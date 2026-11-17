@@ -13,6 +13,9 @@ const CONFIG = {
   counter: "/c/",
   // Imprint and privacy notice of the host, linked at the end of the sidebar; "" hides the link.
   legalUrl: "/legal",
+  // "Report a problem / Suggest an idea": the form sends straight to Web3Forms (mail to Simon). The access key can only
+  // send to the stored address, the address itself is nowhere in the app. Same key as in Vorleser. key "" hides it.
+  feedback: { key: "b8bf57d6-9254-472a-8d37-72aac7141ccd", endpoint: "https://api.web3forms.com/submit" },
 };
 
 const STORE_KEY = "curriculum-compass";
@@ -200,6 +203,7 @@ function writeHash() { history.replaceState(null, "", programmeHash()); }
 async function init() {
   await loadL10n();
   $("#menu-btn").innerHTML = icon("menu");
+  initFeedback();
   $(".search-icon").outerHTML = icon("search");
   $("#prog-info").innerHTML = icon("info");
   $("#share").innerHTML = icon("share");
@@ -440,7 +444,7 @@ function buildSide() {
         ${sideList(d.programmes)}
         ${(d.missing || []).length ? `<li class="list-head">${esc(t("nav.notIncluded"))}</li>` + d.missing.map((m) => `<li class="missing" data-tip="text" data-text="${esc(m.reason)}" tabindex="0">${esc(m.name)}</li>`).join("") : ""}
       </ul></div></div>
-    </div>`).join("") + (CONFIG.legalUrl ? `<a class="side-legal" href="${esc(CONFIG.legalUrl)}">${esc(t("nav.legal"))}</a>` : "");
+    </div>`).join("") + `<div class="side-foot">${CONFIG.feedback?.key ? `<button class="side-feedback" type="button" data-feedback="bug">${icon("chat")}<span>${esc(t("fb.open"))}</span></button>` : ""}${CONFIG.legalUrl ? `<a class="side-legal" href="${esc(CONFIG.legalUrl)}">${esc(t("nav.legal"))}</a>` : ""}</div>`;
   $("#side").addEventListener("click", (e) => {
     const btn = e.target.closest(".dept-btn");
     if (btn) {
@@ -621,7 +625,7 @@ function buildHeader() {
     date: esc(prettyDate(prog.dataAsOf)),
     checked: esc(checkedNote()),
   });
-  $("#report").innerHTML = t("foot.report", { url: esc(reportUrl()) });
+  $("#report").innerHTML = CONFIG.feedback?.key ? t("foot.reportForm") : t("foot.report", { url: esc(reportUrl()) });
   $("#json-link").href = `data/${prog.id}.json`;
 }
 
@@ -631,6 +635,102 @@ function reportUrl() {
   u.searchParams.set("title", t("report.title", vars));
   u.searchParams.set("body", t("report.body", vars));
   return u.href;
+}
+
+/* ---------- Report a problem / suggest an idea (Web3Forms, like Vorleser) ---------- */
+
+const FB_LIMIT = 3, FB_WINDOW = 60 * 60 * 1000;   // at most 3 messages an hour from one browser
+let fbKind = "bug";
+function fbContext() {
+  return [
+    `${t("fb.ctxProgramme")}: ${prog ? `${prog.name} (${w(prog.degree)})` : "–"}`,
+    `${t("fb.ctxPage")}: ${location.href}`,
+    `${t("fb.ctxData")}: ${prog?.dataAsOf || "–"}`,
+    `${t("fb.ctxLang")}: ${lang} · ${navigator.language}`,
+    `${t("fb.ctxBrowser")}: ${navigator.userAgent}`,
+    `${t("fb.ctxScreen")}: ${innerWidth}×${innerHeight}`,
+  ].join("\n");
+}
+function fbSetKind(kind) {
+  fbKind = kind;
+  const d = $("#feedback");
+  d.querySelectorAll(".fb-kind button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.kind === kind)));
+  const on = d.querySelector(`.fb-kind button[data-kind="${kind}"]`), ink = d.querySelector(".fb-kind .ink");
+  ink.style.width = `${on.offsetWidth}px`;
+  ink.style.transform = `translateX(${on.offsetLeft - 4}px)`;
+  $("#fb-msg").placeholder = t(kind === "bug" ? "fb.placeholderBug" : "fb.placeholderIdea");
+  $("#fb-title").textContent = t(kind === "bug" ? "fb.titleBug" : "fb.titleIdea");
+}
+function openFeedback(kind = "bug", prefill = "") {
+  const d = $("#feedback");
+  d.classList.remove("sent");
+  $("#fb-status").textContent = "";
+  if (prefill && !$("#fb-msg").value) $("#fb-msg").value = prefill;
+  $("#fb-ctx").textContent = fbContext();
+  d.showModal();
+  fbSetKind(kind);
+  setTimeout(() => $("#fb-msg").focus(), 30);
+}
+function fbRecent() {
+  try { return JSON.parse(localStorage.getItem("compass-feedback") || "[]").filter((x) => Date.now() - x < FB_WINDOW); } catch { return []; }
+}
+async function sendFeedback(e) {
+  e.preventDefault();
+  const msg = $("#fb-msg").value.trim(), mail = $("#fb-mail").value.trim(), status = $("#fb-status");
+  if (msg.length < 5) { status.textContent = t("fb.tooShort"); return $("#fb-msg").focus(); }
+  if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { status.textContent = t("fb.badMail"); return $("#fb-mail").focus(); }
+  if (fbRecent().length >= FB_LIMIT) { status.textContent = t("fb.limit"); return; }
+  const fields = {
+    access_key: CONFIG.feedback.key, botcheck: $("#fb-bot").checked ? "true" : "",
+    subject: `Curriculum Compass – ${fbKind === "bug" ? "Fehler" : "Idee"}${prog ? ` (${prog.name} ${w(prog.degree)})` : ""}`,
+    from_name: "Curriculum Compass", Art: fbKind === "bug" ? "Fehler" : "Idee", Nachricht: msg,
+    "Antwort an": mail || "(keine Angabe)", "Technische Infos": $("#fb-tech").checked ? fbContext() : "(nicht mitgeschickt)",
+    ...(mail ? { email: mail, replyto: mail } : {}),
+  };
+  const form = new FormData();
+  for (const [k, v] of Object.entries(fields)) form.append(k, v);
+  const d = $("#feedback");
+  d.classList.add("sending");
+  status.textContent = t("fb.sending");
+  try {
+    // plain form data (not JSON): a "simple" CORS request without preflight – Web3Forms blocks the preflight
+    const r = await fetch(CONFIG.feedback.endpoint, { method: "POST", headers: { Accept: "application/json" }, body: form });
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok || !res.success) throw new Error(res.message || r.status);
+    try { localStorage.setItem("compass-feedback", JSON.stringify([...fbRecent(), Date.now()])); } catch {}
+    d.classList.add("sent");
+    status.textContent = "";
+    $("#fb-msg").value = "";
+    setTimeout(() => { if (d.open && d.classList.contains("sent")) closeFeedback(); }, 2200);
+  } catch {
+    status.textContent = navigator.onLine ? t("fb.failed") : t("fb.offline");
+  } finally {
+    d.classList.remove("sending");
+  }
+}
+function closeFeedback() {
+  const d = $("#feedback");
+  if (!d.open) return;
+  if (reduceMotion) return d.close();
+  d.classList.add("closing");
+  setTimeout(() => { d.classList.remove("closing"); d.close(); }, 200);
+}
+function initFeedback() {
+  const d = $("#feedback");
+  if (!d || !CONFIG.feedback?.key) return;
+  d.querySelectorAll("[data-l10n]").forEach((el) => (el.textContent = t(el.dataset.l10n)));
+  d.querySelectorAll(".fb-kind button").forEach((b) => (b.onclick = () => fbSetKind(b.dataset.kind)));
+  $("#fb-form").addEventListener("submit", sendFeedback);
+  $("#fb-cancel").onclick = closeFeedback;
+  d.addEventListener("cancel", (e) => { e.preventDefault(); closeFeedback(); });
+  d.addEventListener("click", (e) => { if (e.target === d) closeFeedback(); });   // click on the backdrop
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-feedback]");
+    if (!b) return;
+    e.preventDefault();
+    const ctx = b.dataset.feedback === "data" && prog ? t("fb.prefillData", { programme: `${prog.name} (${w(prog.degree)})` }) : "";
+    openFeedback(b.dataset.feedback === "idea" ? "idea" : "bug", ctx);
+  });
 }
 
 function renderNotes() {

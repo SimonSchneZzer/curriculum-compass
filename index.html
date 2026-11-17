@@ -73,6 +73,32 @@
     </main>
   </div>
 
+  <dialog class="feedback" id="feedback" aria-labelledby="fb-title">
+    <form id="fb-form" novalidate>
+      <div class="fb-head">
+        <h2 id="fb-title">Report a problem</h2>
+        <div class="fb-kind" role="group"><span class="ink" aria-hidden="true"></span>
+          <button type="button" data-kind="bug" data-l10n="fb.kindBug">Problem</button>
+          <button type="button" data-kind="idea" data-l10n="fb.kindIdea">Idea</button>
+        </div>
+      </div>
+      <label class="fb-label" for="fb-msg" data-l10n="fb.msgLabel">Your message</label>
+      <textarea id="fb-msg" rows="5" maxlength="4000" required></textarea>
+      <label class="fb-label" for="fb-mail" data-l10n="fb.mailLabel">Your e-mail (optional)</label>
+      <input id="fb-mail" type="email" autocomplete="email">
+      <input id="fb-bot" type="checkbox" tabindex="-1" autocomplete="off" class="fb-bot" aria-hidden="true">
+      <label class="fb-check"><input id="fb-tech" type="checkbox" checked> <span data-l10n="fb.tech">Include technical details</span></label>
+      <pre id="fb-ctx" class="fb-ctx"></pre>
+      <p class="fb-note" data-l10n="fb.privacy"></p>
+      <div class="fb-foot">
+        <span id="fb-status" role="status" aria-live="polite"></span>
+        <button type="button" class="fb-btn" id="fb-cancel" data-l10n="fb.cancel">Cancel</button>
+        <button type="submit" class="fb-btn primary" data-l10n="fb.send">Send</button>
+      </div>
+      <div class="fb-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4 4L19 7"/></svg><span data-l10n="fb.thanks">Thank you!</span></div>
+    </form>
+  </dialog>
+
   <div class="tip" id="tip" role="tooltip"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
