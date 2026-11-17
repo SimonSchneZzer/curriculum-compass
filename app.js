@@ -11,6 +11,8 @@ const CONFIG = {
   // Privacy-friendly visit counter (GoatCounter, no cookies). Path on the same host where count.js and /count are
   // served; "" turns counting off. On a host without it the script simply fails to load.
   counter: "/c/",
+  // Imprint and privacy notice of the host, linked at the end of the sidebar; "" hides the link.
+  legalUrl: "/legal",
 };
 
 const STORE_KEY = "curriculum-compass";
@@ -428,7 +430,7 @@ function buildSide() {
         ${sideList(d.programmes)}
         ${(d.missing || []).length ? `<li class="list-head">${esc(t("nav.notIncluded"))}</li>` + d.missing.map((m) => `<li class="missing" data-tip="text" data-text="${esc(m.reason)}" tabindex="0">${esc(m.name)}</li>`).join("") : ""}
       </ul></div></div>
-    </div>`).join("");
+    </div>`).join("") + (CONFIG.legalUrl ? `<a class="side-legal" href="${esc(CONFIG.legalUrl)}">${esc(t("nav.legal"))}</a>` : "");
   $("#side").addEventListener("click", (e) => {
     const btn = e.target.closest(".dept-btn");
     if (btn) {
