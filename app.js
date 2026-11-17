@@ -47,14 +47,17 @@ const checkedNote = () => (checkedAt && prog && checkedAt > prog.dataAsOf ? t("p
 const prettyDate = (d) => new Date(d + "T12:00:00").toLocaleDateString(lang === "de" ? "de-AT" : "en-GB", { day: "numeric", month: "long", year: "numeric" });
 const season = (s) => t(s % 2 ? "sem.winter" : "sem.summer");
 const semWord = () => (lang === "de" ? "Semester" : "semesters");
-// Workload: ECTS × 25 h is the total (class time included); SWS × 14 h is the class time within it.
+// Workload: ECTS × 25 h is the total (class time included). Class time: 1 SWS = one lesson of 45 minutes per teaching
+// week (Austrian standard, e.g. KLRV: "Die Dauer einer Lehreinheit beträgt 45 Minuten") → SWS × 14 weeks × 0.75 h.
 // Per day: a 5-day week over a semester of about 20 weeks (FH Salzburg: mid-Sep to end of Jan, mid-Feb to end of June);
 // classes run 14 weeks. Shown as halves, e.g. 7½.
-const SEMESTER_WEEKS = 20, TEACHING_WEEKS = 14, DAYS = 5;
+const SEMESTER_WEEKS = 20, TEACHING_WEEKS = 14, DAYS = 5, LESSON_H = 0.75;
+const lessonsOf = (sws) => sws * TEACHING_WEEKS;          // lessons of 45 min over the semester
+const classHours = (sws) => lessonsOf(sws) * LESSON_H;    // clock hours in class
 const half = (x) => { const r = Math.round(x * 2) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
 const perDay = (hours) => hours / SEMESTER_WEEKS / DAYS;
 const hoursOf = (ects, sws) => {
-  const total = Math.round(ects * 25), inClass = Math.round(sws * 14);
+  const total = Math.round(ects * 25), inClass = Math.round(classHours(sws));
   return { total, inClass, self: Math.max(0, total - inClass) };
 };
 
@@ -913,11 +916,14 @@ const NO_ATTENDANCE_TYPES = new Set(["BP", "DP", "MP"]);
 const floorHalf = (x) => { const r = Math.floor(x * 2 + 1e-9) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
 function absenceHtml(c) {
   if (!(c.sws > 0) || NO_ATTENDANCE_TYPES.has(c.type)) return "";
-  const total = c.sws * TEACHING_WEEKS;
-  const row = (p) => `<li><span class="abs-p">${p} %</span><span>${t("course.absenceRow", {
-    h: `<b>${floorHalf(total * (1 - p / 100))} h</b>`, n: Math.floor(TEACHING_WEEKS * (1 - p / 100) + 1e-9), w: TEACHING_WEEKS })}</span></li>`;
+  const lessons = lessonsOf(c.sws);
+  const row = (p) => {
+    const miss = Math.floor(lessons * (1 - p / 100) + 1e-9);          // whole lessons, rounded down
+    return `<li><span class="abs-p">${p} %</span><span>${t("course.absenceRow", {
+      u: `<b>${miss}</b>`, h: floorHalf(miss * LESSON_H), n: Math.floor(TEACHING_WEEKS * (1 - p / 100) + 1e-9), w: TEACHING_WEEKS })}</span></li>`;
+  };
   return `<div class="absence"><h4 class="first">${esc(t("course.absence"))}</h4><ul>${row(75)}${row(50)}</ul>
-    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, total: floorHalf(total) }))}</p></div>`;
+    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, u: fmt(lessons), total: floorHalf(classHours(c.sws)) }))}</p></div>`;
 }
 
 // A course: one line with short facts (each explained in a tooltip); a click folds out the details.
@@ -1138,7 +1144,7 @@ function tipContent(el) {
   const d = el.dataset;
   switch (d.tip) {
     case "type": return { small: true, html: esc(typeName(d.type)) };
-    case "sws": return { small: true, html: esc(t("course.sws", { n: fmt(d.v * 14) })) };
+    case "sws": return { small: true, html: esc(t("course.sws", { n: fmt(lessonsOf(+d.v)), h: half(classHours(+d.v)) })) };
     case "assess": return { small: true, html: esc(assessName(d.v)) };
     case "ects": return { small: true, html: esc(t("course.ectsTip")) };
     case "hours": {
@@ -1169,7 +1175,7 @@ function tipContent(el) {
         ${line("var(--core)", t("sem.everyone"), r.core)}
         ${prog.tracks.map((tr, i) => line(i ? "var(--minor)" : "var(--accent)", optionName(tr.key), i ? r.minor : r.spec)).join("")}
         ${line("var(--elec)", t("sem.electives"), r.elec)}
-        <span class="t-meta">${esc(t("sem.assumption", { teach: half(r.sws / DAYS) }))}</span>`;
+        <span class="t-meta">${esc(t("sem.assumption", { teach: half(r.sws * LESSON_H / DAYS) }))}</span>`;
     }
     case "notes": return prog.notes.filter((n) => !n.semester && matches(n.onlyFor)).map((n) => `<p>${esc(n.text)}</p>`).join("");
     case "semnote": return prog.notes.filter((n) => n.semester === +d.sem).map((n) => `<p>${esc(n.text)}</p>`).join("");

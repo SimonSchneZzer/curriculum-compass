@@ -166,6 +166,7 @@ def build(dept, meta, cache_dir, as_of):
             groups.setdefault(extra["id"], _new_group(extra, c["semester"]))
             groups[extra["id"]]["options"].append(dict(id=c["code"], label=c["title"], courses=[c["code"]]))
         courses.append(c)
+    add_extra_options(meta, groups, courses)
     for g in meta.get("extraSlots", []):
         # Something the page does not list (free electives, courses at a partner university): ECTS/SWS only.
         # compulsory=True marks courses everyone takes (shown and counted with the compulsory courses).
@@ -180,6 +181,21 @@ def build(dept, meta, cache_dir, as_of):
         source=dict(curriculum=page_url(dept["id"], meta),
                     brochure=dict(url=BASE + brochure["url"], version=brochure["version"]) if brochure else None),
         tracks=tracks, notes=meta.get("notes", []), groups=list(groups.values()), courses=courses)
+
+
+def add_extra_options(meta, groups, courses):
+    """Options the page does not list (e.g. joining a project of another programme). Each copies ECTS, SWS, type and
+    assessment from the group's first option and gets the area as last part of the label, so series across semesters
+    still match ("Master Project - Development - CDE GAME"). Marked virtual=True; the note says where it comes from."""
+    for x in meta.get("extraOptions", []):
+        g = groups.get(x["group"])
+        if not g or not g["options"] or any(o["id"].endswith("-" + x["id"]) for o in g["options"]):
+            continue
+        ref = next(c for c in courses if c["code"] == g["options"][0]["courses"][0])
+        code = f"{ref['code']}-{x['id']}"
+        title = ref["title"].rsplit(" - ", 1)[0] + " - " + x["area"] if " - " in ref["title"] else f"{ref['title']} - {x['area']}"
+        courses.append(dict(ref, code=code, title=title, content=x["note"], learningOutcome="", virtual=True, sourceCode=None))
+        g["options"].append(dict(id=code, label=title, courses=[code]))
 
 
 # ---------- check ----------

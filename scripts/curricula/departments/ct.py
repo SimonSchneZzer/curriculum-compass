@@ -134,7 +134,12 @@ PROGRAMMES = [
          language="English", semesters=4, classify=mma_m, fixTitles=FIX_TITLES,
          brochure=dict(url="/fileadmin/fhs_daten/studiengaenge/mma/documents/mma_Masterfolder.pdf", version="2026/03"),
          tracks=[dict(key="major", label="Specialisation", fromSemester=1, options=[dict(id=k, name=v) for k, v in MMA_M_TRACKS.items()])],
-         notes=[dict(semester=None, onlyFor={"major": "producing"}, text="Producing has no Master Project of its own. Producing students join a Master Project of one of the three project types (Audiovisual Environments, Communication Design, Film) in a role such as producer. Source: the programme brochure (version 2026/03) lists the Master Project for all majors and 30 ECTS per semester.")]),
+         notes=[dict(semester=None, onlyFor={"major": "producing"}, text="Producing has no Master Project of its own. Producing students join a Master Project of one of the three project types (Audiovisual Environments, Communication Design, Film) in a role such as producer – or a project of CDE (Game or Web). Source: the programme brochure (version 2026/03) lists the Master Project for all majors and 30 ECTS per semester.")],
+         # Not on the curriculum page: Producing students can also join a CDE project (Game or Web). Simon, 17.11.2026.
+         extraOptions=[dict(group=f"producing-master-project-{s}", id=f"CDE-{a}", area=f"CDE {a}",
+                            note=f"Cooperation with CDE ({a.title()}): Producing students can also join a CDE {a.title()} project in a producing role. "
+                                 "Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.")
+                       for s in range(1, 5) for a in ("GAME", "WEB")]),
     dict(id="rave-m", slug="realtime-art-visual-effects-master", name="Realtime Art & Visual Effects", degree="Master",
          mode="Full-time", language="English", semesters=4, classify=rave_m,
          brochure=dict(url="/fileadmin/fhs_daten/studiengaenge/rve/documents/RVE_Masterfolder.pdf", version="2026/03"),

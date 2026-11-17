@@ -59,7 +59,7 @@
   "group.yourMajor": "Dein Schwerpunkt",
   "group.courses": "{n} Kurse",
   "group.pick": "{label} wählen",
-  "course.sws": "{n} Präsenzstunden im Semester",
+  "course.sws": "{n} Einheiten à 45 Minuten im Semester, rund {h} h",
   "course.ects": "Rund {n} Stunden Arbeitsaufwand",
   "course.exam": "Prüfung",
   "course.cont": "Laufend",
@@ -122,7 +122,7 @@
   "sem.dayLine": "≈ {day} h am Tag · {total} h",
   "sem.assumption": "Durchschnitt bei einer 5-Tage-Woche und rund 20 Semesterwochen. In den 14 Unterrichtswochen bist du rund {teach} h am Tag im Unterricht.",
   "course.absence": "So viel darfst du fehlen",
-  "course.absenceRow": "Anwesenheit: bis zu {h} fehlen · etwa {n} von {w} Terminen",
-  "course.absenceNote": "Gerechnet mit {sws} SWS × {w} Unterrichtswochen = {total} h Unterricht, ein Termin pro Woche. Welche Anwesenheit gilt, legt die Lehrveranstaltung fest.",
+  "course.absenceRow": "Anwesenheit: bis zu {u} Einheiten ({h} h) fehlen · etwa {n} von {w} Terminen",
+  "course.absenceNote": "Gerechnet mit {sws} SWS × {w} Unterrichtswochen = {u} Einheiten à 45 Minuten ({total} h), ein Termin pro Woche. Welche Anwesenheit gilt, legt die Lehrveranstaltung fest.",
   "series.applied": "Auch in Semester {sems} auf {area} gesetzt"
 }

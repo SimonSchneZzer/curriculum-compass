@@ -59,7 +59,7 @@
   "group.yourMajor": "Your major",
   "group.courses": "{n} courses",
   "group.pick": "Pick {label}",
-  "course.sws": "{n} contact hours over the semester",
+  "course.sws": "{n} lessons of 45 minutes over the semester, about {h} h",
   "course.ects": "About {n} hours of work",
   "course.exam": "Exam",
   "course.cont": "Cont.",
@@ -122,7 +122,7 @@
   "sem.dayLine": "≈ {day} h a day · {total} h",
   "sem.assumption": "Averaged over a 5-day week and a semester of about 20 weeks. During the 14 teaching weeks you are in class about {teach} h a day.",
   "course.absence": "Allowed absence",
-  "course.absenceRow": "attendance: you can miss up to {h} · about {n} of {w} sessions",
-  "course.absenceNote": "Based on {sws} SWS × {w} teaching weeks = {total} h in class, one session a week. Which attendance rule applies is set by the course.",
+  "course.absenceRow": "attendance: you can miss up to {u} lessons ({h} h) · about {n} of {w} sessions",
+  "course.absenceNote": "Based on {sws} SWS × {w} teaching weeks = {u} lessons of 45 minutes ({total} h), one session a week. Which attendance rule applies is set by the course.",
   "series.applied": "Also set to {area} in semester {sems}"
 }

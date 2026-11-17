@@ -46,7 +46,7 @@
       "onlyFor": {
         "major": "producing"
       },
-      "text": "Producing has no Master Project of its own. Producing students join a Master Project of one of the three project types (Audiovisual Environments, Communication Design, Film) in a role such as producer. Source: the programme brochure (version 2026/03) lists the Master Project for all majors and 30 ECTS per semester."
+      "text": "Producing has no Master Project of its own. Producing students join a Master Project of one of the three project types (Audiovisual Environments, Communication Design, Film) in a role such as producer – or a project of CDE (Game or Web). Source: the programme brochure (version 2026/03) lists the Master Project for all majors and 30 ECTS per semester."
     }
   ],
   "groups": [
@@ -82,6 +82,20 @@
           "courses": [
             "MMAM1MDFIL"
           ]
+        },
+        {
+          "id": "MMAM1MDAIL-CDE-GAME",
+          "label": "Master Project - Development - CDE GAME",
+          "courses": [
+            "MMAM1MDAIL-CDE-GAME"
+          ]
+        },
+        {
+          "id": "MMAM1MDAIL-CDE-WEB",
+          "label": "Master Project - Development - CDE WEB",
+          "courses": [
+            "MMAM1MDAIL-CDE-WEB"
+          ]
         }
       ]
     },
@@ -116,6 +130,20 @@
           "label": "Master Project - Conception - FILM",
           "courses": [
             "MMAM2MCFIL"
+          ]
+        },
+        {
+          "id": "MMAM2MCAIL-CDE-GAME",
+          "label": "Master Project - Conception - CDE GAME",
+          "courses": [
+            "MMAM2MCAIL-CDE-GAME"
+          ]
+        },
+        {
+          "id": "MMAM2MCAIL-CDE-WEB",
+          "label": "Master Project - Conception - CDE WEB",
+          "courses": [
+            "MMAM2MCAIL-CDE-WEB"
           ]
         }
       ]
@@ -185,6 +213,20 @@
           "courses": [
             "MMAM3MRFIL"
           ]
+        },
+        {
+          "id": "MMAM3MRAIL-CDE-GAME",
+          "label": "Master Project - Realisation - CDE GAME",
+          "courses": [
+            "MMAM3MRAIL-CDE-GAME"
+          ]
+        },
+        {
+          "id": "MMAM3MRAIL-CDE-WEB",
+          "label": "Master Project - Realisation - CDE WEB",
+          "courses": [
+            "MMAM3MRAIL-CDE-WEB"
+          ]
         }
       ]
     },
@@ -245,6 +287,20 @@
           "label": "Master Project - Release - FILM",
           "courses": [
             "MMAM4MRFIL"
+          ]
+        },
+        {
+          "id": "MMAM4MRAIL-CDE-GAME",
+          "label": "Master Project - Release - CDE GAME",
+          "courses": [
+            "MMAM4MRAIL-CDE-GAME"
+          ]
+        },
+        {
+          "id": "MMAM4MRAIL-CDE-WEB",
+          "label": "Master Project - Release - CDE WEB",
+          "courses": [
+            "MMAM4MRAIL-CDE-WEB"
           ]
         }
       ]
@@ -1818,6 +1874,166 @@
         "major": "film"
       },
       "group": null
+    },
+    {
+      "code": "MMAM1MDAIL-CDE-GAME",
+      "title": "Master Project - Development - CDE GAME",
+      "semester": 1,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Compulsory Elective 1 - Development - Audio",
+      "content": "Cooperation with CDE (Game): Producing students can also join a CDE Game project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM1MDAIL-CDE-WEB",
+      "title": "Master Project - Development - CDE WEB",
+      "semester": 1,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Compulsory Elective 1 - Development - Audio",
+      "content": "Cooperation with CDE (Web): Producing students can also join a CDE Web project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM2MCAIL-CDE-GAME",
+      "title": "Master Project - Conception - CDE GAME",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Compulsory Elective 1 - Refined Concept - Audio",
+      "content": "Cooperation with CDE (Game): Producing students can also join a CDE Game project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM2MCAIL-CDE-WEB",
+      "title": "Master Project - Conception - CDE WEB",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Compulsory Elective 1 - Refined Concept - Audio",
+      "content": "Cooperation with CDE (Web): Producing students can also join a CDE Web project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM3MRAIL-CDE-GAME",
+      "title": "Master Project - Realisation - CDE GAME",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 9,
+      "language": "English",
+      "assessment": "final",
+      "module": "Compulsory Elective 1 - Realisation - Audio",
+      "content": "Cooperation with CDE (Game): Producing students can also join a CDE Game project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM3MRAIL-CDE-WEB",
+      "title": "Master Project - Realisation - CDE WEB",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 9,
+      "language": "English",
+      "assessment": "final",
+      "module": "Compulsory Elective 1 - Realisation - Audio",
+      "content": "Cooperation with CDE (Web): Producing students can also join a CDE Web project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM4MRAIL-CDE-GAME",
+      "title": "Master Project - Release - CDE GAME",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 2,
+      "language": "English",
+      "assessment": "final",
+      "module": "Compulsory Elective 1 - Release & Presentation - Audio",
+      "content": "Cooperation with CDE (Game): Producing students can also join a CDE Game project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
+    },
+    {
+      "code": "MMAM4MRAIL-CDE-WEB",
+      "title": "Master Project - Release - CDE WEB",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 2,
+      "language": "English",
+      "assessment": "final",
+      "module": "Compulsory Elective 1 - Release & Presentation - Audio",
+      "content": "Cooperation with CDE (Web): Producing students can also join a CDE Web project in a producing role. Not listed on the curriculum page – ECTS and SWS as for the other Master Projects of this semester.",
+      "learningOutcome": "",
+      "track": {
+        "major": "audio"
+      },
+      "group": null,
+      "virtual": true,
+      "sourceCode": null
     }
   ]
 }
