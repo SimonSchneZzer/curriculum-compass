@@ -1,63 +1,6 @@
 {
-  "department": "Creative Technologies",
   "institution": "Salzburg University of Applied Sciences (FH Salzburg)",
   "dataAsOf": "2026-11-17",
-  "programmes": [
-    {
-      "id": "cis-b",
-      "name": "Code and Interactive Systems",
-      "degree": "Bachelor",
-      "mode": "Full-time",
-      "language": "German",
-      "semesters": 6,
-      "file": "data/cis-b.json"
-    },
-    {
-      "id": "mma-b",
-      "name": "MultiMediaArt",
-      "degree": "Bachelor",
-      "mode": "Full-time",
-      "language": "German",
-      "semesters": 6,
-      "file": "data/mma-b.json"
-    },
-    {
-      "id": "cis-m",
-      "name": "Code and Interactive Systems",
-      "degree": "Master",
-      "mode": "Part-time",
-      "language": "English",
-      "semesters": 4,
-      "file": "data/cis-m.json"
-    },
-    {
-      "id": "hci-m",
-      "name": "Human-Computer Interaction",
-      "degree": "Joint Master",
-      "mode": "Full-time",
-      "language": "English",
-      "semesters": 4,
-      "file": "data/hci-m.json"
-    },
-    {
-      "id": "mma-m",
-      "name": "MultiMediaArt",
-      "degree": "Master",
-      "mode": "Full-time",
-      "language": "English",
-      "semesters": 4,
-      "file": "data/mma-m.json"
-    },
-    {
-      "id": "rave-m",
-      "name": "Realtime Art & Visual Effects",
-      "degree": "Master",
-      "mode": "Full-time",
-      "language": "English",
-      "semesters": 4,
-      "file": "data/rave-m.json"
-    }
-  ],
   "legend": {
     "sws": "Weekly contact hours over 14 weeks (SWS 2 = 28 contact hours for the whole course).",
     "ects": "Workload in ECTS credits; 1 ECTS credit is about 25 hours of work.",
@@ -81,12 +24,422 @@
       "TU": "Tutorial",
       "UB": "Practice session",
       "VO": "Lecture",
-      "BA": "Bachelor thesis",
-      "BE": "Professional internship",
       "EX": "Not defined in the source legend",
       "KO": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page",
       "UV": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page",
       "VP": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page"
     }
-  }
+  },
+  "departments": [
+    {
+      "id": "as",
+      "name": "Applied Social Sciences",
+      "programmes": [
+        {
+          "id": "si-m",
+          "name": "Social Innovation",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 4,
+          "file": "data/si-m.json"
+        },
+        {
+          "id": "sw-b",
+          "name": "Social Work",
+          "degree": "Bachelor",
+          "mode": "Full-time and part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/sw-b.json"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "id": "bt",
+      "name": "Business and Tourism",
+      "programmes": [
+        {
+          "id": "bm-b",
+          "name": "Business Management",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/bm-b.json"
+        },
+        {
+          "id": "bm-pt-b",
+          "name": "Business Management",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/bm-pt-b.json"
+        },
+        {
+          "id": "bm-m",
+          "name": "Business Management",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 4,
+          "file": "data/bm-m.json"
+        },
+        {
+          "id": "imt-b",
+          "name": "Innovation & Management in Tourism",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "English",
+          "semesters": 6,
+          "file": "data/imt-b.json"
+        },
+        {
+          "id": "imt-de-b",
+          "name": "Innovation & Management in Tourism",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/imt-de-b.json"
+        },
+        {
+          "id": "imt-m",
+          "name": "Innovation & Management in Tourism",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/imt-m.json"
+        },
+        {
+          "id": "me-b",
+          "name": "Management & Entrepreneurship",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/me-b.json"
+        },
+        {
+          "id": "rt-m",
+          "name": "Retail & Technology",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 4,
+          "file": "data/rt-m.json"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "id": "ct",
+      "name": "Creative Technologies",
+      "programmes": [
+        {
+          "id": "cis-b",
+          "name": "Code and Interactive Systems",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/cis-b.json"
+        },
+        {
+          "id": "mma-b",
+          "name": "MultiMediaArt",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/mma-b.json"
+        },
+        {
+          "id": "cis-m",
+          "name": "Code and Interactive Systems",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/cis-m.json"
+        },
+        {
+          "id": "hci-m",
+          "name": "Human-Computer Interaction",
+          "degree": "Joint Master",
+          "mode": "Full-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/hci-m.json"
+        },
+        {
+          "id": "mma-m",
+          "name": "MultiMediaArt",
+          "degree": "Master",
+          "mode": "Full-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/mma-m.json"
+        },
+        {
+          "id": "rave-m",
+          "name": "Realtime Art & Visual Effects",
+          "degree": "Master",
+          "mode": "Full-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/rave-m.json"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "id": "ed",
+      "name": "Design and Green Engineering",
+      "programmes": [
+        {
+          "id": "dpm-b",
+          "name": "Design & Product Management",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/dpm-b.json"
+        },
+        {
+          "id": "dpm-m",
+          "name": "Design & Product Management",
+          "degree": "Master",
+          "mode": "Full-time",
+          "language": "German and English",
+          "semesters": 4,
+          "file": "data/dpm-m.json"
+        },
+        {
+          "id": "fpt-b",
+          "name": "Forest Products Technology & Timber Constructions",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/fpt-b.json"
+        },
+        {
+          "id": "fpt-m",
+          "name": "Forest Products Technology & Timber Constructions",
+          "degree": "Master",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 4,
+          "file": "data/fpt-m.json"
+        },
+        {
+          "id": "gbd-b",
+          "name": "Green Building - Design & Engineering",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/gbd-b.json"
+        },
+        {
+          "id": "ge-b",
+          "name": "Green Engineering",
+          "degree": "Bachelor",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/ge-b.json"
+        },
+        {
+          "id": "tcp-b",
+          "name": "Timber Construction Professional",
+          "degree": "Bachelor Professional",
+          "mode": "Part-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/tcp-b.json"
+        },
+        {
+          "id": "sbc-m",
+          "name": "Smart Buildings in Smart Cities",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German and English",
+          "semesters": 4,
+          "file": "data/sbc-m.json"
+        }
+      ],
+      "missing": []
+    },
+    {
+      "id": "gw",
+      "name": "Health Sciences",
+      "programmes": [
+        {
+          "id": "bms-b",
+          "name": "Biomedical Sciences",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/bms-b.json"
+        },
+        {
+          "id": "mw-b",
+          "name": "Midwifery",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/mw-b.json"
+        },
+        {
+          "id": "mws-m",
+          "name": "Midwifery Sciences",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German, English",
+          "semesters": 4,
+          "file": "data/mws-m.json"
+        },
+        {
+          "id": "nur-b",
+          "name": "Nursing",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/nur-b.json"
+        },
+        {
+          "id": "ot-b",
+          "name": "Occupational Therapy",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/ot-b.json"
+        },
+        {
+          "id": "orth-b",
+          "name": "Orthoptics",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/orth-b.json"
+        },
+        {
+          "id": "phys-b",
+          "name": "Physiotherapy",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/phys-b.json"
+        },
+        {
+          "id": "rad-b",
+          "name": "Radiological Technology",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/rad-b.json"
+        }
+      ],
+      "missing": [
+        {
+          "name": "Child and Youth Care (academic course)",
+          "url": "https://www.fh-salzburg.ac.at/en/study/gw/child-and-youth-care-academic-course",
+          "reason": "Part-time continuing-education course (3 semesters, certificate “Academic expert in child and adolescent care”, not a degree programme). Its curriculum page lists no courses."
+        },
+        {
+          "name": "Mental Health Nursing (academic course)",
+          "url": "https://www.fh-salzburg.ac.at/en/study/gw/mental-health-nursing-academic-course",
+          "reason": "Part-time continuing-education course (3 semesters, certificate “Academic expert in psychiatric nursing”, not a degree programme). Its curriculum page lists no courses."
+        }
+      ]
+    },
+    {
+      "id": "it",
+      "name": "Information Technologies and Digitalisation",
+      "programmes": [
+        {
+          "id": "bidt-b",
+          "name": "Business Informatics & Digital Transformation",
+          "degree": "Bachelor",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 6,
+          "file": "data/bidt-b.json"
+        },
+        {
+          "id": "aist-m",
+          "name": "AI for Sustainable Technologies",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German and English",
+          "semesters": 4,
+          "file": "data/aist-m.json"
+        },
+        {
+          "id": "aisp-m",
+          "name": "Applied Image and Signal Processing",
+          "degree": "Joint Master",
+          "mode": "Full-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/aisp-m.json"
+        },
+        {
+          "id": "aih-m",
+          "name": "Applied AI in Healthcare",
+          "degree": "Joint Master",
+          "mode": "Part-time",
+          "language": "English",
+          "semesters": 4,
+          "file": "data/aih-m.json"
+        },
+        {
+          "id": "cs-m",
+          "name": "Cyber Security",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German and English",
+          "semesters": 4,
+          "file": "data/cs-m.json"
+        },
+        {
+          "id": "iir-m",
+          "name": "Industrial Informatics & Robotics",
+          "degree": "Master",
+          "mode": "Part-time",
+          "language": "German and English",
+          "semesters": 4,
+          "file": "data/iir-m.json"
+        },
+        {
+          "id": "itmc-m",
+          "name": "IT Management & Consulting",
+          "degree": "Master",
+          "mode": "Full-time",
+          "language": "German",
+          "semesters": 4,
+          "file": "data/itmc-m.json"
+        }
+      ],
+      "missing": [
+        {
+          "name": "Information Technologies (Bachelor)",
+          "url": "https://www.fh-salzburg.ac.at/en/study/it/information-technologies-bachelor",
+          "reason": "New programme (formerly Information Technology & Systems Management). No curriculum page with a course list exists yet, neither in English nor in German; only the info flyer."
+        }
+      ]
+    }
+  ]
 }

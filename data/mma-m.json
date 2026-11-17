@@ -1,5 +1,6 @@
 {
   "id": "mma-m",
+  "department": "ct",
   "name": "MultiMediaArt",
   "degree": "Master",
   "mode": "Full-time",
@@ -18,6 +19,7 @@
     {
       "key": "major",
       "label": "Specialisation",
+      "fromSemester": 1,
       "options": [
         {
           "id": "audio",
@@ -35,8 +37,7 @@
           "id": "producing",
           "name": "Producing"
         }
-      ],
-      "fromSemester": 1
+      ]
     }
   ],
   "notes": [

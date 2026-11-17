@@ -1,0 +1,1297 @@
+{
+  "id": "fpt-m",
+  "department": "ed",
+  "name": "Forest Products Technology & Timber Constructions",
+  "degree": "Master",
+  "mode": "Full-time",
+  "language": "German",
+  "semesters": 4,
+  "ectsTotal": 120,
+  "dataAsOf": "2026-11-17",
+  "source": {
+    "curriculum": "https://www.fh-salzburg.ac.at/en/study/ed/forest-products-technology-timber-constructions-master/curriculum",
+    "brochure": {
+      "url": "https://www.fh-salzburg.ac.at/fileadmin/fhs_daten/studiengaenge/htb-htw/documents/htb_Masterfolder.pdf",
+      "version": "2026/08"
+    }
+  },
+  "tracks": [
+    {
+      "key": "major",
+      "label": "Specialisation",
+      "fromSemester": 2,
+      "options": [
+        {
+          "id": "wt",
+          "name": "Wood Technology"
+        },
+        {
+          "id": "tc",
+          "name": "Timber Constructions"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "semester": null,
+      "text": "The brochure (version 2026/08) lists one free elective per semester: 2, 5, 2 and 4 ECTS. The curriculum page shows it as placeholder slots (“Detailed Competences”) and reuses one course code per semester for all of them; a suffix (-2, -3, …) is added here."
+    }
+  ],
+  "groups": [
+    {
+      "id": "free-elective-1",
+      "semester": 1,
+      "label": "Free elective",
+      "choose": 1,
+      "note": "Placeholder slots: one larger course or several smaller ones. Subjects change every year.",
+      "open": true,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "HTWM1WAHIL",
+          "label": "Detailed Competences 1.1",
+          "courses": [
+            "HTWM1WAHIL"
+          ]
+        },
+        {
+          "id": "HTWM1WAHIL-2",
+          "label": "Detailed Competences 1.2.1",
+          "courses": [
+            "HTWM1WAHIL-2"
+          ]
+        },
+        {
+          "id": "HTWM1WAHIL-3",
+          "label": "Detailed Competences 1.2.2",
+          "courses": [
+            "HTWM1WAHIL-3"
+          ]
+        }
+      ],
+      "budget": 2,
+      "budgetSws": 2
+    },
+    {
+      "id": "free-elective-2",
+      "semester": 2,
+      "label": "Free elective",
+      "choose": 1,
+      "note": "Placeholder slots: one larger course or several smaller ones. Subjects change every year.",
+      "open": true,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "HTWM2WAHIL",
+          "label": "Detailed Competences 2.1",
+          "courses": [
+            "HTWM2WAHIL"
+          ]
+        },
+        {
+          "id": "HTWM2WAHIL-2",
+          "label": "Detailed Competences 2.2.2",
+          "courses": [
+            "HTWM2WAHIL-2"
+          ]
+        },
+        {
+          "id": "HTWM2WAHIL-3",
+          "label": "Detailed Competences 2.2.3",
+          "courses": [
+            "HTWM2WAHIL-3"
+          ]
+        },
+        {
+          "id": "HTWM2WAHIL-4",
+          "label": "Detailed Competences 2.2.1",
+          "courses": [
+            "HTWM2WAHIL-4"
+          ]
+        },
+        {
+          "id": "HTWM2WAHIL-5",
+          "label": "Detailed Competences 2.3.1",
+          "courses": [
+            "HTWM2WAHIL-5"
+          ]
+        },
+        {
+          "id": "HTWM3WAHIL",
+          "label": "Detailed Competences 2.3.2",
+          "courses": [
+            "HTWM3WAHIL"
+          ]
+        },
+        {
+          "id": "HTWM3WAHIL-2",
+          "label": "Detailed Competences 2.3.3",
+          "courses": [
+            "HTWM3WAHIL-2"
+          ]
+        },
+        {
+          "id": "HTWM3WAHIL-3",
+          "label": "Detailed Competences 2.3.4",
+          "courses": [
+            "HTWM3WAHIL-3"
+          ]
+        }
+      ],
+      "budget": 5,
+      "budgetSws": 4
+    },
+    {
+      "id": "free-elective-3",
+      "semester": 3,
+      "label": "Free elective",
+      "choose": 1,
+      "note": "Placeholder slots: one larger course or several smaller ones. Subjects change every year.",
+      "open": true,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "HTWM3WAHIL-4",
+          "label": "Detailed Competences 3.1",
+          "courses": [
+            "HTWM3WAHIL-4"
+          ]
+        },
+        {
+          "id": "HTWM3WAHIL-5",
+          "label": "Detailed Competences 3.2.1",
+          "courses": [
+            "HTWM3WAHIL-5"
+          ]
+        },
+        {
+          "id": "HTWM3WAHIL-6",
+          "label": "Detailed Competences 3.2.2",
+          "courses": [
+            "HTWM3WAHIL-6"
+          ]
+        }
+      ],
+      "budget": 2,
+      "budgetSws": 2
+    },
+    {
+      "id": "free-elective-4",
+      "semester": 4,
+      "label": "Free elective",
+      "choose": 1,
+      "note": "Placeholder slots: one larger course or several smaller ones. Subjects change every year.",
+      "open": true,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "HTWM4WAHIL",
+          "label": "Detailed Competences 4.1",
+          "courses": [
+            "HTWM4WAHIL"
+          ]
+        },
+        {
+          "id": "HTWM4WAHIL-2",
+          "label": "Detailed Competences 4.2.1",
+          "courses": [
+            "HTWM4WAHIL-2"
+          ]
+        },
+        {
+          "id": "HTWM4WAHIL-3",
+          "label": "Detailed Competences 4.2.2",
+          "courses": [
+            "HTWM4WAHIL-3"
+          ]
+        },
+        {
+          "id": "HTWM4WAHIL-4",
+          "label": "Detailed Competences 4.3.1",
+          "courses": [
+            "HTWM4WAHIL-4"
+          ]
+        },
+        {
+          "id": "HTWM4WAHIL-5",
+          "label": "Detailed Competences 4.3.2",
+          "courses": [
+            "HTWM4WAHIL-5"
+          ]
+        },
+        {
+          "id": "HTWM4WAHIL-6",
+          "label": "Detailed Competences 4.3.3",
+          "courses": [
+            "HTWM4WAHIL-6"
+          ]
+        }
+      ],
+      "budget": 4,
+      "budgetSws": 4
+    }
+  ],
+  "courses": [
+    {
+      "code": "HTWM1SWPSE",
+      "title": "Academic Writing and Publishing Workshop",
+      "semester": 1,
+      "type": "SE",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Scientific Studies",
+      "content": "Consolidation and repetition of the guidelines for writing a scientific paper, literature research, citation rules and standards, development of the review process for scientific publications and conferences, working with bibliographic management software, literature databases and online libraries. Discourse theory, dialectics, theories of science, theories of actions and their application.",
+      "learningOutcome": "The alumni are familiar with the methods of scientific writing and are able to present and analyse the logical structure of a scientific paper for specific topics. The alumni are able to write a paper on a specialist subject themselves.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1HTGVO",
+      "title": "Basic Principles of Forest Products Technology",
+      "semester": 1,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Forest Products Technology - Wood as a raw & processed material",
+      "content": "Bridging the level of content and knowledge between the different bachelor and diploma studies, Basic Principles of Wood as a Raw and Processed Material are covered: Wood Anatomy, Wood Physics, Wood Chemistry; Basic Principles for the Treatment and Processing of Timber, Basic Principles of Wood-based Materials: Classification, Properties, Production.",
+      "learningOutcome": "The graduates are able to: - understand wood as an anisotropic, hydrophilic material and to characterise it on the basis of its essential mechanical and physical properties - describe the production processes of wood technology and define their respective objectives and technical parameters.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1BIRVO",
+      "title": "Business Economics & Investment Appraisal",
+      "semester": 1,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Management & Markets",
+      "content": "The course is structured according to the basic functional structure of operational problems as they arise from sales processes. The following topics (regarding challenges and decision areas along the value chain) are covered in an overview and integrated in management decisions by the students: Purchase - Production - Logistics; Marketing; Human Resources and Management; Organisation. The components of the business plan and business model calculations are put to practical use in Business modelling and Entrepreneurship.",
+      "learningOutcome": "The alumni acquire the ability to design and evaluate business models in the wood industry.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1DPMVO",
+      "title": "Digitalisation: Project Planning and Installation",
+      "semester": 1,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Introduction to Wood Construction",
+      "content": "The course teaches the use of different CAD programmes for the following purposes: Designing and drawing of construction plans; Work preparation and manufacturing planning; Integration into BIM systems",
+      "learningOutcome": "The alumni acquire the ability to outline constructions and buildings from the idea to submission, execution and work planning, as well as for work preparation, production and assembly planning up to the building acceptance in a digital form. They can record and document adjustments and changes, and are able to hand over an \"as-built\" digital twin to the building owner.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1ENHIL",
+      "title": "Ethics & Sustainability",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Scientific Studies",
+      "content": "The need for (professional) ethical orientation has never been as great as in the last decade. In the process, ethics is currently encountered in the most diverse forms and variants: Bioethics, medical ethics, animal ethics, ethics and politics, ethics and economy, teaching ethics instead of religious education in schools, from the ethics of the addressee to environmental ethics, from every day life ethics to systems ethics, ... Our existence seems to be moving in ethically and morally charged times, especially as the concepts of ethics and sustainability themselves are becoming increasingly blurred and inflationary. Therefore the symposium attempts to contribute to a better understanding of the concept of ethics in general as well as to raise awareness of (professional) ethical problems and questions of sustainabilty.",
+      "learningOutcome": "After completion of the symposium, the alumni are able to: - analyse and reflect on ethical and moral dilemmas - evaluate opinions from a lecture in their own context of action - argue societal questions with regard to their own professional/occupational environment - articulate and justify their own opinion in the group discussion.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1IPRPT",
+      "title": "Individual Project 1",
+      "semester": 1,
+      "type": "PT",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Project 1",
+      "content": "In the course of individual projects, specific topics from applied or research-based questions are dealt with in detail and specific tasks are solved. Projects in cooperation with forest product industry companies can be carried out in various areas, from raw material supply and strategic purchasing, production and distribution to the sales markets and services. In the field of Timber Construction the topics can range from the pre-planning phase and basic survey through the planning and execution phase to the utilization phase and the consideration of end-of-life strategies.",
+      "learningOutcome": "The alumni can implement the theoretical skills in a practical project. The skills in the technical area are used just as much as the economic, systematic and social skills.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1IHMIL",
+      "title": "International Markets of the Forest Products Industry",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Management & Markets",
+      "content": "Introduction to international timber trade markets: Types; Market participants; Sales structures; Business models of the international timber trade. International timber purchasing and production: Foreign trade marketing and sales; Purchasing and sales market research; Market selection; Marketing strategies; Sales forecasts; Marketing planning in the timber trade. Legal framework and foreign trade logistics: Foreign trade and customs law; international purchase contract regulations; Sea freight, air freight, rail and road freight; International delivery terms; Foreign trade documentation. Financial planning and foreign trade risks: Financial processes; International payments, Terms of payment; Documentary collection; Documentary credits. Risks: Risk policy; Types of risks; Transport insurance; Export credit insurance European timber trade security law (EUTR): Legal prinicples; Spatial and temporal scope; Contents and scope of application; Affected parties; Special regulations; Due diligence regulation; Risk assessment; Surveillance, Sanctions.",
+      "learningOutcome": "The alumni are able to: - describe and evaluate the operational structures of the international value chain of the timber industry and of the international timber trade - name the companies involved in the timber trade and analyse their activities - evaluate the international production of timber products, the international marketing of timber products and the international purchasing and distribution of timber trade companies, taking into account the specifics of cross-border timber trading transactions - explain the functioning of international logistics and payment transactions and use the special documents required for cross-border timber trade - assess the risks associated with foreign transactions with timber products.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1HBGIL",
+      "title": "Introduction to Timber Construction",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Introduction to Wood Construction",
+      "content": "Building systems and Wood frame construction systems; Load-bearing structures made of wood; Component structures and component assemblies; Detailed plan systems; Materials for wood constructions; Stability and Usability.",
+      "learningOutcome": "The alumni acquire the skills to select suitable timber construction systems for the construction of buildings and to assess and properly apply them. Furthermore they gain the ability to plan structures and connection techniques in compliance with the use of materials as well as manufacturing and assembly specifications. They can develop detailed structures with respect to fire protection and sound insulation.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1SFHIL",
+      "title": "Structural and Functional Material of Wood",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Forest Products Technology - Wood as a raw & processed material",
+      "content": "Further analyses of wood and wood-based materials based on the desired material properties: predominant mechanical properties for structural materials, further physical or chemical properties as functional material. Current topics of material development in the field of wood and processes for the production of new wood-based materials are dealt with: Wood modification and Thermal wood treatment, Wood-based materials - Wood Plastic Composites.",
+      "learningOutcome": "The graduates are able to characterise wood as a raw material for specific wood-based materials and to describe the essential processes for the breakdown of wood in order to extract its subtle elements. They can describe new wood-based materials and evaluate the further development of these materials according to current research.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1NUFVO",
+      "title": "Sustainable Corporate Management",
+      "semester": 1,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Management & Markets",
+      "content": "Lecture series, field trips and company visits on the integration of the dimensions of sustainability in management decisions. Based on theoretical principles and specifics of the forest products industry, best practice examples of companies are visited and assessed. Subject categories: Sustainability with reference to the use of materials and material-flow patterns; Sustainability with regard to all company processes; Sustainability in strategic corporate management. Reports from practitioners and business leaders: Presentation of their company (corporate groups, small and medium-sized family-owned companies) with regard to the implementation of sustainability. Discussion of the different approaches to sustainable corporate management in the group: Derivation of the relevant findings from lectures and the further development of ideas.",
+      "learningOutcome": "The alumni are able to describe and evaluate the implications and additional requirements of sustainable corporate management that goes far beyond classic shareholder orientation.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1HPVIL",
+      "title": "Wood-technological Processes & Procedures",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Forest Products Technology - Wood as a raw & processed material",
+      "content": "Processes for the production of modified woods and new wood-based materials, description of the process parameters, theoretical treatment of the methods and processes for measuring, analysing and controlling the process parameters. Exemplary description and application of the process parameters, in particular for the thermal modification of wood and the production of new wood-based materials.",
+      "learningOutcome": "The graduates are able to: - characterise wood technology processes with regard to process parameters and gauge the effect of changes in these parameters on product properties - present the main measurement methods for the evaluation and analysis of process parameters and to discuss questions regarding the selection and application of measurement methods in the operational environment.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM1WAHIL",
+      "title": "Detailed Competences 1.1",
+      "semester": 1,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 1.1",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-1"
+    },
+    {
+      "code": "HTWM1WAHIL-2",
+      "title": "Detailed Competences 1.2.1",
+      "semester": 1,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 1.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-1",
+      "sourceCode": "HTWM1WAHIL"
+    },
+    {
+      "code": "HTWM1WAHIL-3",
+      "title": "Detailed Competences 1.2.2",
+      "semester": 1,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 1.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-1",
+      "sourceCode": "HTWM1WAHIL"
+    },
+    {
+      "code": "HTWM2FPAIL",
+      "title": "Funding and project acquisition",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Negotiations & Funding",
+      "content": "Contents of a grant application (project content and description, project management, cost breakdown), different national and international funding sources, exemplary conception of a project application, business funding and prizes, business start-up.",
+      "learningOutcome": "The alumni can choose the optimal funding channel from the available funding options and are able to write and handle applications for funds in a target-oriented manner.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2ISHVO",
+      "title": "ICT systems in the Forest Products Industry/in Timber Construction",
+      "semester": 2,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Information Technology & Operations Management",
+      "content": "Description of the essential characteristics of database systems, specific requirements for data collection and management in companies in the timber industry. Production planning assisted by production planning systems, specific requirements for production planning systems in the different branches of the timber industry, presentation of the most frequently used systems. Challenges for data collection in production, description of the main methods for data collection and the resulting data quality. Consideration of the correlation between data collection, process analysis, process control and optimization, with a focus on applications in the timber industry.",
+      "learningOutcome": "The alumni are able to: - understand selected structures of IT solutions in production companies - understand data exchange and data formats in selected production companies - discuss the importance and possibilities of selected IT interfaces - recognize the components of control systems - realise simple PLC circuits.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2IPRPT",
+      "title": "Individual Project 2",
+      "semester": 2,
+      "type": "PT",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Project 2",
+      "content": "This project can either be based directly on the Individual Project 1 of module PR 1, or give students the opportunity of a complete reorientation concerning their project work. The approach in this project is more experimental than in the preceding Individual Project 1. Experimental approaches in product development and process design are tested and developed. Independent approaches can be followed and pursued without restrictive specifications.",
+      "learningOutcome": "The alumni can implement the theoretical skills in a practical project. The skills in the technical area are used just as much as the economic, systematic and social skills.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2LMPIL",
+      "title": "Lean Management - Production Technology",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Information Technology & Operations Management",
+      "content": "Basics and application of value stream analysis, exemplary treatment of case studies from the timber industry. The flow principle and the consequences for the production planning. The implementation of the flow principle in the company. The pull principle and methods for the implementation of operational measures to achieve lean management, exemplary application on real examples.",
+      "learningOutcome": "Alumni are able to: - recognize the essential processes in a company's workflow - represent the structure of production processes in a flow chart - implement continuous improvement processes in a production flow - define measurement parameters for the characterization of production processes - present reports to illustrate improvements in production processes.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2VMTVO",
+      "title": "Negotiations",
+      "semester": 2,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "final",
+      "module": "Negotiations & Funding",
+      "content": "Professional negotiation is an important basic skill for future managers. This course teaches the components and successful implementation of professional negotiations: Negotiation strategies and tactics; Motives and negotiation styles; Negotiating power; Operational negotiation management.",
+      "learningOutcome": "The alumni can name and evaluate the components of efficient negotiation, from preparation to negotiation styles and tactics to successful completion. The additional focus on practical application in the context of the timber markets enables the alumni to directly implement the methods in the relevant professional field.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2QQFIL",
+      "title": "Qualitative and Quantitative Research Methods",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Research Methods",
+      "content": "A comprehensive overview of the relevant aspects and elements of an empiric organisation and strategy research; independent and systematic planning and implementation of an empiric research project; ethical aspects of action; potential difficulties in accessing data; selection of appropriate methods for data collection and analysis; quality criteria for empirical research and the appropriate presentation of findings; statistical data analysis with common software packages such as SPSS.",
+      "learningOutcome": "The alumni are able to: - develop research hypotheses - formulate alternative hypotheses - differentiate and apply qualitative and quantitative methods - evaluate statistical data - perform statistical tests - create statistical models.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM2WAHIL",
+      "title": "Detailed Competences 2.1",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 4,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.1",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2"
+    },
+    {
+      "code": "HTWM2WAHIL-2",
+      "title": "Detailed Competences 2.2.2",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM2WAHIL"
+    },
+    {
+      "code": "HTWM2WAHIL-3",
+      "title": "Detailed Competences 2.2.3",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM2WAHIL"
+    },
+    {
+      "code": "HTWM2WAHIL-4",
+      "title": "Detailed Competences 2.2.1",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM2WAHIL"
+    },
+    {
+      "code": "HTWM2WAHIL-5",
+      "title": "Detailed Competences 2.3.1",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM2WAHIL"
+    },
+    {
+      "code": "HTWM3WAHIL",
+      "title": "Detailed Competences 2.3.2",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2"
+    },
+    {
+      "code": "HTWM3WAHIL-2",
+      "title": "Detailed Competences 2.3.3",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM3WAHIL"
+    },
+    {
+      "code": "HTWM3WAHIL-3",
+      "title": "Detailed Competences 2.3.4",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 2.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the the-matic and industry-specific requirements of the individual project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-2",
+      "sourceCode": "HTWM3WAHIL"
+    },
+    {
+      "code": "HTWM2HKHIL",
+      "title": "Building Envelopes in Timber Construction",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 1",
+      "content": "From the wall to the facade; Principles of construction; Facade requirements; Adaptive facades; Materials for facades; Facades - future developments and multifunctional facades",
+      "learningOutcome": "The alumni acquire the skills to plan facades and facade systems made of different materials and material combinations. They can integrate additional functionalities into the facade in addition to the requirements of normative and building physics regulations as well as planning and building laws.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2BIMIL",
+      "title": "Building Information Modelling - Basics",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 1",
+      "content": "- Creating Building Models - BIM in the different planning stages - BIM management - Area and quantity evaluation - Visualization",
+      "learningOutcome": "The alumni are able to use virtual building information modeling (BIM) for the optimized planning, construction and management of buildings.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2MOTIL",
+      "title": "Model Construction in Structural Design",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 1",
+      "content": "Optimization of load-bearing elements and structural performance; Modelling for beam and shell structures; Optimization and modelling of connection nodes and construction details; Modelling of materials; Variations of parameters.",
+      "learningOutcome": "The alumni acquire the ability to transfer structures into load-bearing structural elements and to assess and dimension them.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2VOFIL",
+      "title": "Pre-Fabrication",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 1",
+      "content": "Regulations - Laws, Norms, Guidelines, Approvals; CE label and ÜA label; Production Planning; Factory Production; Quality Assurance - factory production control system",
+      "learningOutcome": "The alumni acquire the ability to develop components, to plan and carry out an approval (conformity), to produce the approved components - commercial or industrial production - and to implement the required factory production control system within the framework of quality assurance. They are able to name and evaluate the relevant production systems and manufacturing processes and the quality assurance requirements for the prefabrication of wooden construction elements.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2GEGIL",
+      "title": "The Development of Buildings 1",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 1",
+      "content": "Functional and organisational building conception; Planning methodology; Essentials of Building planning; Development of new building typologies",
+      "learningOutcome": "The alumni are able to: - explain and evaluate the diverse and complex framework conditions and procedures for functional and organisational building development - develop a building based on real situations according to defined specifications and present it convincingly.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2VUBIL",
+      "title": "Process Engineering and Bio composite materials",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 1",
+      "content": "Wood and other biogenic raw materials as the basis for bio-composite materials; Chemical and biological processes for the breakdown of ligno-cellulose materials; Manufacturing processes for bio-composite materials; Mechanical properties of bio-composite materials; Physical properties of bio-composite materials; Ecological properties of bio-composite materials; Properties of bio-composite materials in specific fields of application; Comparison of bio-composite materials with conventional composite materials.",
+      "learningOutcome": "The alumni are able to: - describe and characterize the process technology for the pre-treatment of wood and biogenic raw materials for use in bio-composite materials - describe the manufacturing processes of bio-composite materials and to characterise them on the basis of selected process properties - compare bio-composite materials with conventional materials in various fields of application in technical, economic and ecological terms.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2PSHIL",
+      "title": "Process analyses & controlling in the Forest Products Industry",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 1",
+      "content": "Modelling of systems; Methods of process analysis; Key figures for the description of processes; Analysis of processes in the Timber industry - exemplary applications; Methods for the improvement of process flows; Exemplary application of process analysis and control at vacuum drying with steam injection.",
+      "learningOutcome": "The alumni are able to: - plan the data collection for the evaluation of production processes in the timber industry and to determine suitable intervals and framework conditions - evaluate and analyse data from production processes and to answer the defined questions based on this data.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM2FMBIL",
+      "title": "Production processes in the Furniture & Construction Industry",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 1",
+      "content": "Basics of automated manufacturing in the furniture and construction industries; Systems and machinery for computer-aided design, work preparation, manufacturing and service management in the furniture and construction industries; Technical parameters for system selection in the furniture and construction industries; Economic consideration and planning of manufacturing plants based on selected examples.",
+      "learningOutcome": "The alumni are able to: - describe the main methods and models for planning and analysing manufacturing processes and to apply them by means of examples - plan a production plant in the furniture and construction industries and to demonstrate the interaction of all manufacturing processes with regard to technical, economic, temporal and qualitative characteristics.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3CONIL",
+      "title": "Controlling",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Professional Management & Controlling",
+      "content": "As basis of the operational management, the students can identify and develop the key performance indicators and implement them in controlling systems as source for management information. KPI, calculation- and management information systems for the forest products industries are developed and implemented in practical case studies.",
+      "learningOutcome": "The alumni are able to develop and to implement operative controlling systems for the timber industry.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3DOEIL",
+      "title": "Design of Experiments",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Master's Preparation",
+      "content": "Strategy of experimentation and analysis, Randomized Blocks and Latin Squares, Factorial Designs, Fitting Regression Models, Response Surface Methods and Designs, Statistical Software for Design of Experiments, Examples.",
+      "learningOutcome": "The alumni are able to: - break scientific questions down to the relevant hypotheses - characterise the relevant variables and make them measurable - determine the statistical experimental designs necessary to answer the hypotheses - define and apply the relevant evaluation methods and models - derive conclusions from the models.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3MTHIT",
+      "title": "Master thesis preparation",
+      "semester": 3,
+      "type": "IT",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 6,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Master's Preparation",
+      "content": "In-depth scientific work, current developments, assistence in IT-supported implementation and in formal questions (IT support of the supervision process, upload, appointments, handling of literature databases, source work, ...) Analysis of current publications; Dealing with scientific literature sources (also in electronic form) including referencing.",
+      "learningOutcome": "The alumni are able to draft the following contents in the context of an exposé: - the questions of the Master's thesis - the scientific hypotheses - the schedule and work plan for the preparation of the Master's thesis - the intended methods and evaluation techniques.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3MBSSE",
+      "title": "Master thesis seminar",
+      "semester": 3,
+      "type": "SE",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Master's Preparation",
+      "content": "Systematic structure of an exposé; Elaboration and discursive defense of the exposé in group situations; Characteristics of a scientific working style; Literature research, thematic range and variety of topics.",
+      "learningOutcome": "The alumni can carry out the necessary administrative and organisational tasks for the submission and completion of the Master's thesis in accordance with the Master's thesis guidelines.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3SPRPT",
+      "title": "Specialisation project",
+      "semester": 3,
+      "type": "PT",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Project 3",
+      "content": "Independent development of a practice-based project: The entire scope of the production process or material and product development must be worked on. The mentoring is provided through individual correction lessons. If possible, individual tasks are assigned, or team projects with parts that can be assessed and processed separately from each other. (The first two semesters are dedicated to teamwork, this semester ensures that all areas of the product development process are worked on individually.)",
+      "learningOutcome": "The alumni can implement the theoretical skills in a practical project. The skills in the technical area are used just as much as the economic, systematic and social skills.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3STMVO",
+      "title": "Strategic Management",
+      "semester": 3,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "final",
+      "module": "Professional Management & Controlling",
+      "content": "Strategic Management is more demanding than ever, as the world is more unstable and dynamic than ever. Next to the established concepts of the Strategy Process, the proven tools like SWOT Analysis, Portfolio Manangement, Balanced Scorecards ect. The future will need more anticipating tools for the changes to come.",
+      "learningOutcome": "The alumni are able to apply established concepts of strategic management and to make predictions about the requirements of the increasingly dynamic timber industry.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM3WAHIL-4",
+      "title": "Detailed Competences 3.1",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 3.1",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-3",
+      "sourceCode": "HTWM3WAHIL"
+    },
+    {
+      "code": "HTWM3WAHIL-5",
+      "title": "Detailed Competences 3.2.1",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 3.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-3",
+      "sourceCode": "HTWM3WAHIL"
+    },
+    {
+      "code": "HTWM3WAHIL-6",
+      "title": "Detailed Competences 3.2.2",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 3.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-3",
+      "sourceCode": "HTWM3WAHIL"
+    },
+    {
+      "code": "HTWM3GZGIL",
+      "title": "Building Certification",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 2",
+      "content": "International framework for sustainable construction; Current status of international building certification; Differences between the certification systems; Methods and tools",
+      "learningOutcome": "The alumni are able to name and describe the parameters for the \"systematic certification of buildings\" and the relevant certification systems. They have the ability to plan and carry out a building project with the aim of gaining a certification and can present and defend their project in an exemplary presentation.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3LCOVO",
+      "title": "Lean Construction",
+      "semester": 3,
+      "type": "VO",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "final",
+      "module": "Main option: Timber Constructions 2",
+      "content": "In order to ensure the quality requirements for a building during assembly on the construction site knowledge of the basic assembly principles and joining processes is required in addition to the scheduling of the assembly planning, the knowledge of the possibilities of transporting the components and the requirements for temporary storage on the construction site: - Preliminary work (construction site equipment, preparation of work and storage areas, transport routes on the construction site, ...) - Joining and assembly processes - Sequence planning and control of the assembly processes - LPS system, BIM, ... - Quality assurance (requirements, records, ...)",
+      "learningOutcome": "In order to enable an efficient assembly process, the alumni acquire the ability to create an adequate sequence planning and construction site logistics on the basis of the joining and assembly processes. They can derive sub-processes. They are able to use appropriate control tools to evaluate the processes and can explain the necessary records, requirements and documentation.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3LOGIL",
+      "title": "Logistics (Manufacturing and Mounting))",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 2",
+      "content": "Concepts and basics of logistics and supply chain management; Production logistics and materials management; Assembly processes and construction time planning; Stock planning; Transport logistics.",
+      "learningOutcome": "The alumni are able to: - name and evaluate the logistical requirements in the areas of production, transport and assembly of components and prefabricated building units - plan and develop continuous processes taking into account the following aspects: detailed presentation of throughput times, knowledge of the relevant sub-processes, continuous coordination with all actors and timely availability of the required materials, supported, if necessary, by the provision of intermediate storage facilities.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3NGTIL",
+      "title": "Sustainable Building Technology (Sensor Technology and Control Technology)",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 2",
+      "content": "Development of new building typologies; Building technology systems (system components and concepts); Building technology and energy concept; Optimizations; Future technologies.",
+      "learningOutcome": "The alumni are able to: - name and evaluate the technological concepts of sustainable building technology and to integrate them into the design planning from the very beginning - plan low, zero or plus energy buildings, including a high degree of energy efficiency and the use of renewable energy sources.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3FTWIL",
+      "title": "Tensile Structures",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Timber Constructions 2",
+      "content": "Panels, shims, folded plates and structures; Structural analysis of surface structures; Orthotropy in tensile structures; In-depth options for shell structures, detailed structures and proofs, dynamics, etc.",
+      "learningOutcome": "The alumni are able to: - describe structural and static surface structures - assess the surface structures - analyse the surface structure with regard to usability and stability.",
+      "track": {
+        "major": "tc"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3BIRVO",
+      "title": "Biorefinery",
+      "semester": 3,
+      "type": "VO",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 2",
+      "content": "Biogenic raw materials for the biorefinery; Types and products of biorefineries; Chemical and biological processes for use in a biorefinery; Economic comparison of products from biorefineries with conventional products; Detailed examination of selected biorefinerie plants.",
+      "learningOutcome": "The alumni are able to: - characterise the different generations of the biorefinery and evaluate the main products and their properties - determine and evaluate the feasibility and economic indicators of biorefineries depending on the used raw material, products and region.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3GFRIL",
+      "title": "Generative Manufacturing, Rapid Prototyping",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 2",
+      "content": "Planning principles and tools for preparing data for generative manufacturing; Methods and materials of generative manufacturing; Systems of generative manufacturing, normative and process engineering basics; Economic principles and key figures of generative manufacturing technologies; Comparison of generative manufacturing and conventional manufacturing; Analysis and evaluation of exemplary plants and products.",
+      "learningOutcome": "The alumni are able to: - apply planning principles and tools to prepare data for generative manufacturing in practice - to name and evaluate process engineering methods, materials and systems of generative manufacturing - evaluate key figures of generative manufacturing technologies - compare generative manufacturing and conventional manufacturing - analyse and evaluate exemplary plants and products.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM3PRDIL",
+      "title": "Process Development",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Main option: Wood technology 2",
+      "content": "Principles of process modelling, process systems engineering, analytical solving of process models, numerical solving of process models, statistical testing of hypothesis in process analysis and development, methods to reduce variation of process parameters for heterogeneous materials as wood, examples for process development in wood industries, application of process development methods in wood drying and wood modification.",
+      "learningOutcome": "The graduates are able to: - establish general linear models for the evaluation of multivariate process systems and calculate the relevant key figures for statistical evaluation - create models for selected wood industrial processes and to carry out specific parameter optimization - create, verify and validate simulation models for production processes.",
+      "track": {
+        "major": "wt"
+      },
+      "group": null
+    },
+    {
+      "code": "HTWM4INCIL",
+      "title": "Intercultural Communication",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Interculturalism & Leadership",
+      "content": "Negotiating skills needed to meet the challenges facing today's executives, experiential and intellectual components of negotiation. Develop the sophistication to analyze bargaining and conflict relationships and to learn (through class discussion and self-assessment) about their own individual bargaining style, various techniques to help to understand the basic elements of negotiation: when to reach a deal and when to walk away; how to negotiate in teams; how to negotiate with multiple opponents; and how to handle international negotiations.",
+      "learningOutcome": "The alumni are able to: - be sensitive to the customs of different cultures - understand different behavior and problem-solving approaches in different cultures - see different cultural specifics as an opportunity for further development and successful management.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM4LETIL",
+      "title": "Leadership Training",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Interculturalism & Leadership",
+      "content": "Analyse different leadership behaviours, define your personal leadership style: gain insight into your patterns, beliefs and rules; Define qualities and strengths, determine how well you perceive what's going on around you, learn how to empower, motivate and inspire others, Decision making techniques and decision making skills, leading by example, human resource management and work conditions, Learn how to lead successful teams in order to meet strategic company aims and objectives.",
+      "learningOutcome": "The alumni are able to: - understand the role of leaders in companies - select and apply methods of employee and company management - understand leadership as an essential corporate process and the basis for successful corporate development.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM4APGIT",
+      "title": "Master defense",
+      "semester": 4,
+      "type": "DP",
+      "kind": "compulsory",
+      "sws": 0,
+      "ects": 3,
+      "language": "English",
+      "assessment": "final",
+      "module": "Master defense",
+      "content": "The final examination is held in front of a commission on the master's thesis and subject-related topics.",
+      "learningOutcome": ".",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM4MTHIT",
+      "title": "Master's Thesis",
+      "semester": 4,
+      "type": "IT",
+      "kind": "thesis",
+      "sws": 1,
+      "ects": 17,
+      "language": "English",
+      "assessment": "final",
+      "module": "Master's Thesis",
+      "content": "The graduades meet the respective subject-related requirements of the tasks in the field of Wood Technology, Timber Construction or Forest Products Industry branches. They can independently develop and present projects and proceed and document them in a scientifically structured manner. They are able to argue the approach scientifically.",
+      "learningOutcome": "In the course of composing the Master's thesis, all general and in-depth technical competencies are applied as well as working methodological and economic skills. The alumni are able to identify and analyse a comprehensive scientific problem using the appropriate methods and to independently derive conclusions and recommendations based on these.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "HTWM4WAHIL",
+      "title": "Detailed Competences 4.1",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 4,
+      "ects": 4,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.1",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4"
+    },
+    {
+      "code": "HTWM4WAHIL-2",
+      "title": "Detailed Competences 4.2.1",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4",
+      "sourceCode": "HTWM4WAHIL"
+    },
+    {
+      "code": "HTWM4WAHIL-3",
+      "title": "Detailed Competences 4.2.2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.2",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4",
+      "sourceCode": "HTWM4WAHIL"
+    },
+    {
+      "code": "HTWM4WAHIL-4",
+      "title": "Detailed Competences 4.3.1",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4",
+      "sourceCode": "HTWM4WAHIL"
+    },
+    {
+      "code": "HTWM4WAHIL-5",
+      "title": "Detailed Competences 4.3.2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4",
+      "sourceCode": "HTWM4WAHIL"
+    },
+    {
+      "code": "HTWM4WAHIL-6",
+      "title": "Detailed Competences 4.3.3",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Detailed Competences 4.3",
+      "content": "Different elective subjects are offered based on the students' suggestions and according to the thematic and industry-specific requirements of the specialisation project. Options can be: Statistics; Finite elements methods; Entrepreneurship; Marketing; Language courses; etc. Alternatively, courses of a corresponding level can be taken at other acknowledged domestic and foreign universities or at other degree programmes of FH Salzburg.",
+      "learningOutcome": "The alumni are familiar with specific technical topics in the field of wood technology, the timber industry and timber construction, but also with specialist topics in related subject areas, and can successfully apply this knowledge to specific questions in their studies and their final thesis.",
+      "track": null,
+      "group": "free-elective-4",
+      "sourceCode": "HTWM4WAHIL"
+    }
+  ]
+}

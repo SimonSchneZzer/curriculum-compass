@@ -1,5 +1,6 @@
 {
   "id": "cis-b",
+  "department": "ct",
   "name": "Code and Interactive Systems",
   "degree": "Bachelor",
   "mode": "Full-time",
@@ -18,6 +19,7 @@
     {
       "key": "major",
       "label": "Major",
+      "fromSemester": 3,
       "options": [
         {
           "id": "web",
@@ -27,12 +29,12 @@
           "id": "game",
           "name": "Game & Immersive Tech"
         }
-      ],
-      "fromSemester": 3
+      ]
     },
     {
       "key": "minor",
       "label": "Specialisation",
+      "fromSemester": 3,
       "options": [
         {
           "id": "ixd",
@@ -42,8 +44,7 @@
           "id": "ai",
           "name": "AI Engineering"
         }
-      ],
-      "fromSemester": 3
+      ]
     }
   ],
   "notes": [],
@@ -1121,7 +1122,7 @@
       "group": null
     },
     {
-      "code": "CDEB4IASIL",
+      "code": "CDEB4IASIL-2",
       "title": "Interactive Audio and Sound Design",
       "semester": 4,
       "type": "IL",
@@ -1136,7 +1137,8 @@
       "track": {
         "minor": "ixd"
       },
-      "group": null
+      "group": null,
+      "sourceCode": "CDEB4IASIL"
     },
     {
       "code": "CDEB5BFDSE",

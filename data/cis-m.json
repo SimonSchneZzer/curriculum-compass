@@ -1,5 +1,6 @@
 {
   "id": "cis-m",
+  "department": "ct",
   "name": "Code and Interactive Systems",
   "degree": "Master",
   "mode": "Part-time",
@@ -18,6 +19,7 @@
     {
       "key": "major",
       "label": "Major",
+      "fromSemester": 1,
       "options": [
         {
           "id": "game",
@@ -27,8 +29,7 @@
           "id": "web",
           "name": "Web Engineering"
         }
-      ],
-      "fromSemester": 1
+      ]
     }
   ],
   "notes": [],
