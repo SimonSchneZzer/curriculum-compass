@@ -42,6 +42,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 4,
+          "aliases": [
+            "SI",
+            "SOZ"
+          ],
           "file": "data/si-m.json"
         },
         {
@@ -51,6 +55,10 @@
           "mode": "Full-time and part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "SOB",
+            "SW"
+          ],
           "file": "data/sw-b.json"
         }
       ],
@@ -67,6 +75,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "BM",
+            "BWI"
+          ],
           "file": "data/bm-b.json"
         },
         {
@@ -76,6 +88,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "BM",
+            "BWB"
+          ],
           "file": "data/bm-pt-b.json"
         },
         {
@@ -85,6 +101,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 4,
+          "aliases": [
+            "BM",
+            "BWB"
+          ],
           "file": "data/bm-m.json"
         },
         {
@@ -94,6 +114,10 @@
           "mode": "Part-time",
           "language": "English",
           "semesters": 6,
+          "aliases": [
+            "IME",
+            "IMT"
+          ],
           "file": "data/imt-b.json"
         },
         {
@@ -103,6 +127,9 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "IMT"
+          ],
           "file": "data/imt-de-b.json"
         },
         {
@@ -112,6 +139,9 @@
           "mode": "Part-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "IMT"
+          ],
           "file": "data/imt-m.json"
         },
         {
@@ -121,6 +151,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "ME",
+            "UNT"
+          ],
           "file": "data/me-b.json"
         },
         {
@@ -130,6 +164,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 4,
+          "aliases": [
+            "RT",
+            "RUT"
+          ],
           "file": "data/rt-m.json"
         }
       ],
@@ -146,6 +184,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "CDE",
+            "CIS"
+          ],
           "file": "data/cis-b.json"
         },
         {
@@ -155,6 +197,9 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "MMA"
+          ],
           "file": "data/mma-b.json"
         },
         {
@@ -164,6 +209,10 @@
           "mode": "Part-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "CIS",
+            "MMT"
+          ],
           "file": "data/cis-m.json"
         },
         {
@@ -173,6 +222,10 @@
           "mode": "Full-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "HCI",
+            "HI"
+          ],
           "file": "data/hci-m.json"
         },
         {
@@ -182,6 +235,9 @@
           "mode": "Full-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "MMA"
+          ],
           "file": "data/mma-m.json"
         },
         {
@@ -191,6 +247,10 @@
           "mode": "Full-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "RAVE",
+            "RVE"
+          ],
           "file": "data/rave-m.json"
         }
       ],
@@ -207,6 +267,9 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "DPM"
+          ],
           "file": "data/dpm-b.json"
         },
         {
@@ -216,6 +279,9 @@
           "mode": "Full-time",
           "language": "German and English",
           "semesters": 4,
+          "aliases": [
+            "DPM"
+          ],
           "file": "data/dpm-m.json"
         },
         {
@@ -225,6 +291,11 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "FPT",
+            "FPTTC",
+            "HTB"
+          ],
           "file": "data/fpt-b.json"
         },
         {
@@ -234,6 +305,11 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 4,
+          "aliases": [
+            "FPT",
+            "FPTTC",
+            "HTW"
+          ],
           "file": "data/fpt-m.json"
         },
         {
@@ -243,6 +319,11 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "GBD",
+            "GBDE",
+            "SMB"
+          ],
           "file": "data/gbd-b.json"
         },
         {
@@ -252,6 +333,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "GE",
+            "GENB"
+          ],
           "file": "data/ge-b.json"
         },
         {
@@ -261,6 +346,10 @@
           "mode": "Part-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "HBP",
+            "TCP"
+          ],
           "file": "data/tcp-b.json"
         },
         {
@@ -270,6 +359,11 @@
           "mode": "Part-time",
           "language": "German and English",
           "semesters": 4,
+          "aliases": [
+            "SBC",
+            "SBSC",
+            "SMC"
+          ],
           "file": "data/sbc-m.json"
         }
       ],
@@ -286,6 +380,11 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "BMA",
+            "BMS",
+            "BS"
+          ],
           "file": "data/bms-b.json"
         },
         {
@@ -295,6 +394,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "HEB",
+            "MW"
+          ],
           "file": "data/mw-b.json"
         },
         {
@@ -304,6 +407,11 @@
           "mode": "Part-time",
           "language": "German, English",
           "semesters": 4,
+          "aliases": [
+            "HEW",
+            "MS",
+            "MWS"
+          ],
           "file": "data/mws-m.json"
         },
         {
@@ -313,6 +421,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "GUK",
+            "NUR"
+          ],
           "file": "data/nur-b.json"
         },
         {
@@ -322,6 +434,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "ETH",
+            "OT"
+          ],
           "file": "data/ot-b.json"
         },
         {
@@ -331,6 +447,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "ORTH",
+            "OTK"
+          ],
           "file": "data/orth-b.json"
         },
         {
@@ -340,6 +460,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "PHYS",
+            "PTH"
+          ],
           "file": "data/phys-b.json"
         },
         {
@@ -349,6 +473,11 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "RAD",
+            "RAT",
+            "RT"
+          ],
           "file": "data/rad-b.json"
         }
       ],
@@ -376,6 +505,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 6,
+          "aliases": [
+            "BIDT",
+            "WIN"
+          ],
           "file": "data/bidt-b.json"
         },
         {
@@ -385,6 +518,11 @@
           "mode": "Part-time",
           "language": "German and English",
           "semesters": 4,
+          "aliases": [
+            "AIST",
+            "AIT",
+            "AST"
+          ],
           "file": "data/aist-m.json"
         },
         {
@@ -394,6 +532,10 @@
           "mode": "Full-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "AIS",
+            "AISP"
+          ],
           "file": "data/aisp-m.json"
         },
         {
@@ -403,6 +545,10 @@
           "mode": "Part-time",
           "language": "English",
           "semesters": 4,
+          "aliases": [
+            "AAH",
+            "AIH"
+          ],
           "file": "data/aih-m.json"
         },
         {
@@ -412,6 +558,10 @@
           "mode": "Part-time",
           "language": "German and English",
           "semesters": 4,
+          "aliases": [
+            "CS",
+            "CYS"
+          ],
           "file": "data/cs-m.json"
         },
         {
@@ -421,6 +571,9 @@
           "mode": "Part-time",
           "language": "German and English",
           "semesters": 4,
+          "aliases": [
+            "IIR"
+          ],
           "file": "data/iir-m.json"
         },
         {
@@ -430,6 +583,10 @@
           "mode": "Full-time",
           "language": "German",
           "semesters": 4,
+          "aliases": [
+            "IMC",
+            "ITMC"
+          ],
           "file": "data/itmc-m.json"
         }
       ],

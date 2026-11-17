@@ -16,14 +16,25 @@ Design and Green Engineering, Health Sciences, Information Technologies and Digi
 Not included (no course list published): the academic courses Child and Youth Care and Mental Health Nursing, and the
 new Information Technologies bachelor. The app lists them under "Not included yet".
 
-Links can point to a programme and selection, e.g. `#/mma-m/film` or `#/cis-b/game/ai`.
+Links can point to a programme and selection, e.g. `#/mma-m/film` or `#/cis-b/game/ai`. The share button next to
+the programme title adds the picked electives (`?picks=…`). `#/` is the start page ("What do you study?").
+
+The search finds programmes (also by short names such as MMA, CIS, HCI or FH codes like CDE) and courses of all
+programmes; it uses `data/search.json`. A course found this way is opened in its programme and briefly highlighted.
+
+## Languages
+
+All interface texts live in `l10n/en.json` and `l10n/de.json`; the app picks the browser language and falls back
+to English. To add a language, copy `en.json`, translate it and add its code to `CONFIG.languages` in `app.js`.
+Course titles and descriptions stay in the language of the FH Salzburg source.
 
 ## Saved in the browser
 
 - **Local storage** (`curriculum-compass`): last programme, majors per programme, picked electives, expanded courses,
   scroll position. Nothing leaves the browser.
-- **Offline cache** (service worker, `sw.js`): the app and all curricula, so it opens without internet. The data
-  (about 3.6 MB) is too big for local storage, so it lives in the browser's Cache Storage instead.
+- **Offline cache** (service worker, `sw.js`): the app and the curricula you open, so it works without internet.
+  On a known unmetered connection all curricula are cached in advance (about 3.6 MB, too big for local storage).
+- "Report it" in the footer opens a prefilled issue (`CONFIG.reportUrl` in `app.js`).
 
 ## Data
 
@@ -56,6 +67,10 @@ python3 scripts/update_data.py --only bt    # one department
 This downloads the curriculum pages, rewrites `data/*.json` with today's date and prints the ECTS per semester for
 every track combination. Lines marked `<-- check` do not add up to 30 per semester; check them against the brochure.
 Each department module documents its rules; `scripts/curricula/core.py` holds the parser and data model.
+
+## Plan for later
+
+See [docs/PLAN.md](docs/PLAN.md): automatic data check, "what's new" for users, own domain and hosting.
 
 ## Hosting
 

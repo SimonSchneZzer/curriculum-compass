@@ -1,25 +1,75 @@
 "use strict";
 
 /* Curriculum Compass — plain JS, no build step. All URLs are relative, so it runs on any static host.
-   Design "Atlas": the page shows names and short facts; everything else lives in tooltips. */
+   Design "Atlas": the page shows names and short facts; everything else lives in tooltips.
+   All interface texts are in l10n/<language>.json; course data stays in the language of its source. */
+
+const CONFIG = {
+  // Where "Report it" leads. Change this when the app moves to another host or issue tracker.
+  reportUrl: "https://github.com/SimonSchneZzer/curriculum-compass/issues/new",
+  languages: ["en", "de"],
+};
 
 const STORE_KEY = "curriculum-compass";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = window.matchMedia("(hover: hover)").matches;
 
+let L10N = {};      // texts of the current language
+let lang = "en";
 let index;          // data/index.json
-let prog;           // the programme shown
+let prog;           // the programme shown, null on the start page
 let sel = {};       // chosen track options, e.g. { major: "film", minor: "ai" }
 let picks = {};     // picked elective options: { groupId or sync: [optionId, …] }
+let searchIndex = null;
 const cache = {};
 
 const $ = (s, el = document) => el.querySelector(s);
-const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString("en", { maximumFractionDigits: 1 });
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const season = (s) => (s % 2 ? "Winter" : "Summer");
 const wait = (ms) => new Promise((r) => setTimeout(r, reduceMotion ? 0 : ms));
 
-// Counts a number from its old to its new value once (no jump); text = value => string.
+/* ---------- Localisation ---------- */
+
+// t("sem.title", { n: 2 }) fills {placeholders}. Callers escape values that come from data.
+function t(key, vars = {}) {
+  const s = L10N[key] ?? key;
+  return String(s).replace(/\{(\w+)\}/g, (_, k) => (vars[k] ?? ""));
+}
+const w = (word) => L10N["words." + word] ?? word; // data words like "Full-time"
+const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString(lang === "de" ? "de-AT" : "en", { maximumFractionDigits: 1 });
+const prettyDate = (d) => new Date(d + "T12:00:00").toLocaleDateString(lang === "de" ? "de-AT" : "en-GB", { day: "numeric", month: "long", year: "numeric" });
+const season = (s) => t(s % 2 ? "sem.winter" : "sem.summer");
+const semWord = () => (lang === "de" ? "Semester" : "semesters");
+// Workload: ECTS × 25 h is the total (class time included); SWS × 14 h is the class time within it.
+// Per day: a 5-day week over a semester of about 20 weeks (FH Salzburg: mid-Sep to end of Jan, mid-Feb to end of June);
+// classes run 14 weeks. Shown as halves, e.g. 7½.
+const SEMESTER_WEEKS = 20, TEACHING_WEEKS = 14, DAYS = 5;
+const half = (x) => { const r = Math.round(x * 2) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
+const perDay = (hours) => hours / SEMESTER_WEEKS / DAYS;
+const hoursOf = (ects, sws) => {
+  const total = Math.round(ects * 25), inClass = Math.round(sws * 14);
+  return { total, inClass, self: Math.max(0, total - inClass) };
+};
+
+async function loadL10n() {
+  const wanted = (navigator.languages || [navigator.language || "en"]).map((l) => l.slice(0, 2).toLowerCase());
+  lang = wanted.find((l) => CONFIG.languages.includes(l)) || "en";
+  try {
+    L10N = await (await fetch(`l10n/${lang}.json`)).json();
+  } catch {
+    lang = "en";
+    L10N = await (await fetch("l10n/en.json")).json();
+  }
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-l10n]").forEach((el) => { el.innerHTML = t(el.dataset.l10n); });
+  document.querySelectorAll("[data-l10n-attr]").forEach((el) => {
+    el.dataset.l10nAttr.split(";").forEach((pair) => {
+      const [attr, key] = pair.split(":");
+      el.setAttribute(attr, t(key));
+    });
+  });
+}
+
+// Counts a number from its old to its new value once (no jump).
 function countTo(el, value, text) {
   if (!el) return;
   const from = parseFloat(el.dataset.v ?? "NaN");
@@ -47,10 +97,13 @@ const ICON_PATHS = {
   bookmark: '<path d="M19 21l-7-4.5L5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
   cloudOff: '<path d="M3 3l18 18"/><path d="M8.5 6.2A6 6 0 0 1 17.7 10h.3a4 4 0 0 1 2.2 7.3M17 19H7a5 5 0 0 1-1.5-9.8"/>',
   info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5v.01"/>',
+  share: '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/>',
   alert: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/>',
   star: '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
   check: '<path d="M5 12.5l4 4L19 7"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
   note: '<path d="M9 18V6l11-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
   pen: '<path d="M12 19l7-7 3 3-7 7z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/><circle cx="11" cy="11" r="2"/>',
   camera: '<rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5l5-3v9l-5-3z"/>',
@@ -66,12 +119,12 @@ const ICON_PATHS = {
   chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/>',
   chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
   compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 };
 const icon = (name) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICON_PATHS[name] || ICON_PATHS.compass}</svg>`;
 
 const DEPT_ICONS = { as: "users", bt: "briefcase", ct: "sparkles", ed: "leaf", gw: "heart", it: "chip" };
 
-// A fitting icon for a track option from its name.
 const TRACK_ICONS = [
   [/audio|sound|music/i, "note"], [/film|cinema/i, "camera"], [/animation/i, "play"],
   [/web|mobile|internet/i, "globe"], [/game/i, "gamepad"], [/\bai\b|artificial|intelligence|machine|data/i, "brain"],
@@ -96,7 +149,8 @@ function readStore() {
   } catch { return {}; }
 }
 const store = readStore();
-["sel", "picks", "scroll"].forEach((k) => { store[k] = store[k] || {}; });
+["sel", "picks", "scroll", "open"].forEach((k) => { store[k] = store[k] || {}; });
+let openSet = new Set(); // expanded courses of the programme shown
 
 let saveTimer;
 function persist() {
@@ -109,55 +163,53 @@ function remember() {
   store.last = prog.id;
   store.sel[prog.id] = sel;
   store.picks[prog.id] = picks;
+  store.open[prog.id] = [...openSet];
   persist();
 }
 
-/* ---------- URL: #/<programme>/<track option>/<track option> ---------- */
+/* ---------- URL: #/<programme>/<track option>…[?picks=…]  ·  #/ is the start page ---------- */
 
 const allProgrammes = () => index.departments.flatMap((d) => d.programmes.map((p) => ({ ...p, dept: d })));
 const findProgramme = (id) => allProgrammes().find((p) => p.id === id);
 
 function readHash() {
-  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
-  if (!parts.length) return null;
+  const raw = location.hash.replace(/^#\/?/, "");
+  const [path, query = ""] = raw.split("?");
+  const parts = path.split("/").filter(Boolean);
+  const shared = new URLSearchParams(query).get("picks");
+  if (!parts.length) return { home: location.hash === "#/" || location.hash === "#" };
   if (parts.length === 1 && !findProgramme(parts[0])) return { id: "mma-m", opts: parts }; // old #film links
-  return { id: parts[0], opts: parts.slice(1) };
+  return { id: parts[0], opts: parts.slice(1), shared };
 }
-function writeHash() {
-  history.replaceState(null, "", "#/" + [prog.id, ...prog.tracks.map((t) => sel[t.key])].join("/"));
-}
+const programmeHash = () => "#/" + [prog.id, ...prog.tracks.map((tr) => sel[tr.key])].join("/");
+function writeHash() { history.replaceState(null, "", programmeHash()); }
 
 /* ---------- Boot ---------- */
 
 async function init() {
+  await loadL10n();
   $("#menu-btn").innerHTML = icon("menu");
   $(".search-icon").outerHTML = icon("search");
   $("#prog-info").innerHTML = icon("info");
+  $("#share").innerHTML = icon("share");
   try {
     index = await (await fetch("data/index.json")).json();
   } catch {
-    $("#title").textContent = "Could not load the curriculum data.";
+    $("#home").hidden = false;
+    $("#home-title").textContent = t("app.loadError");
     return;
   }
   buildSide();
   buildSearch();
   initTips();
   // An entrance animation keeps holding its values after it ends, which makes hover transitions jump.
-  // Drop the class once it has played, so the element's own transitions work again.
   document.addEventListener("animationend", (e) => {
     if (e.animationName === "enter") { e.target.classList.remove("enter"); e.target.style.removeProperty("--i"); }
   });
+  $("#share").addEventListener("click", sharePlan);
 
-  const h = readHash();
-  const id = h && findProgramme(h.id) ? h.id : findProgramme(store.last) ? store.last : "mma-m";
-  await openProgramme(id, h && h.id === id ? h.opts : null, false);
-
-  window.addEventListener("hashchange", async () => {
-    const hh = readHash();
-    if (!hh || !findProgramme(hh.id)) return;
-    if (hh.id !== prog.id) await openProgramme(hh.id, hh.opts, true);
-    else applyOpts(hh.opts);
-  });
+  await route(false);
+  window.addEventListener("hashchange", () => route(true));
   window.addEventListener("scroll", () => {
     if (!prog) return;
     store.scroll[prog.id] = Math.round(window.scrollY);
@@ -181,9 +233,21 @@ async function init() {
   registerOffline();
 }
 
+async function route(animate) {
+  const h = readHash();
+  if (h.home || (!h.id && !findProgramme(store.last))) { await showHome(animate); return; }
+  const id = h.id && findProgramme(h.id) ? h.id : store.last;
+  if (prog && id === prog.id && !h.shared) { applyOpts(h.opts || []); return; }
+  await openProgramme(id, h.id === id ? h.opts : null, animate, h.id === id ? h.shared : null);
+}
+
+// Service worker: offline copy. On a known metered or slow connection only the programmes you open are kept.
 function registerOffline() {
   if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
   navigator.serviceWorker.register("sw.js").then(() => navigator.serviceWorker.ready).then((reg) => {
+    const c = navigator.connection;
+    const roomy = c && !c.saveData && c.type !== "cellular" && !/2g/.test(c.effectiveType || "");
+    if (!roomy) return;
     const urls = allProgrammes().map((p) => new URL(p.file, location.href).href);
     reg.active && reg.active.postMessage({ type: "precache", urls });
   }).catch(() => { /* offline mode not available here */ });
@@ -194,53 +258,138 @@ async function getProgramme(id) {
   return cache[id];
 }
 
-async function openProgramme(id, opts, animate) {
-  const data = await getProgramme(id);
-  const page = $("#page");
+// Swaps the visible view (start page or programme) with the same fade as a programme change.
+async function swapView(animate, build) {
+  const views = [$("#home"), $("#page")];
+  const visible = views.find((v) => !v.hidden);
   hideTip(true);
-  if (animate && !reduceMotion) {
-    page.classList.remove("in");
-    page.classList.add("out");
+  if (animate && visible && !reduceMotion) {
+    visible.classList.remove("in");
+    visible.classList.add("out");
     await wait(180);
+    visible.classList.remove("out");
   }
-  prog = data;
-  const stored = store.sel[id] || {};
-  sel = {};
-  prog.tracks.forEach((t, i) => {
-    const ids = t.options.map((o) => o.id);
-    const fromUrl = opts && opts[i];
-    sel[t.key] = ids.includes(fromUrl) ? fromUrl : ids.includes(stored[t.key]) ? stored[t.key] : ids[0];
+  const shown = build();
+  views.forEach((v) => { v.hidden = v !== shown; });
+  if (animate && !reduceMotion) { shown.classList.remove("in"); void shown.offsetWidth; shown.classList.add("in"); }
+}
+
+async function openProgramme(id, opts, animate, shared) {
+  const data = await getProgramme(id);
+  await swapView(animate, () => {
+    prog = data;
+    const stored = store.sel[id] || {};
+    sel = {};
+    prog.tracks.forEach((tr, i) => {
+      const ids = tr.options.map((o) => o.id);
+      const fromUrl = opts && opts[i];
+      sel[tr.key] = ids.includes(fromUrl) ? fromUrl : ids.includes(stored[tr.key]) ? stored[tr.key] : ids[0];
+    });
+    picks = { ...(store.picks[id] || {}) };
+    openSet = new Set(store.open[id] || []);
+    if (shared) applyShared(shared);
+
+    buildHeader();
+    buildPickers();
+    $("#overview").innerHTML = "";
+    buildSemesters();
+    render(false);
+    updateSide();
+    writeHash();
+    remember();
+    toggleSide(false);
+    return $("#page");
   });
-  picks = { ...(store.picks[id] || {}) };
-
-  buildHeader();
-  buildPickers();
-  $("#overview").innerHTML = "";
-  buildSemesters();
-  render(false);
-  updateSide();
-  writeHash();
-  remember();
-  toggleSide(false);
-
-  if (animate) {
-    page.classList.remove("out");
-    if (!reduceMotion) { void page.offsetWidth; page.classList.add("in"); }
-  }
-  window.scrollTo({ top: store.scroll[id] || 0, behavior: "auto" });
+  window.scrollTo({ top: shared ? 0 : store.scroll[id] || 0, behavior: "auto" });
 }
 
 function applyOpts(opts) {
   let changed = false;
-  prog.tracks.forEach((t, i) => {
-    if (opts[i] && t.options.some((o) => o.id === opts[i]) && sel[t.key] !== opts[i]) { sel[t.key] = opts[i]; changed = true; }
+  prog.tracks.forEach((tr, i) => {
+    if (opts[i] && tr.options.some((o) => o.id === opts[i]) && sel[tr.key] !== opts[i]) { sel[tr.key] = opts[i]; changed = true; }
   });
   if (changed) { render(true); remember(); }
+}
+
+/* ---------- Start page: what do you study? ---------- */
+
+async function showHome(animate) {
+  await swapView(animate, () => {
+    prog = null;
+    document.title = t("app.name");
+    renderHomeDepts();
+    updateSide();
+    toggleSide(false);
+    return $("#home");
+  });
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function renderHomeDepts() {
+  const stage = $("#home-stage");
+  stage.innerHTML = `<div class="home-grid">${index.departments.map((d, i) => `
+    <button class="dept-tile ${reduceMotion ? "" : "enter"}" type="button" data-dept="${d.id}" style="--i:${i}; --bg: var(--${d.id}-bg); --fg: var(--${d.id}-fg)">
+      <span class="dept-ico">${icon(DEPT_ICONS[d.id])}</span>
+      <b>${esc(d.name)}</b>
+      <small>${esc(t("home.programmes", { n: d.programmes.length }))}</small>
+    </button>`).join("")}</div>`;
+  stage.onclick = (e) => {
+    const tile = e.target.closest(".dept-tile");
+    if (tile) renderHomeProgrammes(tile.dataset.dept);
+  };
+}
+
+function renderHomeProgrammes(deptId) {
+  const stage = $("#home-stage");
+  const d = index.departments.find((x) => x.id === deptId);
+  leaveStage(() => {
+    stage.innerHTML = `
+      <button class="back ${reduceMotion ? "" : "enter"}" type="button">${icon("arrowLeft")}${esc(t("home.back"))}</button>
+      <div class="home-dept ${reduceMotion ? "" : "enter"}" style="--bg: var(--${d.id}-bg); --fg: var(--${d.id}-fg)">
+        <span class="dept-ico">${icon(DEPT_ICONS[d.id])}</span><h2>${esc(d.name)}</h2>
+      </div>
+      <ul class="home-list">${sideList(d.programmes, true)}</ul>`;
+    if (!reduceMotion) stage.querySelectorAll(".home-list li").forEach((li, i) => { li.style.setProperty("--i", i + 2); li.classList.add("enter"); });
+    stage.onclick = (e) => {
+      if (e.target.closest(".back")) { leaveStage(renderHomeDepts); return; }
+      const link = e.target.closest(".prog-link");
+      if (link) { e.preventDefault(); openProgramme(link.dataset.id, null, true); }
+    };
+    $(".back", stage).focus({ preventScroll: true });
+  });
+}
+
+function leaveStage(next) {
+  const stage = $("#home-stage");
+  if (reduceMotion || !stage.firstElementChild) { next(); return; }
+  stage.querySelectorAll(".dept-tile, .home-list li, .back, .home-dept").forEach((el) => el.classList.add("leave"));
+  setTimeout(next, 160);
 }
 
 /* ---------- Sidebar: departments with their programmes ---------- */
 
 const degreeShort = (d) => (d.startsWith("Bachelor Professional") ? "BPr" : d.startsWith("Bachelor") ? "BA" : d.startsWith("Joint") ? "Joint MA" : "MA");
+const DEGREE_RANK = (d) => (d.startsWith("Bachelor Professional") ? 1 : d.startsWith("Bachelor") ? 0 : d.startsWith("Joint") ? 3 : 2);
+
+// Bachelor first, then Master; alphabetical inside; variants of one programme right under each other.
+function sideList(list, big) {
+  const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name) || DEGREE_RANK(a.degree) - DEGREE_RANK(b.degree)
+    || (a.mode === "Full-time" ? 0 : 1) - (b.mode === "Full-time" ? 0 : 1) || a.language.localeCompare(b.language));
+  const variant = (p, group) => {
+    const twins = group.filter((q) => q.name === p.name && q.degree === p.degree);
+    if (twins.length < 2) return "";
+    return w(twins.some((q) => q.mode !== p.mode) ? p.mode : p.language);
+  };
+  return [["nav.bachelor", (p) => p.degree.startsWith("Bachelor")], ["nav.master", (p) => !p.degree.startsWith("Bachelor")]].map(([label, test]) => {
+    const group = sorted.filter(test);
+    if (!group.length) return "";
+    return `<li class="list-head">${esc(t(label))}</li>` + group.map((p) => {
+      const v = variant(p, group);
+      const meta = big ? `<em>${esc([w(p.mode), w(p.language), `${p.semesters} ${semWord()}`].join(" · "))}</em>` : v ? `<em>${esc(v)}</em>` : "";
+      return `<li><a class="prog-link" href="#/${p.id}" data-id="${p.id}" ${big ? "" : 'data-tip="prog"'}><span>${esc(p.name)}${meta}</span><small>${degreeShort(p.degree)}</small></a></li>`;
+    }).join("");
+  }).join("");
+}
 
 function buildSide() {
   $("#side").innerHTML = index.departments.map((d) => `
@@ -251,7 +400,7 @@ function buildSide() {
       </button>
       <div class="dept-list"><div><ul>
         ${sideList(d.programmes)}
-        ${(d.missing || []).length ? `<li class="list-head">Not included</li>` + d.missing.map((m) => `<li class="missing" data-tip="text" data-text="${esc(m.reason)}" tabindex="0">${esc(m.name)}</li>`).join("") : ""}
+        ${(d.missing || []).length ? `<li class="list-head">${esc(t("nav.notIncluded"))}</li>` + d.missing.map((m) => `<li class="missing" data-tip="text" data-text="${esc(m.reason)}" tabindex="0">${esc(m.name)}</li>`).join("") : ""}
       </ul></div></div>
     </div>`).join("");
   $("#side").addEventListener("click", (e) => {
@@ -266,32 +415,10 @@ function buildSide() {
     const link = e.target.closest(".prog-link");
     if (link) {
       e.preventDefault();
-      if (link.dataset.id !== prog.id) openProgramme(link.dataset.id, null, true);
+      if (!prog || link.dataset.id !== prog.id) openProgramme(link.dataset.id, null, true);
       else toggleSide(false);
     }
   });
-}
-
-// Bachelor first, then Master; alphabetical inside; variants of one programme (BA/BPr, full-/part-time,
-// English/German) right under each other.
-const DEGREE_RANK = (d) => (d.startsWith("Bachelor Professional") ? 1 : d.startsWith("Bachelor") ? 0 : d.startsWith("Joint") ? 3 : 2);
-function sideList(list) {
-  const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name) || DEGREE_RANK(a.degree) - DEGREE_RANK(b.degree)
-    || (a.mode === "Full-time" ? 0 : 1) - (b.mode === "Full-time" ? 0 : 1) || a.language.localeCompare(b.language));
-  const variant = (p, group) => {
-    const twins = group.filter((q) => q.name === p.name && q.degree === p.degree);
-    if (twins.length < 2) return "";
-    if (twins.some((q) => q.mode !== p.mode)) return p.mode;
-    return p.language;
-  };
-  return [["Bachelor", (p) => p.degree.startsWith("Bachelor")], ["Master", (p) => !p.degree.startsWith("Bachelor")]].map(([label, test]) => {
-    const group = sorted.filter(test);
-    if (!group.length) return "";
-    return `<li class="list-head">${label}</li>` + group.map((p) => {
-      const v = variant(p, group);
-      return `<li><a class="prog-link" href="#/${p.id}" data-id="${p.id}" data-tip="prog"><span>${esc(p.name)}${v ? `<em>${esc(v)}</em>` : ""}</span><small>${degreeShort(p.degree)}</small></a></li>`;
-    }).join("");
-  }).join("");
 }
 
 function setDept(el, open) {
@@ -300,9 +427,9 @@ function setDept(el, open) {
 }
 
 function updateSide() {
-  document.querySelectorAll(".dept").forEach((d) => setDept(d, d.dataset.dept === prog.department));
-  document.querySelectorAll(".prog-link").forEach((a) => {
-    if (a.dataset.id === prog.id) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  document.querySelectorAll(".dept").forEach((d) => setDept(d, Boolean(prog) && d.dataset.dept === prog.department));
+  document.querySelectorAll("#side .prog-link").forEach((a) => {
+    if (prog && a.dataset.id === prog.id) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   });
 }
 
@@ -311,25 +438,87 @@ function toggleSide(open) {
   $("#menu-btn").setAttribute("aria-expanded", String(open));
 }
 
-/* ---------- Search ---------- */
+/* ---------- Search: programmes (also by short names) and courses of all programmes ---------- */
 
 let results = [], active = 0;
 
+async function loadSearchIndex() {
+  if (!searchIndex) {
+    try { searchIndex = await (await fetch("data/search.json")).json(); } catch { searchIndex = []; }
+  }
+  return searchIndex;
+}
+
+// Search matches the start of words ("ma" finds "Master" but not "German"); short names like MMA or CIS count as words.
+const tokens = (str) => String(str).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+const hits = (q, words) => words.some((x) => x.startsWith(q));
+
+function programmeWords(p) {
+  return [...tokens(p.name), ...tokens(p.degree), degreeShort(p.degree).toLowerCase(), ...tokens(p.mode), ...tokens(w(p.mode)),
+    ...tokens(p.language), ...tokens(w(p.language)), ...tokens(p.dept.name), ...(p.aliases || []).map((a) => a.toLowerCase())];
+}
+
+function findMatches(q) {
+  const words = tokens(q);
+  const progs = allProgrammes();
+  const pw = Object.fromEntries(progs.map((p) => [p.id, programmeWords(p)]));
+  const byId = Object.fromEntries(progs.map((p) => [p.id, p]));
+  // Programmes: every word must match; an exact short name (MMA, CIS) ranks first.
+  const pr = progs.map((p) => {
+    if (!words.length || !words.every((x) => hits(x, pw[p.id]))) return null;
+    const exact = words.some((x) => (p.aliases || []).some((a) => a.toLowerCase() === x));
+    const starts = p.name.toLowerCase().startsWith(words[0]);
+    return { kind: "programme", p, score: exact ? 0 : starts ? 1 : 2 };
+  }).filter(Boolean).sort((a, b) => a.score - b.score || a.p.name.localeCompare(b.p.name)).slice(0, 6);
+  // Courses: at least one word must match the course title (or a full course code); the rest may narrow by programme.
+  const cr = [];
+  if (searchIndex && words.length) {
+    for (const [pid, code, title, semester, track] of searchIndex) {
+      const p = byId[pid];
+      if (!p) continue;
+      const tw = tokens(title);
+      const codeL = code.toLowerCase();
+      const own = (x) => hits(x, tw) || (x.length >= 6 && codeL.startsWith(x));
+      if (!words.some(own)) continue;
+      if (!words.every((x) => own(x) || hits(x, pw[pid]) || hits(x, tokens(track)))) continue;
+      cr.push({ kind: "course", p, code, title, semester, track, score: tw[0] && tw[0].startsWith(words[0]) ? 0 : 1 });
+    }
+    cr.sort((a, b) => a.score - b.score || a.title.localeCompare(b.title));
+  }
+  return { words, list: [...pr, ...cr.slice(0, 8)] };
+}
+
 function buildSearch() {
   const input = $("#search"), box = $("#search-results");
+  box.setAttribute("aria-label", t("search.label"));
   const close = () => { box.classList.remove("open"); input.setAttribute("aria-expanded", "false"); };
-  const go = (p) => { input.value = ""; close(); input.blur(); if (p.id !== prog.id) openProgramme(p.id, null, true); };
-  input.addEventListener("input", () => {
+  const go = (r) => {
+    input.value = ""; close(); input.blur();
+    if (r.kind === "programme") { if (!prog || r.p.id !== prog.id) openProgramme(r.p.id, null, true); }
+    else goToCourse(r.p.id, r.code);
+  };
+  input.addEventListener("focus", loadSearchIndex);
+  input.addEventListener("input", async () => {
     const q = input.value.trim();
     if (!q) { close(); return; }
-    const words = q.toLowerCase().split(/\s+/);
-    results = allProgrammes().filter((p) => words.every((w) => `${p.name} ${p.degree} ${p.mode} ${p.language} ${p.dept.name}`.toLowerCase().includes(w))).slice(0, 8);
+    await loadSearchIndex();
+    if (input.value.trim() !== q) return;
+    const { words, list } = findMatches(q);
+    results = list;
     active = 0;
-    box.innerHTML = results.length ? results.map((p, i) => `
-      <button class="result" type="button" role="option" aria-selected="${i === 0}" data-i="${i}">
-        <span class="dept-ico" style="background: var(--${p.dept.id}-bg); color: var(--${p.dept.id}-fg)">${icon(DEPT_ICONS[p.dept.id])}</span>
-        <span><b>${highlight(p.name, words.length === 1 ? q : "")}</b><small>${esc(p.degree)} · ${esc(p.mode)} · ${esc(p.dept.name)}</small></span>
-      </button>`).join("") : `<p class="result-empty">No programme matches “${esc(q)}”.</p>`;
+    const hl = words.length === 1 ? words[0] : "";
+    let html = "", lastKind = "";
+    list.forEach((r, i) => {
+      if (r.kind !== lastKind) { html += `<p class="result-head">${esc(t(r.kind === "programme" ? "search.programmes" : "search.courses"))}</p>`; lastKind = r.kind; }
+      const d = r.p.dept;
+      const ico = `<span class="dept-ico" style="background: var(--${d.id}-bg); color: var(--${d.id}-fg)">${icon(r.kind === "programme" ? DEPT_ICONS[d.id] : "book")}</span>`;
+      const meta = r.kind === "programme"
+        ? `${esc(w(r.p.degree))} · ${esc(w(r.p.mode))} · ${esc(d.name)}`
+        : `${esc(r.p.name)} ${degreeShort(r.p.degree)} · ${esc(t("search.semester", { n: r.semester }))}${r.track ? " · " + esc(r.track) : ""}`;
+      html += `<button class="result" type="button" role="option" aria-selected="${i === 0}" data-i="${i}">${ico}
+        <span><b>${highlight(r.kind === "programme" ? r.p.name : r.title, hl)}</b><small>${meta}</small></span></button>`;
+    });
+    box.innerHTML = list.length ? html : `<p class="result-empty">${esc(t("search.none", { q }))}</p>`;
     if (!box.classList.contains("open") && !reduceMotion) box.querySelectorAll(".result").forEach((r, i) => { r.style.setProperty("--i", i); r.classList.add("enter"); });
     box.classList.add("open");
     input.setAttribute("aria-expanded", "true");
@@ -340,7 +529,8 @@ function buildSearch() {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       active = (active + (e.key === "ArrowDown" ? 1 : -1) + results.length) % results.length;
-      box.querySelectorAll(".result").forEach((r, i) => r.setAttribute("aria-selected", String(i === active)));
+      box.querySelectorAll(".result").forEach((r) => r.setAttribute("aria-selected", String(+r.dataset.i === active)));
+      box.querySelector(`.result[data-i="${active}"]`).scrollIntoView({ block: "nearest" });
     }
     if (e.key === "Enter") { e.preventDefault(); go(results[active]); }
   });
@@ -354,46 +544,128 @@ function highlight(text, q) {
   return esc(text.slice(0, i)) + "<mark>" + esc(text.slice(i, i + q.length)) + "</mark>" + esc(text.slice(i + q.length));
 }
 
-/* ---------- Header and pickers ---------- */
+// Opens the programme, switches to the course's specialisation if needed, and points at the course.
+async function goToCourse(pid, code) {
+  if (!prog || prog.id !== pid) await openProgramme(pid, null, true);
+  const c = byCode(code);
+  if (!c) return;
+  if (c.track && !matches(c.track)) {
+    Object.entries(c.track).forEach(([k, v]) => { sel[k] = Array.isArray(v) ? v[0] : v; });
+    writeHash(); remember(); render(false);
+  }
+  let el = $(`.row-title[data-code="${CSS.escape(code)}"]`)?.closest(".course");
+  if (!el && c.group) {
+    const g = prog.groups.find((x) => x.id === c.group);
+    const o = g && g.options.find((x) => x.courses.includes(code));
+    if (o) el = $(`.opt[data-group="${CSS.escape(g.id)}"][data-opt="${CSS.escape(o.id)}"]`);
+  }
+  if (!el) return;
+  el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  el.classList.remove("flash");
+  void el.offsetWidth;
+  el.classList.add("flash");
+}
+
+/* ---------- Header, notes, sharing, pickers ---------- */
 
 const deptName = () => index.departments.find((d) => d.id === prog.department).name;
 
 function buildHeader() {
   $("#title").textContent = prog.name;
-  $("#subtitle").textContent = `${prog.degree} · ${deptName()}`;
-  document.title = `${prog.name} (${prog.degree}) · Curriculum Compass`;
+  $("#subtitle").textContent = t("prog.subtitle", { degree: w(prog.degree), department: deptName() });
+  document.title = `${prog.name} (${w(prog.degree)}) · ${t("app.name")}`;
   const b = prog.source.brochure;
-  $("#source").innerHTML = `Source: <a href="${esc(prog.source.curriculum)}">curriculum page</a>` +
-    (b ? ` and <a href="${esc(b.url)}">programme brochure</a> (version ${esc(b.version)})` : "") + ` of FH Salzburg · data as of ${prettyDate(prog.dataAsOf)}.`;
+  $("#source").innerHTML = t("foot.source", {
+    curriculum: esc(prog.source.curriculum),
+    brochure: b ? t("foot.brochure", { url: esc(b.url), version: esc(b.version) }) : "",
+    date: esc(prettyDate(prog.dataAsOf)),
+  });
+  $("#report").innerHTML = t("foot.report", { url: esc(reportUrl()) });
   $("#json-link").href = `data/${prog.id}.json`;
 }
 
-const prettyDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+function reportUrl() {
+  const vars = { programme: prog.name, degree: w(prog.degree), link: location.href.split("?")[0], date: prog.dataAsOf };
+  const u = new URL(CONFIG.reportUrl);
+  u.searchParams.set("title", t("report.title", vars));
+  u.searchParams.set("body", t("report.body", vars));
+  return u.href;
+}
 
 function renderNotes() {
   const notes = prog.notes.filter((n) => !n.semester && matches(n.onlyFor));
   const slot = $("#notes-slot");
   const html = notes.length
-    ? `<button class="note-pill" type="button" data-tip="notes">${icon("info")}${notes.length === 1 ? "1 note about this programme" : `${notes.length} notes about this programme`}</button>`
+    ? `<div class="notes-inner"><button class="note-pill" type="button" data-tip="notes">${icon("info")}${esc(notes.length === 1 ? t("prog.notes1") : t("prog.notesN", { n: notes.length }))}</button></div>`
     : "";
   if (slot.dataset.html === html) return;
   slot.dataset.html = html;
   const old = $(".note-pill", slot);
   const show = () => {
     slot.innerHTML = html;
-    slot.classList.toggle("open", Boolean(html));
+    void slot.offsetWidth;
+    slot.classList.add("open");
     const pill = $(".note-pill", slot);
     if (pill && !reduceMotion) pill.classList.add("enter");
   };
-  if (old && !reduceMotion) { old.classList.add("leave"); setTimeout(show, 160); } else show();
+  if (!old) { if (html) show(); return; }
+  if (reduceMotion) { if (html) show(); else { slot.innerHTML = ""; slot.classList.remove("open"); } return; }
+  // Fold the pill away together with its space; only then remove it (or put the new one in).
+  old.classList.add("leave");
+  slot.classList.remove("open");
+  setTimeout(() => { if (slot.dataset.html !== html) return; slot.innerHTML = ""; if (html) show(); }, 380);
+}
+
+// The share link holds the programme, the specialisation and the picked electives.
+function shareLink() {
+  const entries = Object.entries(picks).filter(([, v]) => v && v.length);
+  const q = entries.length ? "?picks=" + encodeURIComponent(entries.map(([k, v]) => `${k}:${v.join(",")}`).join(";")) : "";
+  return location.href.split("#")[0] + programmeHash() + q;
+}
+
+async function sharePlan() {
+  const url = shareLink();
+  if (!canHover && navigator.share) {
+    try { await navigator.share({ title: t("share.text", { programme: prog.name }), url }); } catch { /* cancelled */ }
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    toast(t("share.copied"));
+  } catch {
+    toast(t("share.failed"));
+  }
+}
+
+function applyShared(param) {
+  const before = JSON.parse(JSON.stringify(picks));
+  const next = {};
+  param.split(";").forEach((part) => {
+    const [k, v] = part.split(":");
+    if (k && v) next[k] = v.split(",").filter(Boolean);
+  });
+  picks = next;
+  toast(t("share.opened"), t("share.undo"), () => { picks = before; remember(); semesters().forEach((s) => { $(`#sem-${s} .slot`).dataset.html = ""; }); render(false); });
+}
+
+let toastTimer;
+function toast(text, actionLabel, action) {
+  const el = $("#toast");
+  el.innerHTML = `<span>${esc(text)}</span>${actionLabel ? `<button type="button">${esc(actionLabel)}</button>` : ""}`;
+  if (actionLabel) $("button", el).onclick = () => { action(); el.classList.remove("show"); };
+  el.classList.remove("show");
+  void el.offsetWidth;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), actionLabel ? 6000 : 2400);
 }
 
 function buildPickers() {
-  $("#pickers").innerHTML = prog.tracks.map((t, i) => `
-    <section class="picker ${i ? "minor" : ""}" aria-label="${esc(t.label)}">
-      <h2 class="picker-label">Your ${esc(t.label.toLowerCase())}${t.fromSemester > 1 ? ` <small>· from semester ${t.fromSemester}</small>` : ""}</h2>
-      <div class="pills" role="radiogroup" aria-label="${esc(t.label)}" data-key="${t.key}">
-        ${t.options.map((o) => `<button class="pill" type="button" role="radio" data-id="${o.id}">${icon(trackIcon(o.name))}${esc(o.name)}</button>`).join("")}
+  $("#pickers").innerHTML = prog.tracks.map((tr, i) => `
+    <section class="picker ${i ? "minor" : ""}" aria-label="${esc(w(tr.label))}">
+      <h2 class="picker-label">${esc(t("prog.yourTrack", { track: w(tr.label) }))}${tr.fromSemester > 1 ? ` <small>${esc(t("prog.fromSemester", { n: tr.fromSemester }))}</small>` : ""}</h2>
+      <div class="pills" role="radiogroup" aria-label="${esc(w(tr.label))}" data-key="${tr.key}">
+        ${tr.options.map((o) => `<button class="pill" type="button" role="radio" data-id="${o.id}">${icon(trackIcon(o.name))}${esc(o.name)}</button>`).join("")}
       </div>
     </section>`).join("");
   document.querySelectorAll(".pills").forEach((group) => {
@@ -424,7 +696,7 @@ function selectTrack(key, id) {
 const byCode = (code) => prog.courses.find((c) => c.code === code);
 const sum = (list, key) => list.reduce((a, c) => a + c[key], 0);
 const matches = (cond) => !cond || Object.entries(cond).every(([k, v]) => (Array.isArray(v) ? v.includes(sel[k]) : sel[k] === v));
-const trackOf = (key) => prog.tracks.find((t) => t.key === key);
+const trackOf = (key) => prog.tracks.find((tr) => tr.key === key);
 const optionName = (key) => trackOf(key).options.find((o) => o.id === sel[key]).name;
 const groupsIn = (s) => prog.groups.filter((g) => g.semester === s && matches(g.onlyFor));
 const optionTotal = (o, key) => sum(o.courses.map(byCode), key);
@@ -444,7 +716,6 @@ function pickedOptions(g) {
 const pickedEcts = (g) => pickedOptions(g).reduce((a, o) => a + optionTotal(o, "ects"), 0);
 const isFull = (g) => (isBudget(g) ? pickedEcts(g) >= g.budget - 0.01 : pickedOptions(g).length >= g.choose);
 
-// ECTS/SWS a group adds: the picks, and for choices still open the largest remaining option.
 function groupTotal(g, key) {
   if (!g.options.length) return g[key] || 0;
   if (isBudget(g)) return key === "ects" ? g.budget : g.budgetSws ?? pickedOptions(g).reduce((a, o) => a + optionTotal(o, key), 0);
@@ -457,18 +728,18 @@ function semesterParts(s) {
   const inSem = prog.courses.filter((c) => c.semester === s && !c.group);
   return {
     core: inSem.filter((c) => !c.track),
-    tracks: prog.tracks.map((t) => ({ track: t, courses: inSem.filter((c) => c.track && c.track[t.key] && matches(c.track)) })),
+    tracks: prog.tracks.map((tr) => ({ track: tr, courses: inSem.filter((c) => c.track && c.track[tr.key] && matches(c.track)) })),
     groups: groupsIn(s),
   };
 }
 
 function totals(s) {
   const p = semesterParts(s);
-  const t = { core: sum(p.core, "ects"), spec: 0, minor: 0, elec: 0, sws: sum(p.core, "sws") };
-  p.tracks.forEach(({ courses }, i) => { t[i ? "minor" : "spec"] += sum(courses, "ects"); t.sws += sum(courses, "sws"); });
-  p.groups.forEach((g) => { t[groupColor(g)] = (t[groupColor(g)] || 0) + groupTotal(g, "ects"); t.sws += groupTotal(g, "sws"); });
-  t.ects = t.core + t.spec + t.minor + t.elec;
-  return t;
+  const r = { core: sum(p.core, "ects"), spec: 0, minor: 0, elec: 0, sws: sum(p.core, "sws") };
+  p.tracks.forEach(({ courses }, i) => { r[i ? "minor" : "spec"] += sum(courses, "ects"); r.sws += sum(courses, "sws"); });
+  p.groups.forEach((g) => { r[groupColor(g)] = (r[groupColor(g)] || 0) + groupTotal(g, "ects"); r.sws += groupTotal(g, "sws"); });
+  r.ects = r.core + r.spec + r.minor + r.elec;
+  return r;
 }
 
 const semesters = () => Array.from({ length: prog.semesters }, (_, i) => i + 1);
@@ -487,11 +758,12 @@ const RING = 94.25; // circumference of r = 15
 
 function renderOverview() {
   const box = $("#overview");
+  box.setAttribute("aria-label", t("a11y.semesters"));
   const first = !box.children.length;
   box.style.setProperty("--n", prog.semesters);
   box.classList.toggle("many", prog.semesters > 4);
   semesters().forEach((s, i) => {
-    const t = totals(s);
+    const r = totals(s);
     if (first) {
       const card = document.createElement("button");
       card.type = "button";
@@ -502,25 +774,25 @@ function renderOverview() {
       const seg = (k) => `<circle class="seg ${k}" cx="18" cy="18" r="15" fill="none" stroke-width="5" transform="rotate(-90 18 18)" stroke-dasharray="0 ${RING}"/>`;
       card.innerHTML = `<svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="track" cx="18" cy="18" r="15" fill="none" stroke-width="5"/>
         ${["core", "spec", "minor", "elec"].map(seg).join("")}</svg>
-        <span><small>Semester ${s}</small><b></b></span>`;
+        <span><small>${esc(t("sem.title", { n: s }))}</small><b></b><em class="per-day">${icon("clock")}<span></span></em></span>`;
       card.addEventListener("click", () => document.getElementById("sem-" + s).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }));
       box.appendChild(card);
     }
     const card = box.querySelector(`[data-sem="${s}"]`);
-    // Same split as the tooltip: everyone, track(s), electives — each a segment with a small gap.
     let start = 0;
     ["core", "spec", "minor", "elec"].forEach((k) => {
-      const len = (t[k] || 0) / (t.ects || 1) * RING;
+      const len = (r[k] || 0) / (r.ects || 1) * RING;
       const el = $(`.seg.${k}`, card);
       el.setAttribute("stroke-dasharray", `${Math.max(0, len - 1.2).toFixed(2)} ${RING}`);
       el.setAttribute("stroke-dashoffset", (-start).toFixed(2));
       el.style.opacity = len > 0.5 ? "1" : "0";
       start += len;
     });
-    countTo($("b", card), t.ects, (v) => `${fmt(v)} ECTS`);
-    card.classList.toggle("off", Math.abs(t.ects - perSemester()) > 0.01);
+    countTo($("b", card), r.ects, (v) => `${fmt(v)} ECTS`);
+    $(".per-day span", card).textContent = t("sem.perDay", { n: half(perDay(hoursOf(r.ects, r.sws).total)) });
+    card.classList.toggle("off", Math.abs(r.ects - perSemester()) > 0.01);
     const head = $(`#sem-${s} .sum`);
-    countTo(head && $(".sum-v", head), t.ects, (v) => `${fmt(v)} ECTS`);
+    countTo(head && $(".sum-v", head), r.ects, (v) => `${fmt(v)} ECTS`);
   });
 
   const choosable = semesters().flatMap(groupsIn).filter((g) => g.options.length);
@@ -529,7 +801,8 @@ function renderOverview() {
   const info = $("#picks-info");
   if (!need) { info.innerHTML = ""; return; }
   if (!$(".have", info)) {
-    info.innerHTML = `${icon("star")}<span data-tip="text" data-text="Totals use your picks. Choices you have not made yet count with the largest option." tabindex="0"><span class="have"></span> of <span class="need"></span> electives picked</span>`;
+    const label = t("sem.picked", { have: '<span class="have"></span>', need: '<span class="need"></span>' });
+    info.innerHTML = `${icon("star")}<span data-tip="text" data-text="${esc(t("sem.pickedHint"))}" tabindex="0">${label}</span>`;
   }
   countTo($(".have", info), have, (v) => String(Math.round(v)));
   $(".need", info).textContent = need;
@@ -540,12 +813,13 @@ function buildSemesters() {
     const warns = prog.notes.filter((n) => n.semester === s);
     return `<section class="semester" id="sem-${s}" aria-labelledby="sem-${s}-t">
       <div class="sem-head">
-        <h2 id="sem-${s}-t">Semester ${s}</h2>
-        <button class="sum" type="button" data-tip="semester" data-sem="${s}"><span class="sum-v"></span>${warns.length ? `<span class="warn-ico" data-tip="semnote" data-sem="${s}" aria-label="Note">${icon("alert")}</span>` : ""}</button>
+        <h2 id="sem-${s}-t">${esc(t("sem.title", { n: s }))}</h2>
+        <button class="sum" type="button" data-tip="semester" data-sem="${s}"><span class="sum-v"></span>${warns.length ? `<span class="warn-ico" data-tip="semnote" data-sem="${s}" aria-label="${esc(t("sem.note"))}">${icon("alert")}</span>` : ""}</button>
       </div>
       <div class="slot"></div>
     </section>`;
   }).join("");
+  $("#picks-info").innerHTML = "";
   if (!$("#semesters").dataset.bound) {
     $("#semesters").dataset.bound = "1";
     $("#semesters").addEventListener("click", onSemesterClick);
@@ -553,6 +827,15 @@ function buildSemesters() {
 }
 
 function onSemesterClick(e) {
+  const course = e.target.closest(".course");
+  if (course && e.target.closest(".row") && !e.target.closest("[data-tip]") && !String(window.getSelection() || "")) {
+    const open = course.classList.toggle("open");
+    $(".row-title", course).setAttribute("aria-expanded", String(open));
+    open ? openSet.add(course.dataset.key) : openSet.delete(course.dataset.key);
+    hideTip(true);
+    remember();
+    return;
+  }
   const opt = e.target.closest(".opt");
   if (opt && !opt.disabled) { togglePick(opt.dataset.group, opt.dataset.opt); return; }
   const clear = e.target.closest(".clear");
@@ -574,7 +857,7 @@ function slotHtml(s) {
   });
   const slotsCore = p.groups.filter((g) => !g.options.length && g.compulsory);
   if (p.core.length || slotsCore.length) {
-    html += `<div class="group"><h3 class="group-head">${icon("users")}Everyone</h3>
+    html += `<div class="group"><h3 class="group-head">${icon("users")}${esc(t("sem.everyone"))}</h3>
       <div class="rows">${p.core.map((c) => rowHtml(c, "core")).join("")}</div>
       ${slotsCore.length ? `<div class="cards" style="margin-top:8px">${slotsCore.map(slotCardHtml).join("")}</div>` : ""}</div>`;
   }
@@ -582,22 +865,36 @@ function slotHtml(s) {
   return html;
 }
 
+// A course: one line with short facts (each explained in a tooltip); a click folds out the details.
+// The facts are repeated in words inside the details, so one tab stop per course is enough.
 function rowHtml(c, cls) {
-  return `<div class="row ${cls}">
-    <i class="stripe"></i>
-    <button class="row-title" type="button" data-tip="course" data-code="${esc(c.code)}">${esc(c.title)}</button>
-    <span class="chip" tabindex="0" data-tip="type" data-type="${esc(c.type)}">${esc(c.type)}</span>
-    <span class="num sws" tabindex="0" data-tip="sws" data-v="${c.sws}">${fmt(c.sws)} SWS</span>
-    <span class="num assess" tabindex="0" data-tip="assess" data-v="${esc(c.assessment)}">${c.assessment === "final" ? "Exam" : "Cont."}</span>
-    <span class="num ects" tabindex="0" data-tip="ects" data-v="${c.ects}">${fmt(c.ects)} ECTS</span>
+  const key = c.code;
+  const open = openSet.has(key);
+  const id = "d-" + key.replace(/[^\w-]/g, "");
+  return `<div class="course ${cls} ${open ? "open" : ""}" data-key="${esc(key)}">
+    <div class="row">
+      <i class="stripe"></i>
+      <button class="row-title" type="button" aria-expanded="${open}" aria-controls="${id}" data-code="${esc(c.code)}">${esc(c.title)}</button>
+      <span class="chip" data-tip="type" data-type="${esc(c.type)}">${esc(c.type)}</span>
+      <span class="num sws" data-tip="sws" data-v="${c.sws}">${fmt(c.sws)} SWS</span>
+      <span class="num assess" data-tip="assess" data-v="${esc(c.assessment)}">${esc(c.assessment === "final" ? t("course.exam") : t("course.cont"))}</span>
+      <span class="num hours" data-tip="hours" data-ects="${c.ects}" data-sws="${c.sws}">${esc(t("course.hours", { n: hoursOf(c.ects, c.sws).total }))}</span>
+      <span class="num ects" data-tip="ects" data-v="${c.ects}">${fmt(c.ects)} ECTS</span>
+      <svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="details" id="${id}"><div><div class="inner">
+      ${c.content ? `<h4 class="first">${esc(t("course.content"))}</h4><p>${esc(c.content)}</p>` : ""}
+      ${c.learningOutcome ? `<h4>${esc(t("course.outcome"))}</h4><p>${esc(c.learningOutcome)}</p>` : ""}
+      <p class="meta">${esc(c.module)} · ${esc(c.sourceCode || c.code)} · ${esc(w(c.language))}</p>
+    </div></div></div>
   </div>`;
 }
 
 function ruleText(g) {
   if (!g.options.length) return "";
-  if (isBudget(g)) return `pick courses worth ${fmt(g.budget)} ECTS`;
-  if (g.linkedTrack) return `yours plus ${g.choose - 1 === 1 ? "one more" : g.choose - 1 + " more"}`;
-  return `pick ${g.choose === 1 ? "one" : g.choose}`;
+  if (isBudget(g)) return t("group.budget", { n: fmt(g.budget) });
+  if (g.linkedTrack) return g.choose - 1 === 1 ? t("group.linkedOne") : t("group.linkedN", { n: g.choose - 1 });
+  return g.choose === 1 ? t("group.pickOne") : t("group.pickN", { n: g.choose });
 }
 
 function groupHtml(g) {
@@ -605,9 +902,9 @@ function groupHtml(g) {
   const picked = pickedOptions(g);
   const own = ownOption(g);
   const head = `<h3 class="group-head ${color === "spec" ? "spec" : "elec"}">${icon(color === "spec" ? "compass" : "star")}${esc(g.label)}
-    ${ruleText(g) ? `<span class="rule">· ${ruleText(g)}</span>` : ""}
-    ${g.note ? `<button class="hint" type="button" data-tip="group" data-group="${g.id}" aria-label="About this choice">${icon("info")}</button>` : ""}
-    ${g.options.length ? `<button class="clear ${picked.length - (own ? 1 : 0) > 0 ? "show" : ""}" type="button" data-group="${g.id}">Clear</button>` : ""}</h3>`;
+    ${ruleText(g) ? `<span class="rule">· ${esc(ruleText(g))}</span>` : ""}
+    ${g.note ? `<button class="hint" type="button" data-tip="group" data-group="${g.id}" aria-label="${esc(t("group.about"))}">${icon("info")}</button>` : ""}
+    ${g.options.length ? `<button class="clear ${picked.length - (own ? 1 : 0) > 0 ? "show" : ""}" type="button" data-group="${g.id}">${esc(t("group.clear"))}</button>` : ""}</h3>`;
   if (!g.options.length) return `<div class="group">${head}<div class="cards">${slotCardHtml(g)}</div></div>`;
   const opts = own ? [own, ...g.options.filter((o) => o !== own)] : g.options;
   const multi = g.choose > 1 || isBudget(g);
@@ -618,7 +915,7 @@ function groupHtml(g) {
       return `<button class="opt ${multi ? "multi" : ""}" type="button" role="checkbox" aria-checked="${on}" ${own === o ? "disabled" : ""}
           data-group="${g.id}" data-opt="${esc(o.id)}" data-tip="option">
         <span class="box">${icon("check")}</span>
-        <span class="lbl">${esc(o.label)}${own === o ? `<span class="tag">Your major</span>` : ""}${n > 1 ? `<small>${n} courses</small>` : ""}</span>
+        <span class="lbl">${esc(o.label)}${own === o ? `<span class="tag">${esc(t("group.yourMajor"))}</span>` : ""}${n > 1 ? `<small>${esc(t("group.courses", { n }))}</small>` : ""}</span>
         <span class="e">${fmt(optionTotal(o, "ects"))} ECTS</span>
       </button>`;
     }).join("")}</div></div>`;
@@ -635,8 +932,7 @@ function renderSlot(s, animate) {
   slot.dataset.html = html;
   if (!animate || reduceMotion) { slot.innerHTML = html; return; }
 
-  // Old rows slide away, the slot glides to its new height, new rows slide in.
-  const PARTS = ".row, .opt, .slot-card, .group-head";
+  const PARTS = ".course, .opt, .slot-card, .group-head";
   const old = slot.querySelectorAll(PARTS);
   old.forEach((r) => r.classList.add("leave"));
   setTimeout(() => {
@@ -669,16 +965,15 @@ function togglePick(gid, oid) {
   else if (isBudget(g)) {
     list.push(oid);
     const ects = (ids) => ids.reduce((a, id) => a + optionTotal(g.options.find((o) => o.id === id), "ects"), 0);
-    while (list.length > 1 && ects(list) > g.budget + 0.01) list.shift(); // the oldest pick makes room
+    while (list.length > 1 && ects(list) > g.budget + 0.01) list.shift();
   } else {
     list.push(oid);
-    while (list.length > slots) list.shift(); // the oldest pick makes room
+    while (list.length > slots) list.shift();
   }
   picks[pickKey(g)] = list;
   afterPick(g);
 }
 
-// Updates picked states in place (groups that share a choice too) and the totals.
 function afterPick(first) {
   prog.groups.filter((g) => pickKey(g) === pickKey(first)).forEach((g) => {
     const el = document.querySelector(`.group[data-group="${g.id}"]`);
@@ -697,33 +992,45 @@ function afterPick(first) {
 
 const tip = () => $("#tip");
 let tipFor = null, showTimer = null, hideTimer = null, warm = false;
+const typeName = (type) => (L10N["legend.types"] || {})[type] || index.legend.types[type] || t("course.typeUnknown");
+const assessName = (a) => (L10N["legend.assessment"] || {})[a] || index.legend.assessment[a] || a;
 
 function tipContent(el) {
-  const d = el.dataset, L = index.legend;
+  const d = el.dataset;
   switch (d.tip) {
-    case "course": {
-      const c = byCode(d.code);
-      const text = c.content.length > 260 ? c.content.slice(0, 260).replace(/\s+\S*$/, "") + "…" : c.content;
-      return `<b class="t-title">${esc(c.title)}</b>${text ? `<span class="t-muted">${esc(text)}</span>` : ""}
-        <span class="t-meta">${esc(c.module)} · ${esc(c.sourceCode || c.code)} · ${esc(c.language)}</span>`;
+    case "type": return { small: true, html: esc(typeName(d.type)) };
+    case "sws": return { small: true, html: esc(t("course.sws", { n: fmt(d.v * 14) })) };
+    case "assess": return { small: true, html: esc(assessName(d.v)) };
+    case "ects": return { small: true, html: esc(t("course.ectsTip")) };
+    case "hours": {
+      const h = hoursOf(+d.ects, +d.sws);
+      return { small: true, html: esc(t("course.hoursTip", { total: h.total, class: h.inClass, self: h.self })) };
     }
-    case "type": return { small: true, html: esc(L.types[d.type] || "Course type not explained by the source") };
-    case "sws": return { small: true, html: `${fmt(d.v * 14)} contact hours over the semester` };
-    case "assess": return { small: true, html: esc(L.assessment[d.v] || d.v) };
-    case "ects": return { small: true, html: `About ${fmt(d.v * 25)} hours of work` };
     case "programme": {
       const b = prog.source.brochure;
-      return `<b class="t-title">${esc(prog.degree)} · ${esc(deptName())}</b>
-        <span class="t-muted">${esc(prog.mode)} · taught in ${esc(prog.language)} · ${prog.semesters} semesters · ${prog.ectsTotal} ECTS</span>
-        <span class="t-meta">Data as of ${prettyDate(prog.dataAsOf)} · source: FH Salzburg curriculum page${b ? ` and brochure (version ${esc(b.version)})` : ""}</span>`;
+      return `<b class="t-title">${esc(t("prog.subtitle", { degree: w(prog.degree), department: deptName() }))}</b>
+        <span class="t-muted">${esc(t("prog.facts", { mode: w(prog.mode), language: w(prog.language), semesters: prog.semesters, ects: prog.ectsTotal }))}</span>
+        <span class="t-muted">${(() => {
+          const all = semesters().map(totals).reduce((x, r) => ({ ects: x.ects + r.ects, sws: x.sws + r.sws }), { ects: 0, sws: 0 });
+          const h = hoursOf(all.ects, all.sws);
+          const n = (v) => v.toLocaleString(lang === "de" ? "de-AT" : "en");
+          return esc(t("prog.hours", { total: n(h.total), class: n(h.inClass) }));
+        })()}</span>
+        <span class="t-meta">${esc(t("prog.source", { date: prettyDate(prog.dataAsOf) }))}${b ? esc(t("prog.sourceBrochure", { version: b.version })) : ""}</span>`;
     }
     case "semester": {
-      const s = +d.sem, t = totals(s);
+      const s = +d.sem, r = totals(s);
       const line = (color, label, v) => (v ? `<span class="t-line"><span><i style="background:${color}"></i>${esc(label)}</span><span>${fmt(v)} ECTS</span></span>` : "");
-      return `<b class="t-title">Semester ${s} · ${season(s)} term · ${fmt(t.sws)} SWS</b>
-        ${line("var(--core)", "Everyone", t.core)}
-        ${prog.tracks.map((tr, i) => line(i ? "var(--minor)" : "var(--accent)", optionName(tr.key), i ? t.minor : t.spec)).join("")}
-        ${line("var(--elec)", "Electives", t.elec)}`;
+      const h = hoursOf(r.ects, r.sws);
+      const dayLine = (color, label, hours) => `<span class="t-line"><span><i style="background:${color}"></i>${esc(label)}</span><span>${esc(t("sem.dayLine", { day: half(perDay(hours)), total: hours }))}</span></span>`;
+      return `<b class="t-title">${esc(t("sem.dayTitle", { title: t("sem.term", { n: s, season: season(s), sws: fmt(r.sws) }), total: h.total }))}</b>
+        ${dayLine("var(--accent)", t("sem.inClass"), h.inClass)}
+        ${dayLine("var(--core)", t("sem.own"), h.self)}
+        <span class="t-sep"></span>
+        ${line("var(--core)", t("sem.everyone"), r.core)}
+        ${prog.tracks.map((tr, i) => line(i ? "var(--minor)" : "var(--accent)", optionName(tr.key), i ? r.minor : r.spec)).join("")}
+        ${line("var(--elec)", t("sem.electives"), r.elec)}
+        <span class="t-meta">${esc(t("sem.assumption", { teach: half(r.sws / DAYS) }))}</span>`;
     }
     case "notes": return prog.notes.filter((n) => !n.semester && matches(n.onlyFor)).map((n) => `<p>${esc(n.text)}</p>`).join("");
     case "semnote": return prog.notes.filter((n) => n.semester === +d.sem).map((n) => `<p>${esc(n.text)}</p>`).join("");
@@ -735,14 +1042,13 @@ function tipContent(el) {
       if (cs.length === 1) {
         const c = cs[0];
         const text = c.content.length > 220 ? c.content.slice(0, 220).replace(/\s+\S*$/, "") + "…" : c.content;
-        return `<b class="t-title">${esc(c.title)}</b><span class="t-meta" style="margin:0 0 6px">${esc(L.types[c.type] || c.type)} · ${fmt(c.sws)} SWS · ${esc(L.assessment[c.assessment] || c.assessment)}</span>${text ? `<span class="t-muted">${esc(text)}</span>` : ""}`;
+        const h = hoursOf(c.ects, c.sws);
+        return `<b class="t-title">${esc(c.title)}</b><span class="t-meta" style="margin:0 0 6px">${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(t("course.hours", { n: h.total }))} · ${esc(assessName(c.assessment))}</span>${text ? `<span class="t-muted">${esc(text)}</span>` : ""}`;
       }
       return `<b class="t-title">${esc(o.label)}</b><ul>${cs.map((c) => `<li>${esc(c.title)} · ${fmt(c.ects)} ECTS</li>`).join("")}</ul>`;
     }
-    case "saved": return navigator.onLine
-      ? "Your programme, specialisation and picked electives are saved in this browser. The app also works offline."
-      : "You are offline. Showing the saved copy of the data.";
-    case "prog": { const p = findProgramme(d.id); return { small: true, html: `${esc(p.degree)} · ${esc(p.mode)} · ${esc(p.language)} · ${p.semesters} semesters` }; }
+    case "saved": return esc(navigator.onLine ? t("status.saved") : t("status.offline"));
+    case "prog": { const p = findProgramme(d.id); return { small: true, html: esc(`${w(p.degree)} · ${w(p.mode)} · ${w(p.language)} · ${p.semesters} ${semWord()}`) }; }
     case "text": return esc(d.text);
   }
   return "";
@@ -750,43 +1056,43 @@ function tipContent(el) {
 
 function showTip(el) {
   clearTimeout(hideTimer);
-  const t = tip();
+  const tEl = tip();
   let content;
-  try { content = tipContent(el); } catch { content = ""; } // e.g. an element of the programme that is just being replaced
+  try { content = tipContent(el); } catch { content = ""; } // e.g. an element of a programme that is just being replaced
   const small = typeof content === "object" && content.small;
   if (typeof content === "object") content = content.html;
   if (!content) return;
-  t.innerHTML = content;
-  t.className = "tip" + (small ? " small" : "");
+  tEl.innerHTML = content;
+  tEl.className = "tip" + (small ? " small" : "");
   tipFor = el;
   el.setAttribute("aria-describedby", "tip");
 
   const sheet = !canHover && window.matchMedia("(max-width: 900px)").matches;
   if (sheet) {
-    t.classList.add("sheet");
+    tEl.classList.add("sheet");
   } else {
     const r = el.getBoundingClientRect();
-    const w = t.offsetWidth, h = t.offsetHeight;
+    const wdt = tEl.offsetWidth, h = tEl.offsetHeight;
     const top = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--top"), 10) || 64;
     const above = r.top - h - 12 > top + 4;
     const anchorX = r.left + Math.min(r.width / 2, 120);
-    const left = Math.max(12, Math.min(window.innerWidth - w - 12, anchorX - w / 2));
-    t.style.left = left + "px";
-    t.style.top = (above ? r.top - h - 10 : r.bottom + 10) + "px";
-    t.style.setProperty("--ax", Math.max(16, Math.min(w - 16, anchorX - left)) + "px");
-    t.classList.add(above ? "above" : "below");
+    const left = Math.max(12, Math.min(window.innerWidth - wdt - 12, anchorX - wdt / 2));
+    tEl.style.left = left + "px";
+    tEl.style.top = (above ? r.top - h - 10 : r.bottom + 10) + "px";
+    tEl.style.setProperty("--ax", Math.max(16, Math.min(wdt - 16, anchorX - left)) + "px");
+    tEl.classList.add(above ? "above" : "below");
   }
-  void t.offsetWidth;
-  t.classList.add("show");
+  void tEl.offsetWidth;
+  tEl.classList.add("show");
   warm = true;
 }
 
 function hideTip(now) {
   clearTimeout(showTimer);
-  const t = tip();
-  if (!t) return;
+  const tEl = tip();
+  if (!tEl) return;
   const go = () => {
-    t.classList.remove("show");
+    tEl.classList.remove("show");
     if (tipFor) tipFor.removeAttribute("aria-describedby");
     tipFor = null;
     setTimeout(() => { if (!tipFor) warm = false; }, 300);
@@ -815,7 +1121,6 @@ function initTips() {
     if (el && el.matches(":focus-visible")) showTip(el);
   });
   document.addEventListener("focusout", (e) => { if (e.target.closest("[data-tip]") === tipFor) hideTip(false); });
-  // Touch: tap shows the tooltip as a card at the bottom; tapping again or elsewhere closes it.
   document.addEventListener("click", (e) => {
     if (canHover) return;
     const el = e.target.closest("[data-tip]");

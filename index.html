@@ -13,9 +13,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip" href="#main" data-l10n="a11y.skip">Skip to content</a>
   <header class="topbar">
-    <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Show departments" aria-expanded="false" aria-controls="side"></button>
-    <a class="brand" href="./" aria-label="Curriculum Compass, home">
+    <button class="icon-btn menu-btn" id="menu-btn" type="button" data-l10n-attr="aria-label:nav.showDepartments" aria-expanded="false" aria-controls="side"></button>
+    <a class="brand" href="#/" data-l10n-attr="aria-label:app.home">
       <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
         <circle cx="16" cy="16" r="15" fill="var(--accent)"/>
         <path d="M16 6.5l3.2 9.5L16 25.5l-3.2-9.5z" fill="#fff"/>
@@ -26,23 +27,31 @@
     <div class="search" id="search-box">
       <label class="search-field">
         <span class="search-icon" aria-hidden="true"></span>
-        <input id="search" type="search" placeholder="Search programmes" autocomplete="off" aria-label="Search programmes"
+        <input id="search" type="search" autocomplete="off" data-l10n-attr="placeholder:search.placeholder;aria-label:search.label"
                role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
       </label>
-      <div class="search-results" id="search-results" role="listbox" aria-label="Programmes"></div>
+      <div class="search-results" id="search-results" role="listbox"></div>
     </div>
-    <span class="status-ico saved" id="saved" tabindex="0" role="img" data-tip="saved" aria-label="Saved in this browser"></span>
+    <span class="status-ico saved" id="saved" tabindex="0" role="img" data-tip="saved" data-l10n-attr="aria-label:status.savedLabel"></span>
   </header>
 
   <div class="shell">
-    <nav class="side" id="side" aria-label="Departments"></nav>
+    <nav class="side" id="side" data-l10n-attr="aria-label:nav.departments"></nav>
     <div class="scrim" id="scrim" aria-hidden="true"></div>
 
-    <main class="main" id="main">
-      <div id="page">
+    <main class="main" id="main" tabindex="-1">
+      <!-- Start: pick a department and programme -->
+      <section class="home" id="home" hidden aria-labelledby="home-title">
+        <h1 id="home-title" data-l10n="home.title">What do you study?</h1>
+        <p class="subtitle" data-l10n="home.lead"></p>
+        <div class="home-stage" id="home-stage"></div>
+      </section>
+
+      <div id="page" hidden>
         <div class="title-row">
           <h1 id="title">&nbsp;</h1>
-          <button class="icon-btn info" id="prog-info" type="button" data-tip="programme" aria-label="About this programme"></button>
+          <button class="icon-btn info" id="prog-info" type="button" data-tip="programme" data-l10n-attr="aria-label:prog.about"></button>
+          <button class="icon-btn info" id="share" type="button" data-tip="text" data-l10n-attr="aria-label:prog.share;data-text:prog.share"></button>
         </div>
         <p class="subtitle" id="subtitle"></p>
         <div class="notes-slot" id="notes-slot"></div>
@@ -56,14 +65,16 @@
 
         <footer class="foot">
           <p id="source"></p>
-          <p>Curriculum Compass is an unofficial overview and not a service of FH Salzburg. If anything here differs from the official study regulations, the regulations apply.</p>
-          <p><a id="json-link" href="data/index.json">Download the data as JSON</a></p>
+          <p data-l10n="foot.disclaimer"></p>
+          <p id="report"></p>
+          <p><a id="json-link" href="data/index.json" data-l10n="foot.json">Download the data as JSON</a></p>
         </footer>
       </div>
     </main>
   </div>
 
   <div class="tip" id="tip" role="tooltip"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="app.js"></script>
 </body>
