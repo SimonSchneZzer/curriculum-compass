@@ -175,6 +175,14 @@ dialog.feedback.closing::backdrop { animation: fbFadeOut .2s ease-in forwards; }
 .fb-kind button[aria-pressed="true"] { color: var(--text); }
 .fb-kind .ink { position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 4px; border-radius: 7px; background: var(--surface); box-shadow: var(--shadow);
   transition: transform .42s var(--spring), width .42s var(--spring); }
+.fb-banner { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-out), margin .35s var(--ease-out); }
+.fb-banner > div { overflow: hidden; }
+.fb-banner p { display: flex; gap: 10px; align-items: flex-start; margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-soft);
+  color: var(--warn); font-size: 13.5px; line-height: 1.45; opacity: 0; transform: translateY(-4px); transition: opacity .25s ease-out, transform .35s var(--spring); }
+.fb-banner svg { width: 18px; height: 18px; flex: none; margin-top: 1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.fb-banner.show { grid-template-rows: 1fr; margin-top: 4px; }
+.fb-banner.show p { opacity: 1; transform: none; }
+dialog.feedback.blocked .fb-btn.primary { opacity: .45; pointer-events: none; }
 .fb-label { font-size: 13px; font-weight: 600; color: var(--text-2); margin: 12px 0 6px; }
 #fb-form textarea, #fb-form input[type="email"] { font: inherit; font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--line);
   border-radius: 10px; padding: 10px 12px; resize: vertical; transition: border-color .2s, box-shadow .2s; }
@@ -204,7 +212,7 @@ dialog.feedback.sent .fb-done svg { animation: fbCheck .5s .1s var(--ease-out) f
 @keyframes fbCheck { to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) {
   dialog.feedback[open], dialog.feedback.closing, dialog.feedback::backdrop, dialog.feedback.closing::backdrop { animation: none; }
-  .fb-kind .ink { transition: none; }
+  .fb-kind .ink, .fb-banner, .fb-banner p { transition: none; }
   dialog.feedback.sent .fb-done svg { animation: none; stroke-dashoffset: 0; }
 }
 .side-legal:hover { color: var(--text); }

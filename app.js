@@ -667,9 +667,29 @@ function openFeedback(kind = "bug", prefill = "") {
   $("#fb-status").textContent = "";
   if (prefill && !$("#fb-msg").value) $("#fb-msg").value = prefill;
   $("#fb-ctx").textContent = fbContext();
+  delete d.dataset.banner; fbBanner("");
   d.showModal();
+  fbCheckLimit();
   fbSetKind(kind);
   setTimeout(() => $("#fb-msg").focus(), 30);
+}
+/** A clear notice at the top of the form (limit reached, sending failed, offline) instead of a small line. */
+function fbBanner(text) {
+  const b = $("#fb-banner");
+  if (text) $("#fb-banner-text").textContent = text;
+  b.classList.toggle("show", Boolean(text));
+}
+/** Limit reached? Then say from when the next message can be sent and block the button until then. */
+function fbCheckLimit() {
+  const recent = fbRecent(), d = $("#feedback");
+  clearTimeout(fbCheckLimit.timer);
+  if (recent.length < FB_LIMIT) { d.classList.remove("blocked"); if (d.dataset.banner === "limit") { fbBanner(""); delete d.dataset.banner; } return false; }
+  const free = Math.min(...recent) + FB_WINDOW;
+  const at = new Date(free).toLocaleTimeString(lang === "de" ? "de-AT" : "en-GB", { hour: "2-digit", minute: "2-digit" });
+  d.classList.add("blocked"); d.dataset.banner = "limit";
+  fbBanner(t("fb.limitAt", { n: FB_LIMIT, time: at }));
+  fbCheckLimit.timer = setTimeout(fbCheckLimit, free - Date.now() + 500);   // unblock by itself
+  return true;
 }
 function fbRecent() {
   try { return JSON.parse(localStorage.getItem("compass-feedback") || "[]").filter((x) => Date.now() - x < FB_WINDOW); } catch { return []; }
@@ -679,7 +699,7 @@ async function sendFeedback(e) {
   const msg = $("#fb-msg").value.trim(), mail = $("#fb-mail").value.trim(), status = $("#fb-status");
   if (msg.length < 5) { status.textContent = t("fb.tooShort"); return $("#fb-msg").focus(); }
   if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { status.textContent = t("fb.badMail"); return $("#fb-mail").focus(); }
-  if (fbRecent().length >= FB_LIMIT) { status.textContent = t("fb.limit"); return; }
+  if (fbCheckLimit()) return;
   const fields = {
     access_key: CONFIG.feedback.key, botcheck: $("#fb-bot").checked ? "true" : "",
     subject: `Curriculum Compass – ${fbKind === "bug" ? "Fehler" : "Idee"}${prog ? ` (${prog.name} ${w(prog.degree)})` : ""}`,
@@ -700,10 +720,13 @@ async function sendFeedback(e) {
     try { localStorage.setItem("compass-feedback", JSON.stringify([...fbRecent(), Date.now()])); } catch {}
     d.classList.add("sent");
     status.textContent = "";
+    fbBanner(""); delete d.dataset.banner;
     $("#fb-msg").value = "";
     setTimeout(() => { if (d.open && d.classList.contains("sent")) closeFeedback(); }, 2200);
   } catch {
-    status.textContent = navigator.onLine ? t("fb.failed") : t("fb.offline");
+    status.textContent = "";
+    d.dataset.banner = "error";
+    fbBanner(navigator.onLine ? t("fb.failed") : t("fb.offline"));
   } finally {
     d.classList.remove("sending");
   }

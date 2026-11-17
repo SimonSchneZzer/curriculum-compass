@@ -143,7 +143,7 @@
   "fb.tooShort": "Bitte schreib ein paar Worte.",
   "fb.badMail": "Die E-Mail-Adresse sieht nicht richtig aus.",
   "fb.limit": "Bitte warte kurz, bevor du noch eine Nachricht schickst.",
-  "fb.failed": "Senden hat nicht geklappt – bitte gleich noch einmal versuchen.",
+  "fb.failed": "Senden hat nicht geklappt – bitte gleich noch einmal versuchen. Dein Text ist noch da.",
   "fb.offline": "Du bist offline – bitte versuch es wieder, wenn du online bist.",
   "fb.ctxProgramme": "Studiengang",
   "fb.ctxPage": "Seite",
@@ -152,5 +152,6 @@
   "fb.ctxBrowser": "Browser",
   "fb.ctxScreen": "Fenster",
   "fb.prefillData": "Datenfehler in {programme}:\n\nWas ist falsch:\n\nWie es sein sollte (und wo das steht):\n",
-  "foot.reportForm": "Stimmt etwas in diesem Curriculum nicht? <a href=\"#\" data-feedback=\"data\">Melden</a>"
+  "foot.reportForm": "Stimmt etwas in diesem Curriculum nicht? <a href=\"#\" data-feedback=\"data\">Melden</a>",
+  "fb.limitAt": "Du hast in der letzten Stunde schon {n} Nachrichten geschickt. Ab {time} Uhr kannst du wieder eine senden – dein Text bleibt so lange hier."
 }

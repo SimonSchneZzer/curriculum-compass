@@ -143,7 +143,7 @@
   "fb.tooShort": "Please write a few words.",
   "fb.badMail": "That e-mail address does not look right.",
   "fb.limit": "Please wait a little before sending another message.",
-  "fb.failed": "Could not send – please try again in a moment.",
+  "fb.failed": "Could not send – please try again in a moment. Your text is still here.",
   "fb.offline": "You are offline – please try again when you are online.",
   "fb.ctxProgramme": "Programme",
   "fb.ctxPage": "Page",
@@ -152,5 +152,6 @@
   "fb.ctxBrowser": "Browser",
   "fb.ctxScreen": "Window",
   "fb.prefillData": "Data error in {programme}:\n\nWhat is wrong:\n\nHow it should be (and where it says so):\n",
-  "foot.reportForm": "Something wrong in this curriculum? <a href=\"#\" data-feedback=\"data\">Report it</a>"
+  "foot.reportForm": "Something wrong in this curriculum? <a href=\"#\" data-feedback=\"data\">Report it</a>",
+  "fb.limitAt": "You have already sent {n} messages in the last hour. You can send the next one from {time} – your text stays here until then."
 }
