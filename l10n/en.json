@@ -123,5 +123,6 @@
   "sem.assumption": "Averaged over a 5-day week and a semester of about 20 weeks. During the 14 teaching weeks you are in class about {teach} h a day.",
   "course.absence": "Allowed absence",
   "course.absenceRow": "attendance: you can miss up to {h} · about {n} of {w} sessions",
-  "course.absenceNote": "Based on {sws} SWS × {w} teaching weeks = {total} h in class, one session a week. Which attendance rule applies is set by the course."
+  "course.absenceNote": "Based on {sws} SWS × {w} teaching weeks = {total} h in class, one session a week. Which attendance rule applies is set by the course.",
+  "series.applied": "Also set to {area} in semester {sems}"
 }

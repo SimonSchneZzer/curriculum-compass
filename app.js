@@ -1041,8 +1041,45 @@ function renderSlot(s, animate) {
 
 /* ---------- Picking electives ---------- */
 
+// Series: the same choice in several semesters, recognised from the data (no extra field needed). Groups with the same
+// label and onlyFor in different semesters whose options end in the same area – e.g. MMA Master "Master Project -
+// Development - FILM" … "Master Project - Release - FILM". Picking an area carries it to the LATER semesters that are
+// still empty or still followed the old area; a semester chosen differently on purpose is left alone.
+const areaOf = (o) => { const p = (o?.label || "").split(/\s+[-–]\s+/); return p.length > 1 ? p[p.length - 1].trim() : null; };
+const areaKey = (o) => areaOf(o)?.toLowerCase() ?? null;
+function seriesOf(g) {
+  if (g.sync || g.budget != null || g.choose !== 1) return [];
+  const mine = new Set(g.options.map(areaKey).filter(Boolean));
+  if (mine.size < 2) return [];
+  return prog.groups.filter((x) => x !== g && x.label === g.label && x.semester > g.semester && x.choose === 1 && !x.sync
+    && x.budget == null && JSON.stringify(x.onlyFor) === JSON.stringify(g.onlyFor) && x.options.filter((o) => mine.has(areaKey(o))).length >= 2);
+}
+function followSeries(g, before) {
+  const now = pickedOptions(g)[0];
+  const others = seriesOf(g);
+  if (!now || !others.length) return;
+  const prevId = (before[pickKey(g)] || [])[0];
+  const prevArea = prevId ? areaKey(g.options.find((o) => o.id === prevId)) : null;
+  const changed = [];
+  others.forEach((x) => {
+    const cur = pickedOptions(x)[0];
+    if (cur && (areaKey(cur) === areaKey(now) || areaKey(cur) !== prevArea)) return;
+    const match = x.options.find((o) => areaKey(o) === areaKey(now));
+    if (!match) return;
+    picks[pickKey(x)] = [match.id];
+    changed.push(x);
+  });
+  if (!changed.length) return;
+  changed.forEach(afterPick);
+  const sems = new Intl.ListFormat(lang === "de" ? "de" : "en", { type: "conjunction" }).format(changed.map((x) => String(x.semester)).sort());
+  toast(t("series.applied", { area: areaOf(now), sems }), t("share.undo"), () => {
+    changed.forEach((x) => { picks[pickKey(x)] = [...(before[pickKey(x)] || [])]; afterPick(x); });
+  });
+}
+
 function togglePick(gid, oid) {
   const g = prog.groups.find((x) => x.id === gid);
+  const before = JSON.parse(JSON.stringify(picks));
   const own = ownOption(g);
   if (own && own.id === oid) return;
   const slots = g.choose - (own ? 1 : 0);
@@ -1058,6 +1095,7 @@ function togglePick(gid, oid) {
   }
   picks[pickKey(g)] = list;
   afterPick(g);
+  followSeries(g, before);
   // One to pick and now picked: the entry folds up a moment later and shows the pick.
   if (!isBudget(g) && slots === 1 && list.includes(oid)) {
     const el = document.querySelector(`.choice[data-group="${g.id}"]`);

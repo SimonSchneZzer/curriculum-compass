@@ -1,5 +1,5 @@
 // Offline support. All paths are relative to this file, so the app works under any host and sub-path.
-const CACHE = "curriculum-compass-v10";
+const CACHE = "curriculum-compass-v11";
 const SHELL = ["./", "index.html", "style.css", "app.js", "icon.svg", "manifest.webmanifest", "data/index.json", "data/search.json", "l10n/en.json", "l10n/de.json"];
 
 self.addEventListener("install", (e) => {

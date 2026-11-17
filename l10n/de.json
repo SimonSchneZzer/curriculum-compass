@@ -123,5 +123,6 @@
   "sem.assumption": "Durchschnitt bei einer 5-Tage-Woche und rund 20 Semesterwochen. In den 14 Unterrichtswochen bist du rund {teach} h am Tag im Unterricht.",
   "course.absence": "So viel darfst du fehlen",
   "course.absenceRow": "Anwesenheit: bis zu {h} fehlen · etwa {n} von {w} Terminen",
-  "course.absenceNote": "Gerechnet mit {sws} SWS × {w} Unterrichtswochen = {total} h Unterricht, ein Termin pro Woche. Welche Anwesenheit gilt, legt die Lehrveranstaltung fest."
+  "course.absenceNote": "Gerechnet mit {sws} SWS × {w} Unterrichtswochen = {total} h Unterricht, ein Termin pro Woche. Welche Anwesenheit gilt, legt die Lehrveranstaltung fest.",
+  "series.applied": "Auch in Semester {sems} auf {area} gesetzt"
 }
