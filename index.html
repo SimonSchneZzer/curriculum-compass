@@ -5,86 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Curriculum Compass</title>
   <meta name="description" content="Unofficial overview of the FH Salzburg curricula, tailored to your major, with your electives saved in your browser.">
-  <meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14151f" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="nav" aria-label="Programmes">
-    <div class="nav-inner">
-      <a class="brand" href="./" aria-label="Curriculum Compass, home">
-        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="15" fill="var(--spec)"/>
-          <circle cx="16" cy="16" r="10.5" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
-          <path d="M16 6.5l3.2 9.5L16 25.5l-3.2-9.5z" fill="#fff"/>
-          <path d="M16 16l3.2 0L16 25.5z" fill="#fff" fill-opacity=".55"/>
-        </svg>
-        <span>Curriculum Compass</span>
-      </a>
-      <button class="switcher" id="switcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">
-        <span class="switcher-label">
-          <small id="switcher-degree">Programme</small>
-          <b id="switcher-name">Loading…</b>
-        </span>
-        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Show departments" aria-expanded="false" aria-controls="side"></button>
+    <a class="brand" href="./" aria-label="Curriculum Compass, home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="15" fill="var(--accent)"/>
+        <path d="M16 6.5l3.2 9.5L16 25.5l-3.2-9.5z" fill="#fff"/>
+        <path d="M16 16h3.2L16 25.5z" fill="#fff" fill-opacity=".5"/>
+      </svg>
+      <span>Curriculum Compass</span>
+    </a>
+    <div class="search" id="search-box">
+      <label class="search-field">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="search" type="search" placeholder="Search programmes" autocomplete="off" aria-label="Search programmes"
+               role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+      </label>
+      <div class="search-results" id="search-results" role="listbox" aria-label="Programmes"></div>
     </div>
-    <div class="menu" id="menu" role="dialog" aria-label="Choose a programme">
-      <div class="menu-search">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <input id="search" type="search" placeholder="Search programmes" autocomplete="off" aria-label="Search programmes">
-      </div>
-      <div class="menu-body">
-        <div class="rail" id="rail" role="tablist" aria-label="Departments"></div>
-        <div class="programmes" id="programmes"></div>
-      </div>
-    </div>
-  </nav>
-  <div class="scrim" id="scrim" aria-hidden="true"></div>
+    <button class="icon-btn saved" id="saved" type="button" data-tip="saved" aria-label="Saved in this browser"></button>
+  </header>
 
-  <div id="page">
-    <header class="top">
-      <div class="wrap">
-        <p class="eyebrow" id="eyebrow">FH Salzburg</p>
-        <h1 id="title">&nbsp;</h1>
-        <ul class="chips" id="chips"></ul>
-        <div class="status">
-          <p class="asof" id="asof">Loading data…</p>
-          <p class="offline" id="offline">Offline · saved copy</p>
+  <div class="shell">
+    <nav class="side" id="side" aria-label="Departments"></nav>
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+    <main class="main" id="main">
+      <div id="page">
+        <div class="title-row">
+          <h1 id="title">&nbsp;</h1>
+          <button class="icon-btn info" id="prog-info" type="button" data-tip="programme" aria-label="About this programme"></button>
         </div>
+        <p class="subtitle" id="subtitle"></p>
+        <div class="notes-slot" id="notes-slot"></div>
+
+        <div id="pickers"></div>
+
+        <section class="overview" id="overview" aria-label="Semesters"></section>
+        <p class="picks-info" id="picks-info"></p>
+
+        <div id="semesters"></div>
+
+        <footer class="foot">
+          <p id="source"></p>
+          <p>Curriculum Compass is an unofficial overview and not a service of FH Salzburg. If anything here differs from the official study regulations, the regulations apply.</p>
+          <p><a id="json-link" href="data/index.json">Download the data as JSON</a></p>
+        </footer>
       </div>
-    </header>
-
-    <main class="wrap">
-      <div id="pickers"></div>
-      <div class="note" id="note" role="status"><div><div class="note-text" id="note-text"></div></div></div>
-
-      <section aria-labelledby="overview-title">
-        <div class="overview-head">
-          <h2 class="section-title" id="overview-title">Overview</h2>
-          <p class="picks-info" id="picks-info"></p>
-        </div>
-        <div class="overview" id="overview"></div>
-        <div class="key" id="key" aria-hidden="true"></div>
-      </section>
-
-      <div id="semesters"></div>
-
-      <section class="legend" aria-labelledby="legend-title">
-        <h2 class="section-title" id="legend-title">How to read this</h2>
-        <dl id="legend"></dl>
-      </section>
     </main>
-
-    <footer class="wrap foot">
-      <p id="source"></p>
-      <p>Curriculum Compass is an unofficial overview and not a service of FH Salzburg. If anything here differs from the official study regulations, the regulations apply.</p>
-      <p>Your choices (programme, majors, picked electives, open courses) are saved only in this browser.</p>
-      <p><a id="json-link" href="data/index.json">Download the data as JSON</a></p>
-    </footer>
   </div>
+
+  <div class="tip" id="tip" role="tooltip"></div>
 
   <script src="app.js"></script>
 </body>
