@@ -142,6 +142,11 @@ async function init() {
   buildSide();
   buildSearch();
   initTips();
+  // An entrance animation keeps holding its values after it ends, which makes hover transitions jump.
+  // Drop the class once it has played, so the element's own transitions work again.
+  document.addEventListener("animationend", (e) => {
+    if (e.animationName === "enter") { e.target.classList.remove("enter"); e.target.style.removeProperty("--i"); }
+  });
 
   const h = readHash();
   const id = h && findProgramme(h.id) ? h.id : findProgramme(store.last) ? store.last : "mma-m";
