@@ -11,6 +11,12 @@ DEPARTMENT = dict(id="gw", name="Health Sciences", missing=[
     dict(name="Mental Health Nursing (academic course)",
          url="https://www.fh-salzburg.ac.at/en/study/gw/mental-health-nursing-academic-course",
          reason="Part-time continuing-education course (3 semesters, certificate “Academic expert in psychiatric nursing”, not a degree programme). Its curriculum page lists no courses."),
+    dict(name="Speech and Language Therapy (Bachelor)",
+         url="https://www.fh-salzburg.ac.at/en/study/gw/speech-and-language-therapy-bachelor",
+         reason="New programme. No curriculum page with a course list exists yet, neither in English nor in German (checked 2026-11-17)."),
+    dict(name="Biomedical Technologies and Analytics (Joint Master)",
+         url="https://www.fh-salzburg.ac.at/en/study/gw/biomedical-technologies-and-analytics",
+         reason="Joint master programme. The FH Salzburg site has no curriculum page with a course list for it (checked 2026-11-17)."),
 ])
 
 FIX_TITLES = {

@@ -41,6 +41,9 @@ function t(key, vars = {}) {
 }
 const w = (word) => L10N["words." + word] ?? word; // data words like "Full-time"
 const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString(lang === "de" ? "de-AT" : "en", { maximumFractionDigits: 1 });
+let checkedAt = null; // date of the last data check on the server (data/checked.json), if there is one
+// " · checked …" when the data was checked after it was taken, else "".
+const checkedNote = () => (checkedAt && prog && checkedAt > prog.dataAsOf ? t("prog.checked", { date: prettyDate(checkedAt) }) : "");
 const prettyDate = (d) => new Date(d + "T12:00:00").toLocaleDateString(lang === "de" ? "de-AT" : "en-GB", { day: "numeric", month: "long", year: "numeric" });
 const season = (s) => t(s % 2 ? "sem.winter" : "sem.summer");
 const semWord = () => (lang === "de" ? "Semester" : "semesters");
@@ -197,6 +200,9 @@ async function init() {
   $(".search-icon").outerHTML = icon("search");
   $("#prog-info").innerHTML = icon("info");
   $("#share").innerHTML = icon("share");
+  // Optional, loaded in parallel: written by the weekly data check on the server; missing elsewhere, which is fine.
+  const checked = fetch("data/checked.json", { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null)).then((j) => (j && j.checkedAt) || null).catch(() => null);
   try {
     index = await (await fetch("data/index.json")).json();
   } catch {
@@ -204,6 +210,7 @@ async function init() {
     $("#home-title").textContent = t("app.loadError");
     return;
   }
+  checkedAt = await checked;
   buildSide();
   buildSearch();
   initTips();
@@ -607,6 +614,7 @@ function buildHeader() {
     curriculum: esc(prog.source.curriculum),
     brochure: b ? t("foot.brochure", { url: esc(b.url), version: esc(b.version) }) : "",
     date: esc(prettyDate(prog.dataAsOf)),
+    checked: esc(checkedNote()),
   });
   $("#report").innerHTML = t("foot.report", { url: esc(reportUrl()) });
   $("#json-link").href = `data/${prog.id}.json`;
@@ -1044,7 +1052,7 @@ function tipContent(el) {
           const n = (v) => v.toLocaleString(lang === "de" ? "de-AT" : "en");
           return esc(t("prog.hours", { total: n(h.total), class: n(h.inClass) }));
         })()}</span>
-        <span class="t-meta">${esc(t("prog.source", { date: prettyDate(prog.dataAsOf) }))}${b ? esc(t("prog.sourceBrochure", { version: b.version })) : ""}</span>`;
+        <span class="t-meta">${esc(t("prog.source", { date: prettyDate(prog.dataAsOf), checked: checkedNote() }))}${b ? esc(t("prog.sourceBrochure", { version: b.version })) : ""}</span>`;
     }
     case "semester": {
       const s = +d.sem, r = totals(s);

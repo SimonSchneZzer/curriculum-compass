@@ -13,8 +13,9 @@ regulations apply.
 
 39 degree programmes in all six departments: Applied Social Sciences, Business and Tourism, Creative Technologies,
 Design and Green Engineering, Health Sciences, Information Technologies and Digitalisation.
-Not included (no course list published): the academic courses Child and Youth Care and Mental Health Nursing, and the
-new Information Technologies bachelor. The app lists them under "Not included yet".
+Not included (no course list published): the academic courses Child and Youth Care and Mental Health Nursing, the
+new Information Technologies and Speech and Language Therapy bachelors, and the joint master Biomedical Technologies
+and Analytics. The app lists them under "Not included yet".
 
 Links can point to a programme and selection, e.g. `#/mma-m/film` or `#/cis-b/game/ai`. The share button next to
 the programme title adds the picked electives (`?picks=…`). `#/` is the start page ("What do you study?").
@@ -59,6 +60,21 @@ the app shows this date at the top.
 Special cases are documented in the department modules in `scripts/curricula/departments/` and checked against the
 programme brochures (PDFs on each programme page). Known problem in the source: the MultiMediaArt Bachelor page lists
 wrong ECTS in semester 4 (shown in the app with a note).
+
+### Weekly data check
+
+`python3 scripts/check_data.py --state <file>` runs the update on a temporary copy and reports what changed, without
+touching `data/`: changed courses per programme, programmes added to or removed from the department pages, and
+changed brochures (PDF fingerprints, kept in the state file). Exit code 0 = unchanged, 1 = changed, 2 = the check
+failed (e.g. a page can no longer be parsed).
+
+On the home server it runs every Monday at 07:00 (`~/compass/check-data.sh`, systemd user timer
+`compass-data-check.timer`) and sends the result to the maintainer via ntfy. Nothing is published automatically.
+If nothing changed it writes `data/checked.json` (`{"checkedAt": "…"}`) next to the app, and the app shows
+"checked …" after the data date. Without that file (any other host) the app simply shows the data date.
+
+When the check reports changes: run `python3 scripts/update_data.py` locally, look at the diff and the ECTS totals,
+commit, push, then `ssh homeserver '~/compass/deploy.sh'`.
 
 ### Updating the data
 

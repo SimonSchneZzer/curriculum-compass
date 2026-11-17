@@ -2,22 +2,11 @@
 
 Ideas we agreed on but postponed. Newest decisions first.
 
-## 1. Notice when the FH Salzburg data changes
+## 1. Notice when the FH Salzburg data changes — done (2026-11-17)
 
-**Goal:** the data never goes stale without anyone noticing.
-
-- Run `python3 scripts/update_data.py` regularly (e.g. once a week) against a temporary copy of `data/`.
-- Compare the result with the published data, ignoring `dataAsOf`.
-- Also check:
-  - the brochure versions (the special cases rely on them, e.g. Producing in MultiMediaArt Master),
-  - whether programmes were added to or removed from the department pages.
-- **Nothing changed:** record a "last checked" date, so the app can show "data as of … · checked …".
-- **Something changed:** do not publish automatically. Notify the maintainer with a short summary
-  (e.g. "MultiMediaArt Bachelor: 2 courses added, semester 4 now 30 ECTS") and let them review and publish.
-- If a page can no longer be parsed (FH changed its layout), the check fails and that is reported too.
-
-**Where it can run:** a scheduled job on our own server (cron + e-mail or a chat message), or a GitHub Action
-that opens a pull request or issue. Full automation is nice to have; a notification that someone acts on is enough.
+`scripts/check_data.py`, weekly on the home server with an ntfy message; see "Weekly data check" in the README.
+The first run found two programmes we did not list (Speech and Language Therapy, Biomedical Technologies and
+Analytics); both have no course list yet and are now under "Not included yet".
 
 ## 9. "What's new" for users
 
