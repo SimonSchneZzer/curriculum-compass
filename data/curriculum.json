@@ -22,13 +22,14 @@
     {
       "id": "producing",
       "name": "Producing",
-      "masterProject": null
+      "masterProject": null,
+      "masterProjectNote": "Producing has no Master Project of its own. Producing students join a Master Project of one of the three project types (Audiovisual Environments, Communication Design, Film) in a role such as producer. Source: FH Salzburg MultiMediaArt Master brochure, version 2026/03, which lists the Master Project for all majors and 30 ECTS per semester."
     }
   ],
   "categories": {
     "compulsory": "Taken by all students, regardless of specialisation.",
     "thesis": "Master thesis, taken by all students.",
-    "specialisation": "Only for students of the given specialisation.",
+    "specialisation": "Only for students of the given specialisation. Courses with alsoOpenTo are open to those specialisations too; there the student chooses one of them per semester.",
     "elective": "Free elective open to all specialisations: choose one per semester."
   },
   "legend": {
@@ -192,7 +193,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Development - Audio",
       "content": "Developing differentiated skills in creating solutions for formulated problems and research questions. Refining and shaping (creatively/theoretically/scientifically; based on the state of the art) the skill, to transfer a concept into a project. Development of a pre-liminary concept for the master's project. Team formation and resource planning.",
-      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for the project."
+      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for the project.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM1MDCIL",
@@ -208,7 +212,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Development - Communication Design",
       "content": "Developing differentiated skills in creating solutions for formulated problems and research questions. Refining and shaping (creatively/theoretically/scientifically; based on the state of the art) the skill, to transfer a concept into a project. Development of a pre-liminary concept for the master's project. Team formation and resource planning.",
-      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for its implementation."
+      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for its implementation.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM1MDFIL",
@@ -224,7 +231,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Development - Film",
       "content": "Developing differentiated skills in creating solutions for formulated problems and research questions. Refining and shaping (creatively/theoretically/scientifically; based on the state of the art) the skill, to transfer a concept into a project. Development of a pre-liminary concept for the master's project. Team formation and resource planning.",
-      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for the project’s implementation."
+      "learningOutcome": "Graduates are able to transition the basic concept of their master’s project into the pre-production phase. They can assemble a team for project execution and develop a resource plan for the project’s implementation.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM1AM1IL",
@@ -528,7 +538,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Refined Concept - Audio",
       "content": "Group Project-Based Coaching: Expanding knowledge of methods in staging, workflows, and processes, as well as the practical, theoretical, and artistic approaches behind them, along with projectspecific input. Historical and critical examination of significant projects in the commercial and artistic fields. The course stimulates the collaborative development of visions within interdisciplinary group settings, exploring the boundaries of possible application areas and ultimately converging on a shared core theme or project, which is then presented through creative artistic abstraction.",
-      "learningOutcome": "Graduates are able to develop concepts, resource plans, and budgets, and to execute ambitious and creative audiovisual environment projects using state-of-the-art technology. Where necessary, they can also implement the development and integration of programming environments and/or interactive musical/sound design. Furthermore, they create concept development guided by thematic motifs for project orientation, such as sound, impact, and evolutionary, psychological, and cultural effects and approaches."
+      "learningOutcome": "Graduates are able to develop concepts, resource plans, and budgets, and to execute ambitious and creative audiovisual environment projects using state-of-the-art technology. Where necessary, they can also implement the development and integration of programming environments and/or interactive musical/sound design. Furthermore, they create concept development guided by thematic motifs for project orientation, such as sound, impact, and evolutionary, psychological, and cultural effects and approaches.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM2MCCIL",
@@ -544,7 +557,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Refined Concept - Communication Design",
       "content": "Based on the students' concepts, subject-specific questions in communication design will be discussed. The focus is on the context of the master’s projects in the context of historical change and international competition, as well as the development of clear communication goals and strategies.",
-      "learningOutcome": "Graduates are able to recognize common methods for researching and planning communication design projects. They define communication goals and strategies for the master’s project and present initial ideas for implementation."
+      "learningOutcome": "Graduates are able to recognize common methods for researching and planning communication design projects. They define communication goals and strategies for the master’s project and present initial ideas for implementation.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM2MCFIL",
@@ -560,7 +576,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Refined Concept - Film",
       "content": "Expanding knowledge of the culture, projects, methods, workflows, and processes of innovative cinema projects (FutureCinema), as well as the theoretical, artistic, and practical approaches behind them. The boundaries of traditional cinema are explored and deliberately surpassed. Starting with the classic screen and TV films with more or less linear storytelling, the course breaks the limits of format and genre, discovering new ways of cinematic storytelling and cross-media communication. Platforms such as pho-tography, architecture, theater, games, the internet, artistic installations, and print intersect, giving cinema a new face. Specific knowledge and skills in the conceptualization, resource planning, budgeting, and execution of ambitious and creative film projects using the latest technology, as well as the development of detailed project concepts. Refined competencies in developing shared visions within interdisciplinary teams that push the boundaries of the application field. Independent creation of film concepts.",
-      "learningOutcome": "Graduates are able to incorporate their ideas from the impulse workshops and the Script Development course and further develop them in an interdisciplinary manner with a focus on the larger master’s project. They shape the idea into initial forms that include the option of feasibility. Furthermore, they integrate interdisciplinary, conceptual, and technological input into the further development of the implementable idea."
+      "learningOutcome": "Graduates are able to incorporate their ideas from the impulse workshops and the Script Development course and further develop them in an interdisciplinary manner with a focus on the larger master’s project. They shape the idea into initial forms that include the option of feasibility. Furthermore, they integrate interdisciplinary, conceptual, and technological input into the further development of the implementable idea.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM2AM2IL",
@@ -1024,7 +1043,10 @@
       "assessment": "final",
       "module": "Compulsory Elective 1 - Realisation - Audio",
       "content": "Input and implementation of audiovisual Master’s concepts using the latest technology during the production phase: musical and sound design for various applications, rang-ing from purely auditory to interactive, in the students’ Master projects / coaching. Project-specific exploration, possibilities of auditory and visual representation, standards and methods of interdisciplinary networking of objects, exploring technical solutions, transformation of processes through new tools, and incorporating new input from previous semesters.",
-      "learningOutcome": "Graduates are able to apply specific knowledge and skills in the realization of multimedia projects, focusing on high-quality and original design as well as technical problem-solving competence. Furthermore, they apply expert competencies to independently establish collaborations in interdisciplinary teams and to organize and reflect on group processes."
+      "learningOutcome": "Graduates are able to apply specific knowledge and skills in the realization of multimedia projects, focusing on high-quality and original design as well as technical problem-solving competence. Furthermore, they apply expert competencies to independently establish collaborations in interdisciplinary teams and to organize and reflect on group processes.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM3MRCIL",
@@ -1040,7 +1062,10 @@
       "assessment": "final",
       "module": "Compulsory Elective 1 - Realisation - Communication Design",
       "content": "Based on the students' project ideas, subject-specific questions of communication design will be discussed. The focus is on the detailed development of strategies to achieve a communication goal, as well as the planning and organization for its implementation.",
-      "learningOutcome": "Graduates are able to develop concrete communication goals and strategies to achieve the formulated objectives and implement these strategies. Furthermore, they enhance their skills in defining their role as designers within the project."
+      "learningOutcome": "Graduates are able to develop concrete communication goals and strategies to achieve the formulated objectives and implement these strategies. Furthermore, they enhance their skills in defining their role as designers within the project.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM3MRFIL",
@@ -1056,7 +1081,10 @@
       "assessment": "final",
       "module": "Compulsory Elective 1 - Realisation - Film",
       "content": "Comprehensive knowledge of methods, workflows, and tools in Future Cinema, with a focus on innovation-oriented, cross-platform applications. Specific knowledge and skills in the realization of innovative Future Cinema projects, with an emphasis on high-quality and original design and technical problem-solving competence. Expert competencies in independently establishing collaboration within interdisciplinary teams and reflecting on or organizing group processes. Autonomous implementation of ambitious Future Cinema concepts using the latest technology during the production phase.",
-      "learningOutcome": "Graduates are able to work with a larger, complex, interdisciplinary team during the realization process of their work after the planning phase. They carry out the production phase, which seamlessly transitions into the post-production phase and finalization. Furthermore, they work on their project with professional guidance."
+      "learningOutcome": "Graduates are able to work with a larger, complex, interdisciplinary team during the realization process of their work after the planning phase. They carry out the production phase, which seamlessly transitions into the post-production phase and finalization. Furthermore, they work on their project with professional guidance.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM3AM3IL",
@@ -1456,7 +1484,10 @@
       "assessment": "final",
       "module": "Compulsory Elective 1 - Release & Presentation - Audio",
       "content": "Professional handling of methods, workflows and tools of audiovisual environments in the completion phase and in the context of release/publication. Professional knowledge and skills in the implementation and publication of innovative audiovisual environment projects with consideration of contemporary distribution forms and channels (including distribution strategies of (pop) culture in the digital, globalized society, effects of YouTube, Facebook on various platforms in a high-quality and adequate form. Consideration of current developments in the areas of performance, communication and preservation of audiovisual culture, adaptation strategies of the entertainment industry. Professional defense of the project (theoretical foundation, reflection, evalua-tion, argumentation, etc.) in connection with the Master's thesis. Autonomous finishing of the audiovisual environment realization using state-of-the-art technology: tests, publication, accompanying communication measures, perfor-mance/publication (including submission to competitions and festivals).",
-      "learningOutcome": "Graduates are able to independently carry out projects in an interdisciplinary team and present them appropriately to a larger professional audience. They present the resulting work in an environment that aligns with the nature and intention of the project, ensuring that its core message and objectives are clearly communicated to a broad professional audience."
+      "learningOutcome": "Graduates are able to independently carry out projects in an interdisciplinary team and present them appropriately to a larger professional audience. They present the resulting work in an environment that aligns with the nature and intention of the project, ensuring that its core message and objectives are clearly communicated to a broad professional audience.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM4M4MRCIL",
@@ -1472,7 +1503,10 @@
       "assessment": "continuous",
       "module": "Compulsory Elective 1 - Release & Presentation - Communication Design",
       "content": "Subject-specific issues relating to communication design are discussed as the students' projects progress. The focus is on questions regarding the realization of design projects, the role of designers in project teams and the further sharpening of the communication strategy.",
-      "learningOutcome": "Graduates are able to carry out projects independently in an interdisciplinary team and present them in an appropriate form to a larger specialist audience. They present the resulting work in an environment that corresponds to the nature and intention of the work, ensuring that its core message and objective are clear to a broader specialized audience."
+      "learningOutcome": "Graduates are able to carry out projects independently in an interdisciplinary team and present them in an appropriate form to a larger specialist audience. They present the resulting work in an environment that corresponds to the nature and intention of the work, ensuring that its core message and objective are clear to a broader specialized audience.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     },
     {
       "code": "MMAM4MRFIL",
@@ -1488,7 +1522,10 @@
       "assessment": "final",
       "module": "Compulsory Elective 1 - Release & Presentation - Film",
       "content": "Professional mastery of methods and tools for the completion and distribution of Future Cinema projects, including publication on various platforms, with consideration of current distribution channels. Expertise in the high-quality realization and presentation of innovative works, accompanied by a well-founded theoretical defense. Interdisciplinary team competence for the independent execution and completion of projects, as well as the autonomous finalization of Future Cinema projects to current technical standards, including the development of marketing materials and communication strategies for publication and participation in competitions and festivals.",
-      "learningOutcome": "Graduates are able to independently carry out projects in an interdisciplinary team and present them in an appropriate form to a larger professional audience. They present the resulting work in an environment that aligns with the nature and intention of the work, ensuring that its core message and objectives are clearly communicated to a broad professional audience."
+      "learningOutcome": "Graduates are able to independently carry out projects in an interdisciplinary team and present them in an appropriate form to a larger professional audience. They present the resulting work in an environment that aligns with the nature and intention of the work, ensuring that its core message and objectives are clearly communicated to a broad professional audience.",
+      "alsoOpenTo": [
+        "producing"
+      ]
     }
   ]
 }

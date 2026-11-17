@@ -121,7 +121,9 @@ h1 { margin: 0; font-size: clamp(30px, 6vw, 44px); line-height: 1.1; letter-spac
 .list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .spec-slot { overflow: hidden; transition: height .45s var(--ease-out); }
 
-.course + .course { border-top: 1px solid var(--line); }
+.course + .course, .course + .subhead, .subhead + .course { border-top: 1px solid var(--line); }
+.subhead { padding: 10px 16px 8px; font-size: 13px; font-weight: 600; background: var(--spec-soft); }
+.subhead small { font-weight: 400; color: var(--muted); }
 .course > button {
   appearance: none; width: 100%; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; text-align: left;
   display: grid; grid-template-columns: 4px 1fr auto auto auto 16px; align-items: center; gap: 14px; padding: 12px 16px;

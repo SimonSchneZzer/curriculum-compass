@@ -97,6 +97,8 @@ function semesterParts(sem) {
     core: inSem.filter((c) => c.category === "compulsory" || c.category === "thesis"),
     spec: inSem.filter((c) => c.category === "specialisation" && c.specialisation === current),
     elec: inSem.filter((c) => c.category === "elective"),
+    // Courses of other specialisations this one may join (Producing: one Master Project per semester).
+    joins: inSem.filter((c) => (c.alsoOpenTo || []).includes(current)),
   };
 }
 
@@ -107,12 +109,15 @@ function totals(sem) {
   // A free elective is a choice of one course, so only one counts towards the total.
   const elecEcts = p.elec.length ? Math.max(...p.elec.map((c) => c.ects)) : 0;
   const elecSws = p.elec.length ? Math.max(...p.elec.map((c) => c.sws)) : 0;
+  const joinEcts = p.joins.length ? Math.max(...p.joins.map((c) => c.ects)) : 0;
+  const joinSws = p.joins.length ? Math.max(...p.joins.map((c) => c.sws)) : 0;
+  const spec = sum(p.spec, "ects") + joinEcts;
   return {
     core: sum(p.core, "ects"),
-    spec: sum(p.spec, "ects"),
+    spec,
     elec: elecEcts,
-    ects: sum(p.core, "ects") + sum(p.spec, "ects") + elecEcts,
-    sws: sum(p.core, "sws") + sum(p.spec, "sws") + elecSws,
+    ects: sum(p.core, "ects") + spec + elecEcts,
+    sws: sum(p.core, "sws") + sum(p.spec, "sws") + joinSws + elecSws,
   };
 }
 
@@ -131,8 +136,8 @@ function render(animate) {
 function renderNote() {
   const spec = data.specialisations.find((s) => s.id === current);
   const note = $("#note");
-  if (spec.masterProject === null) {
-    note.innerHTML = `<div><p class="note-text"><strong>Note:</strong> The published curriculum has no ${esc(spec.name)} version of the Master Project course, so the semester totals here come out below 30 ECTS. Ask the programme team how ${esc(spec.name)} students take part in Master Projects.</p></div>`;
+  if (spec.masterProjectNote) {
+    note.innerHTML = `<div><p class="note-text"><strong>Master Project:</strong> ${esc(spec.masterProjectNote)}</p></div>`;
     note.classList.add("show");
   } else {
     note.classList.remove("show");
@@ -235,8 +240,16 @@ function renderSpecSlot(s, animate) {
   const title = sec.querySelector('[data-k="spec-title"]');
   const fill = () => {
     title.textContent = spec.name;
-    list.innerHTML = p.spec.map(courseHtml).join("");
-    list.style.display = p.spec.length ? "" : "none";
+    let rows = "";
+    if (p.joins.length) {
+      const j = p.joins[0];
+      rows += `<div class="subhead">Master Project <small>· choose one project type, ${fmt(j.ects)} ECTS</small></div>`;
+      rows += p.joins.map(courseHtml).join("");
+      if (p.spec.length) rows += `<div class="subhead">${esc(spec.name)} courses</div>`;
+    }
+    rows += p.spec.map(courseHtml).join("");
+    list.innerHTML = rows;
+    list.style.display = rows ? "" : "none";
   };
 
   if (!animate || reduceMotion) { fill(); return; }

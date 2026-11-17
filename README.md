@@ -23,7 +23,10 @@ Each course has a `category`:
 Notes on the data:
 - Two typos in course titles from the source were fixed ("Presentationion", "Environnements"). Course codes are kept as published.
 - The source legend does not explain the course type `EX`.
-- The published curriculum has no Producing version of the Master Project, so Producing totals are below 30 ECTS per semester.
+- The curriculum page lists Master Project versions only for Audiovisual Environments, Communication Design and Film.
+  Producing students join one of these projects (e.g. as producer), so their Master Project courses carry
+  `"alsoOpenTo": ["producing"]`. Source: the programme brochure (version 2026/03), which lists the Master Project
+  for all majors and 30 ECTS per semester.
 
 To update the data, edit the JSON and set `dataAsOf` to the date of the new copy.
 
