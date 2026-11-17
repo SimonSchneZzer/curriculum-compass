@@ -8,6 +8,9 @@ const CONFIG = {
   // Where "Report it" leads. Change this when the app moves to another host or issue tracker.
   reportUrl: "https://github.com/SimonSchneZzer/curriculum-compass/issues/new",
   languages: ["en", "de"],
+  // Privacy-friendly visit counter (GoatCounter, no cookies). Path on the same host where count.js and /count are
+  // served; "" turns counting off. On a host without it the script simply fails to load.
+  counter: "/c/",
 };
 
 const STORE_KEY = "curriculum-compass";
@@ -234,11 +237,34 @@ async function init() {
 }
 
 async function route(animate) {
+  countVisit();
   const h = readHash();
   if (h.home || (!h.id && !findProgramme(store.last))) { await showHome(animate); return; }
   const id = h.id && findProgramme(h.id) ? h.id : store.last;
   if (prog && id === prog.id && !h.shared) { applyOpts(h.opts || []); return; }
   await openProgramme(id, h.id === id ? h.opts : null, animate, h.id === id ? h.shared : null);
+}
+
+/* ---------- Visit counter: one count per view, e.g. /compass/mma-m/film (never the picks) ---------- */
+
+let counted = null;
+let counterLoaded = false;
+function countVisit() {
+  if (!CONFIG.counter || location.protocol === "file:") return;
+  const view = location.hash.replace(/^#\/?/, "").split("?")[0];
+  const path = location.pathname.replace(/index\.html$/, "") + view;
+  if (path === counted) return;
+  counted = path;
+  if (window.goatcounter && window.goatcounter.count) { window.goatcounter.count({ path }); return; }
+  if (counterLoaded) return;
+  counterLoaded = true;
+  const s = document.createElement("script");
+  s.src = CONFIG.counter + "count.js";
+  s.async = true;
+  s.dataset.goatcounter = CONFIG.counter + "count";
+  s.dataset.goatcounterSettings = JSON.stringify({ no_onload: true });
+  s.onload = () => window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: counted });
+  document.head.appendChild(s);
 }
 
 // Service worker: offline copy. On a known metered or slow connection only the programmes you open are kept.

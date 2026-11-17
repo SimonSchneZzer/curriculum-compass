@@ -1,5 +1,5 @@
 // Offline support. All paths are relative to this file, so the app works under any host and sub-path.
-const CACHE = "curriculum-compass-v4";
+const CACHE = "curriculum-compass-v5";
 const SHELL = ["./", "index.html", "style.css", "app.js", "icon.svg", "manifest.webmanifest", "data/index.json", "data/search.json", "l10n/en.json", "l10n/de.json"];
 
 self.addEventListener("install", (e) => {
@@ -30,7 +30,8 @@ self.addEventListener("message", (e) => {
 // Network first, so online users always get fresh data; the cached copy is the offline fallback.
 self.addEventListener("fetch", (e) => {
   const req = e.request;
-  if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
+  // Only this app's own files: the host may serve other things next to it (e.g. a visit counter or another site).
+  if (req.method !== "GET" || !req.url.startsWith(self.registration.scope)) return;
   // Revalidate with the server every time, so a new deploy (or a local edit) shows up on the next load.
   const fresh = req.mode === "navigate" ? fetch(req) : fetch(req.url, { cache: "no-cache", credentials: "same-origin" });
   e.respondWith(
