@@ -907,6 +907,19 @@ function slotHtml(s) {
   return html;
 }
 
+// Allowed absence: class time = SWS × 14 teaching weeks (as everywhere in the app). Rounded DOWN to halves, so the
+// app never promises more absence than the rule allows. One session a week → whole sessions, also rounded down.
+const NO_ATTENDANCE_TYPES = new Set(["BP", "DP", "MP"]);
+const floorHalf = (x) => { const r = Math.floor(x * 2 + 1e-9) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
+function absenceHtml(c) {
+  if (!(c.sws > 0) || NO_ATTENDANCE_TYPES.has(c.type)) return "";
+  const total = c.sws * TEACHING_WEEKS;
+  const row = (p) => `<li><span class="abs-p">${p} %</span><span>${t("course.absenceRow", {
+    h: `<b>${floorHalf(total * (1 - p / 100))} h</b>`, n: Math.floor(TEACHING_WEEKS * (1 - p / 100) + 1e-9), w: TEACHING_WEEKS })}</span></li>`;
+  return `<div class="absence"><h4 class="first">${esc(t("course.absence"))}</h4><ul>${row(75)}${row(50)}</ul>
+    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, total: floorHalf(total) }))}</p></div>`;
+}
+
 // A course: one line with short facts (each explained in a tooltip); a click folds out the details.
 // The facts are repeated in words inside the details, so one tab stop per course is enough.
 function rowHtml(c, cls) {
@@ -925,7 +938,8 @@ function rowHtml(c, cls) {
       <svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="details" id="${id}"><div><div class="inner">
-      ${c.content ? `<h4 class="first">${esc(t("course.content"))}</h4><p>${esc(c.content)}</p>` : ""}
+      ${absenceHtml(c)}
+      ${c.content ? `<h4 class="${absenceHtml(c) ? "" : "first"}">${esc(t("course.content"))}</h4><p>${esc(c.content)}</p>` : ""}
       ${c.learningOutcome ? `<h4>${esc(t("course.outcome"))}</h4><p>${esc(c.learningOutcome)}</p>` : ""}
       <p class="meta">${esc(c.module)} · ${esc(c.sourceCode || c.code)} · ${esc(w(c.language))}</p>
     </div></div></div>

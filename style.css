@@ -335,6 +335,13 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .details h4 { margin: 14px 0 4px; font-size: 13px; font-weight: 650; color: var(--text); }
 .details p { margin: 0; max-width: 75ch; line-height: 1.55; }
 .details .facts { font-size: 13px; color: var(--muted); }
+/* Allowed absence (first thing in the details) */
+.absence ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.absence li { display: flex; align-items: baseline; gap: 10px; }
+.absence .abs-p { flex: none; min-width: 44px; padding: 1px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent-strong);
+  font-size: 12px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+.absence li b { color: var(--text); font-weight: 650; }
+.absence .facts { margin-top: 6px; }
 .details .meta { margin-top: 12px; font-size: 12px; color: var(--muted); }
 .chip { flex: none; padding: 3px 8px; border-radius: 7px; background: var(--surface-2); font-size: 12px; font-weight: 650; color: var(--text-2); cursor: default; }
 .num { flex: none; text-align: right; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; cursor: default; }
