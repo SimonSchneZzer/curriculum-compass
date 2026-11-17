@@ -301,14 +301,6 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .group-head.minor { color: var(--minor); }
 .group-head.elec { color: var(--elec-strong); }
 .group-head .rule { font-weight: 500; color: var(--muted); }
-.group-head .hint { display: inline-grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--muted); cursor: default; }
-.group-head .hint svg.i { width: 16px; height: 16px; }
-.group-head .clear {
-  margin-left: auto; border: 0; background: none; padding: 2px 4px; font-size: 13px; color: var(--accent); cursor: pointer;
-  opacity: 0; transform: translateX(6px); visibility: hidden;
-  transition: opacity .2s, transform .35s var(--spring), visibility 0s linear .35s;
-}
-.group-head .clear.show { opacity: 1; transform: none; visibility: visible; transition: opacity .2s, transform .35s var(--spring), visibility 0s; }
 .slot { transition: height .45s var(--ease-out); }
 .slot.sizing { overflow: hidden; }
 .rows { display: flex; flex-direction: column; gap: 6px; }
@@ -373,8 +365,28 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .opt .e { flex: none; font-size: 13px; font-weight: 650; color: var(--opt-strong, var(--elec-strong)); }
 .opt .tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 650; vertical-align: 1px; }
 .opt[disabled] { cursor: default; }
-.group.full .opt[aria-checked="false"] { opacity: .55; }
-.group.spec-choice { --opt: var(--accent); --opt-soft: var(--accent-soft); --opt-strong: var(--accent-strong); }
+.choice.full .opt[aria-checked="false"] { opacity: .55; }
+
+/* A choice (electives, master project, …): one entry; folded it shows the picks, open it shows the options */
+.choice.elec { --row-line: color-mix(in srgb, var(--elec) 45%, var(--line)); }
+.choice.elec .stripe { background: var(--elec); }
+.choice.elec .num.ects { color: var(--elec-strong); }
+.choice.spec { --opt: var(--accent); --opt-soft: var(--accent-soft); --opt-strong: var(--accent-strong); }
+.choice .stripe { transition: opacity .3s; }
+.choice.empty .stripe { opacity: .35; }   /* nothing picked yet */
+.pick-sum { display: block; margin-top: 1px; font-size: 13px; font-weight: 500; color: var(--text-2); }
+.pick-sum .todo { color: var(--muted); }
+.choice-note { margin: 2px 0 10px !important; font-size: 13px; color: var(--muted); }
+.opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+/* "Clear" only takes room once there is something to clear */
+.clear-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-out); }
+.clear-wrap > div { overflow: hidden; display: flex; justify-content: flex-end; }
+.clear-wrap.show { grid-template-rows: 1fr; }
+.choice .clear {
+  margin-top: 8px; border: 0; background: none; padding: 2px 4px; font-size: 13px; color: var(--accent-strong); cursor: pointer;
+  opacity: 0; transform: translateX(6px); transition: opacity .2s, transform .35s var(--spring);
+}
+.clear-wrap.show .clear { opacity: 1; transform: none; }
 .slot-card {
   display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px;
   border: 1.5px dashed var(--line); background: transparent; cursor: default; text-align: left;
@@ -426,6 +438,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .tip .t-sep { display: block; height: 1px; margin: 8px 0; background: color-mix(in srgb, var(--tip-text) 14%, transparent); }
 .tip .t-line i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
 .tip ul { margin: 6px 0 0; padding-left: 16px; }
+.tip ul.t-flush { margin-top: 0; }
 .tip li + li { margin-top: 2px; }
 .tip p { margin: 0; }
 .tip p + p { margin-top: 8px; }
@@ -444,7 +457,9 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
   .menu-btn { display: grid; }
   .brand span { display: none; }
   .side {
-    position: fixed; z-index: 60; top: 0; left: 0; bottom: 0; height: auto; width: min(300px, 86vw);
+    /* align-self from the desktop layout would shrink the fixed panel to its content (WebKit applies it to
+       positioned boxes): with all departments folded it ended halfway down the screen. */
+    position: fixed; z-index: 60; top: 0; left: 0; bottom: 0; height: auto; align-self: auto; width: min(300px, 86vw);
     background: var(--bg); box-shadow: var(--tip-shadow); padding-top: 18px;
     transform: translateX(-104%); transition: transform .4s var(--ease-out);
   }
@@ -469,7 +484,10 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 }
 /* Touch: tooltips open as a card at the bottom */
 @media (hover: none) {
-  .tip.sheet { left: 12px !important; right: 12px; top: auto !important; bottom: 12px; max-width: none; white-space: normal; --from: 12px; }
+  .tip.sheet { left: 12px !important; right: 12px; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom)); max-width: none; white-space: normal; --from: 12px; padding-top: 18px; touch-action: none; }
+  .tip.sheet.show { pointer-events: auto; }
+  /* Grab handle: shows that the card can be swiped down */
+  .tip.sheet::before { content: ""; position: absolute; top: 7px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 2px; background: color-mix(in srgb, var(--tip-text) 28%, transparent); }
   .tip.sheet::after { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {

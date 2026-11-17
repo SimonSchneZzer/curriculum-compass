@@ -29,6 +29,16 @@ All interface texts live in `l10n/en.json` and `l10n/de.json`; the app picks the
 to English. To add a language, copy `en.json`, translate it and add its code to `CONFIG.languages` in `app.js`.
 Course titles and descriptions stay in the language of the FH Salzburg source.
 
+## Interface notes
+
+- **Choices** (electives, master project, specialisation picks): every choice is one entry under "Your choices" in its
+  semester. Folded it shows the picks (or what is left to pick) and the ECTS; open it to pick. A choice with one pick
+  folds itself after picking. Option names drop the choice's name in front ("Master Project - Development - FILM" →
+  "Development - FILM").
+- **Tooltips** only say what is not already visible nearby (no semester number, programme subtitle or option name).
+  On touch screens they open as a card at the bottom that can be swiped down; action buttons (share) and programme
+  links in the sidebar show none there.
+
 ## Saved in the browser
 
 - **Local storage** (`curriculum-compass`): last programme, majors per programme, picked electives, expanded courses,

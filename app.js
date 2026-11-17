@@ -593,6 +593,8 @@ async function goToCourse(pid, code) {
     const g = prog.groups.find((x) => x.id === c.group);
     const o = g && g.options.find((x) => x.courses.includes(code));
     if (o) el = $(`.opt[data-group="${CSS.escape(g.id)}"][data-opt="${CSS.escape(o.id)}"]`);
+    const entry = el && el.closest(".choice");
+    if (entry && !entry.classList.contains("open")) { setOpen(entry, true); await new Promise((r) => setTimeout(r, reduceMotion ? 0 : 450)); }
   }
   if (!el) return;
   el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
@@ -865,11 +867,8 @@ function buildSemesters() {
 function onSemesterClick(e) {
   const course = e.target.closest(".course");
   if (course && e.target.closest(".row") && !e.target.closest("[data-tip]") && !String(window.getSelection() || "")) {
-    const open = course.classList.toggle("open");
-    $(".row-title", course).setAttribute("aria-expanded", String(open));
-    open ? openSet.add(course.dataset.key) : openSet.delete(course.dataset.key);
+    setOpen(course, !course.classList.contains("open"));
     hideTip(true);
-    remember();
     return;
   }
   const opt = e.target.closest(".opt");
@@ -897,7 +896,14 @@ function slotHtml(s) {
       <div class="rows">${p.core.map((c) => rowHtml(c, "core")).join("")}</div>
       ${slotsCore.length ? `<div class="cards" style="margin-top:8px">${slotsCore.map(slotCardHtml).join("")}</div>` : ""}</div>`;
   }
-  p.groups.filter((g) => !(g.compulsory && !g.options.length)).forEach((g) => { html += groupHtml(g); });
+  const rest = p.groups.filter((g) => !(g.compulsory && !g.options.length));
+  rest.filter((g) => !g.options.length).forEach((g) => { html += groupHtml(g); });
+  // Choices (electives, master project, …): one entry each; it folds out to show the options to pick from.
+  const choices = rest.filter((g) => g.options.length);
+  if (choices.length) {
+    html += `<div class="group"><h3 class="group-head elec">${icon("star")}${esc(t("sem.choices"))}</h3>
+      <div class="rows">${choices.map(choiceHtml).join("")}</div></div>`;
+  }
   return html;
 }
 
@@ -934,31 +940,61 @@ function ruleText(g) {
 }
 
 function groupHtml(g) {
-  const color = groupColor(g);
+  const head = `<h3 class="group-head ${groupColor(g) === "spec" ? "spec" : "elec"}">${icon(groupColor(g) === "spec" ? "compass" : "star")}${esc(g.label)}</h3>`;
+  return `<div class="group">${head}<div class="cards">${slotCardHtml(g)}</div></div>`;
+}
+
+// Option label without the group's name in front ("Master Project - Development - FILM" → "Development - FILM").
+function shortLabel(g, o) {
+  const m = o.label.match(new RegExp(`^${g.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*[-–:·]\\s*`, "i"));
+  return m ? o.label.slice(m[0].length) : o.label;
+}
+
+// What the folded entry shows: the picks, or what is left to pick.
+function choiceSummary(g) {
+  const picked = pickedOptions(g);
+  const names = picked.map((o) => esc(shortLabel(g, o))).join(", ");
+  if (!picked.length) return `<span class="todo">${esc(ruleText(g))}</span>`;
+  if (isFull(g)) return names;
+  const left = isBudget(g) ? null : g.choose - picked.length;
+  return `${names} <span class="todo">· ${esc(left ? t("group.left", { n: left }) : ruleText(g))}</span>`;
+}
+
+function choiceHtml(g) {
+  const color = groupColor(g) === "spec" ? "spec" : "elec";
   const picked = pickedOptions(g);
   const own = ownOption(g);
-  const head = `<h3 class="group-head ${color === "spec" ? "spec" : "elec"}">${icon(color === "spec" ? "compass" : "star")}${esc(g.label)}
-    ${ruleText(g) ? `<span class="rule">· ${esc(ruleText(g))}</span>` : ""}
-    ${g.note ? `<button class="hint" type="button" data-tip="group" data-group="${g.id}" aria-label="${esc(t("group.about"))}">${icon("info")}</button>` : ""}
-    ${g.options.length ? `<button class="clear ${picked.length - (own ? 1 : 0) > 0 ? "show" : ""}" type="button" data-group="${g.id}">${esc(t("group.clear"))}</button>` : ""}</h3>`;
-  if (!g.options.length) return `<div class="group">${head}<div class="cards">${slotCardHtml(g)}</div></div>`;
+  const key = "g:" + g.id;
+  const open = openSet.has(key);
+  const id = "d-" + key.replace(/[^\w-]/g, "");
   const opts = own ? [own, ...g.options.filter((o) => o !== own)] : g.options;
   const multi = g.choose > 1 || isBudget(g);
-  return `<div class="group ${color === "spec" ? "spec-choice" : ""} ${isFull(g) ? "full" : ""}" data-group="${g.id}">${head}
-    <div class="cards" role="group" aria-label="${esc(g.label)}">${opts.map((o) => {
-      const on = picked.includes(o);
-      const n = o.courses.length;
-      return `<button class="opt ${multi ? "multi" : ""}" type="button" role="checkbox" aria-checked="${on}" ${own === o ? "disabled" : ""}
-          data-group="${g.id}" data-opt="${esc(o.id)}" data-tip="option">
-        <span class="box">${icon("check")}</span>
-        <span class="lbl">${esc(o.label)}${own === o ? `<span class="tag">${esc(t("group.yourMajor"))}</span>` : ""}${n > 1 ? `<small>${esc(t("group.courses", { n }))}</small>` : ""}</span>
-        <span class="e">${fmt(optionTotal(o, "ects"))} ECTS</span>
-      </button>`;
-    }).join("")}</div></div>`;
+  return `<div class="course choice ${color} ${open ? "open" : ""} ${isFull(g) ? "full" : ""} ${picked.length ? "" : "empty"}" data-key="${esc(key)}" data-group="${g.id}">
+    <div class="row">
+      <i class="stripe"></i>
+      <button class="row-title" type="button" aria-expanded="${open}" aria-controls="${id}">${esc(g.label)}<small class="pick-sum">${choiceSummary(g)}</small></button>
+      <span class="num ects">${fmt(groupTotal(g, "ects"))} ECTS</span>
+      <svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="details" id="${id}"><div><div class="inner">
+      ${g.note ? `<p class="choice-note">${esc(g.note)}</p>` : ""}
+      <div class="opts" role="group" aria-label="${esc(g.label)}">${opts.map((o) => {
+        const on = picked.includes(o);
+        const n = o.courses.length;
+        return `<button class="opt ${multi ? "multi" : ""}" type="button" role="checkbox" aria-checked="${on}" ${own === o ? "disabled" : ""}
+            data-group="${g.id}" data-opt="${esc(o.id)}" data-tip="option">
+          <span class="box">${icon("check")}</span>
+          <span class="lbl">${esc(shortLabel(g, o))}${own === o ? `<span class="tag">${esc(t("group.yourMajor"))}</span>` : ""}${n > 1 ? `<small>${esc(t("group.courses", { n }))}</small>` : ""}</span>
+          <span class="e">${fmt(optionTotal(o, "ects"))} ECTS</span>
+        </button>`;
+      }).join("")}</div>
+      <div class="clear-wrap ${picked.length - (own ? 1 : 0) > 0 ? "show" : ""}"><div><button class="clear" type="button" data-group="${g.id}">${esc(t("group.clear"))}</button></div></div>
+    </div></div></div>
+  </div>`;
 }
 
 function slotCardHtml(g) {
-  return `<div class="slot-card" tabindex="0" data-tip="group" data-group="${g.id}"><span class="lbl">${esc(g.label)}</span><span class="e">${fmt(g.ects)} ECTS</span></div>`;
+  return `<div class="slot-card" ${g.note ? `tabindex="0" data-tip="group" data-group="${g.id}"` : ""}><span class="lbl">${esc(g.label)}</span><span class="e">${fmt(g.ects)} ECTS</span></div>`;
 }
 
 function renderSlot(s, animate) {
@@ -1008,16 +1044,31 @@ function togglePick(gid, oid) {
   }
   picks[pickKey(g)] = list;
   afterPick(g);
+  // One to pick and now picked: the entry folds up a moment later and shows the pick.
+  if (!isBudget(g) && slots === 1 && list.includes(oid)) {
+    const el = document.querySelector(`.choice[data-group="${g.id}"]`);
+    setTimeout(() => { if (el && el.isConnected && isFull(g)) setOpen(el, false); }, reduceMotion ? 0 : 420);
+  }
+}
+
+function setOpen(course, open) {
+  course.classList.toggle("open", open);
+  $(".row-title", course).setAttribute("aria-expanded", String(open));
+  open ? openSet.add(course.dataset.key) : openSet.delete(course.dataset.key);
+  remember();
 }
 
 function afterPick(first) {
   prog.groups.filter((g) => pickKey(g) === pickKey(first)).forEach((g) => {
-    const el = document.querySelector(`.group[data-group="${g.id}"]`);
+    const el = document.querySelector(`.choice[data-group="${g.id}"]`);
     if (!el) return;
     const picked = pickedOptions(g).map((o) => o.id);
     el.classList.toggle("full", isFull(g));
+    el.classList.toggle("empty", !picked.length);
+    $(".pick-sum", el).innerHTML = choiceSummary(g);
+    $(".num.ects", el).textContent = `${fmt(groupTotal(g, "ects"))} ECTS`;
     el.querySelectorAll(".opt").forEach((o) => o.setAttribute("aria-checked", String(picked.includes(o.dataset.opt))));
-    const clear = $(".clear", el);
+    const clear = $(".clear-wrap", el);
     if (clear) clear.classList.toggle("show", picked.length - (ownOption(g) ? 1 : 0) > 0);
   });
   remember();
@@ -1044,8 +1095,8 @@ function tipContent(el) {
     }
     case "programme": {
       const b = prog.source.brochure;
-      return `<b class="t-title">${esc(t("prog.subtitle", { degree: w(prog.degree), department: deptName() }))}</b>
-        <span class="t-muted">${esc(t("prog.facts", { mode: w(prog.mode), language: w(prog.language), semesters: prog.semesters, ects: prog.ectsTotal }))}</span>
+      // Degree and department are not repeated: they are the subtitle right under the title.
+      return `<b class="t-title">${esc(t("prog.facts", { mode: w(prog.mode), language: w(prog.language), semesters: prog.semesters, ects: prog.ectsTotal }))}</b>
         <span class="t-muted">${(() => {
           const all = semesters().map(totals).reduce((x, r) => ({ ects: x.ects + r.ects, sws: x.sws + r.sws }), { ects: 0, sws: 0 });
           const h = hoursOf(all.ects, all.sws);
@@ -1059,7 +1110,7 @@ function tipContent(el) {
       const line = (color, label, v) => (v ? `<span class="t-line"><span><i style="background:${color}"></i>${esc(label)}</span><span>${fmt(v)} ECTS</span></span>` : "");
       const h = hoursOf(r.ects, r.sws);
       const dayLine = (color, label, hours) => `<span class="t-line"><span><i style="background:${color}"></i>${esc(label)}</span><span>${esc(t("sem.dayLine", { day: half(perDay(hours)), total: hours }))}</span></span>`;
-      return `<b class="t-title">${esc(t("sem.dayTitle", { title: t("sem.term", { n: s, season: season(s), sws: fmt(r.sws) }), total: h.total }))}</b>
+      return `<b class="t-title">${esc(t("sem.dayTitle", { title: t("sem.term", { season: season(s), sws: fmt(r.sws) }), total: h.total }))}</b>
         ${dayLine("var(--accent)", t("sem.inClass"), h.inClass)}
         ${dayLine("var(--core)", t("sem.own"), h.self)}
         <span class="t-sep"></span>
@@ -1070,7 +1121,7 @@ function tipContent(el) {
     }
     case "notes": return prog.notes.filter((n) => !n.semester && matches(n.onlyFor)).map((n) => `<p>${esc(n.text)}</p>`).join("");
     case "semnote": return prog.notes.filter((n) => n.semester === +d.sem).map((n) => `<p>${esc(n.text)}</p>`).join("");
-    case "group": { const g = prog.groups.find((x) => x.id === d.group); return `<b class="t-title">${esc(g.label)}</b><span class="t-muted">${esc(g.note || "")}</span>`; }
+    case "group": { const g = prog.groups.find((x) => x.id === d.group); return esc(g.note || ""); }   // the name is on the card
     case "option": {
       const g = prog.groups.find((x) => x.id === d.group);
       const o = g.options.find((x) => x.id === d.opt);
@@ -1079,9 +1130,10 @@ function tipContent(el) {
         const c = cs[0];
         const text = c.content.length > 220 ? c.content.slice(0, 220).replace(/\s+\S*$/, "") + "…" : c.content;
         const h = hoursOf(c.ects, c.sws);
-        return `<b class="t-title">${esc(c.title)}</b><span class="t-meta" style="margin:0 0 6px">${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(t("course.hours", { n: h.total }))} · ${esc(assessName(c.assessment))}</span>${text ? `<span class="t-muted">${esc(text)}</span>` : ""}`;
+        // The title is on the option itself → only the facts and the content
+        return `<span class="t-meta" style="margin:0 0 6px">${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(t("course.hours", { n: h.total }))} · ${esc(assessName(c.assessment))}</span>${text ? `<span class="t-muted">${esc(text)}</span>` : ""}`;
       }
-      return `<b class="t-title">${esc(o.label)}</b><ul>${cs.map((c) => `<li>${esc(c.title)} · ${fmt(c.ects)} ECTS</li>`).join("")}</ul>`;
+      return `<ul class="t-flush">${cs.map((c) => `<li>${esc(c.title)} · ${fmt(c.ects)} ECTS</li>`).join("")}</ul>`;
     }
     case "saved": return esc(navigator.onLine ? t("status.saved") : t("status.offline"));
     case "prog": { const p = findProgramme(d.id); return { small: true, html: esc(`${w(p.degree)} · ${w(p.mode)} · ${w(p.language)} · ${p.semesters} ${semWord()}`) }; }
@@ -1100,6 +1152,7 @@ function showTip(el) {
   if (!content) return;
   tEl.innerHTML = content;
   tEl.className = "tip" + (small ? " small" : "");
+  tEl.style.transform = tEl.style.opacity = tEl.style.transition = "";   // rest of a swipe
   tipFor = el;
   el.setAttribute("aria-describedby", "tip");
 
@@ -1138,7 +1191,7 @@ function hideTip(now) {
 
 function initTips() {
   document.addEventListener("pointerover", (e) => {
-    if (e.pointerType === "touch") return;
+    if (e.pointerType === "touch" || !canHover) return;   // touch screens: stray mouse events while scrolling
     const el = e.target.closest("[data-tip]");
     if (!el || el === tipFor) return;
     clearTimeout(showTimer);
@@ -1146,7 +1199,7 @@ function initTips() {
     showTimer = setTimeout(() => showTip(el), warm ? 250 : 650);
   });
   document.addEventListener("pointerout", (e) => {
-    if (e.pointerType === "touch") return;
+    if (e.pointerType === "touch" || !canHover) return;   // touch screens: stray mouse events while scrolling
     const el = e.target.closest("[data-tip]");
     if (!el || (e.relatedTarget && el.contains(e.relatedTarget))) return;
     clearTimeout(showTimer);
@@ -1159,13 +1212,55 @@ function initTips() {
   document.addEventListener("focusout", (e) => { if (e.target.closest("[data-tip]") === tipFor) hideTip(false); });
   document.addEventListener("click", (e) => {
     if (canHover) return;
+    if (e.target.closest("#tip")) return;            // a tap on the card itself keeps it open
     const el = e.target.closest("[data-tip]");
-    if (!el) { hideTip(true); return; }
+    // On touch, labels of actions (share) and the facts behind a programme link are noise: the tap already acts.
+    if (!el || el.dataset.tip === "prog" || el.hasAttribute("data-touch-silent")) { hideTip(true); return; }
     if (el === tipFor) { hideTip(true); return; }
     showTip(el);
   });
   window.addEventListener("scroll", () => { if (tipFor && canHover) hideTip(true); }, { passive: true });
+  initSheetSwipe();
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideTip(true); });
+}
+
+// Touch: the card at the bottom follows the finger down; far or fast enough and it slides away, otherwise it springs back.
+function initSheetSwipe() {
+  const el = tip();
+  let id = null, y0 = 0, dy = 0, last = 0, lastT = 0;
+  el.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" || !el.classList.contains("sheet") || !el.classList.contains("show") || id !== null) return;
+    id = e.pointerId; dy = 0;
+    y0 = last = e.clientY; lastT = e.timeStamp;
+    try { el.setPointerCapture(id); } catch {}
+    el.style.transition = "none";
+  });
+  el.addEventListener("pointermove", (e) => {
+    if (e.pointerId !== id) return;
+    const raw = e.clientY - y0;
+    dy = raw > 0 ? raw : raw / 6;                         // upwards only a little resistance
+    if (e.timeStamp - lastT > 40) { last = e.clientY; lastT = e.timeStamp; }
+    el.style.transform = `translateY(${dy}px)`;
+    el.style.opacity = String(Math.max(0.35, 1 - Math.max(0, dy) / (el.offsetHeight * 1.6)));
+  });
+  const end = (e) => {
+    if (e.pointerId !== id) return;
+    id = null;
+    const v = (e.clientY - last) / Math.max(1, e.timeStamp - lastT);   // px per ms over the last bit of the move
+    if (dy > Math.min(90, el.offsetHeight * 0.35) || (v > 0.45 && dy > 12)) {
+      const ms = reduceMotion ? 1 : Math.round(Math.max(140, Math.min(300, (el.offsetHeight + 24 - dy) / Math.max(v, 0.9))));
+      el.style.transition = `transform ${ms}ms cubic-bezier(.2,.7,.3,1), opacity ${ms}ms ease-out`;
+      el.style.transform = `translateY(${el.offsetHeight + 24}px)`;
+      el.style.opacity = "0";
+      setTimeout(() => { hideTip(true); el.style.transition = "none"; }, ms);
+    } else if (dy) {
+      el.style.transition = "transform .45s var(--spring), opacity .25s ease-out";
+      el.style.transform = "";
+      el.style.opacity = "";
+    }
+  };
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointercancel", end);
 }
 
 init();
