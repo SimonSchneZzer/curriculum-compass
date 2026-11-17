@@ -7,7 +7,7 @@ each semester, the SWS and ECTS totals, and the content and learning outcomes of
 Curriculum Compass is not a service of FH Salzburg. If anything differs from the official study regulations, the
 regulations apply.
 
-**Live:** https://simonschnezzer.github.io/curriculum-compass/
+**Live:** https://simon.schnetzer.at/compass/ (the old GitHub Pages address redirects there)
 
 ## What it covers
 
@@ -35,6 +35,9 @@ Course titles and descriptions stay in the language of the FH Salzburg source.
 - **Offline cache** (service worker, `sw.js`): the app and the curricula you open, so it works without internet.
   On a known unmetered connection all curricula are cached in advance (about 3.6 MB, too big for local storage).
 - "Report it" in the footer opens a prefilled issue (`CONFIG.reportUrl` in `app.js`).
+- **Visit counter** (`CONFIG.counter`, default `/c/`): counts views like `/compass/mma-m/film` with the host's
+  GoatCounter (no cookies, never the picks). Set it to `""` to turn counting off; on a host without it nothing happens.
+- **Imprint & privacy** link at the end of the sidebar (`CONFIG.legalUrl`, default `/legal`, `""` hides it).
 
 ## Data
 
@@ -76,7 +79,17 @@ See [docs/PLAN.md](docs/PLAN.md): automatic data check, "what's new" for users, 
 
 Plain static files (HTML, CSS, JavaScript, JSON), no build step, no server code, and only relative paths. Any static
 web host works, at the domain root or in a sub-folder: copy the repository files (without `scripts/`) and serve them.
-The offline cache needs HTTPS (or `localhost`). Currently published with GitHub Pages from `main`.
+The offline cache needs HTTPS (or `localhost`); the service worker only handles requests inside its own folder.
+
+**Published at simon.schnetzer.at/compass/** (home server, `ssh homeserver`):
+
+- `~/curriculum-compass` is a clone of this repo; `~/compass/deploy.sh` pulls `main` and copies only the app files
+  (no `scripts/`, `docs/`) to `~/compass/site`, which the `compass-web` container (nginx, `~/compass/docker-compose.yml`)
+  serves. After pushing to `main`: `ssh homeserver ~/compass/deploy.sh`.
+- The shared Caddy (`~/ai-server/Caddyfile`, block `simon.schnetzer.at`) forwards `/compass/*` to that container.
+  The portfolio on the same domain is untouched.
+- GitHub Pages now publishes the `gh-pages` branch: only a redirect that keeps the `#/…` path, plus a service worker
+  that removes the old offline copy. Saved picks from the old address stay there (local storage is per domain).
 
 Run locally:
 

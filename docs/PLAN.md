@@ -29,14 +29,9 @@ that opens a pull request or issue. Full automation is nice to have; a notificat
 - If a newer version touches their programme, it shows a short, dismissible hint ("2 courses changed in
   semester 3"). Changed rows get a brief highlight.
 
-## 13. Own domain and hosting
+## 13. Own domain and hosting — done (2026-11-17)
 
-**Goal:** move from GitHub Pages to our own server/domain when it makes sense.
-
-- The app is plain static files with relative paths only: copy the repository without `scripts/` and serve it.
-  It works at the domain root or in a sub-folder.
-- The offline mode needs HTTPS.
-- Update `CONFIG.reportUrl` in `app.js` if issues should go somewhere other than GitHub.
-- Old links keep working as long as the `#/…` paths stay the same; consider a redirect from the GitHub Pages
-  address.
-- Combine with 1: the server that hosts the app can also run the weekly data check.
+Live at https://simon.schnetzer.at/compass/, the GitHub Pages address redirects there. How it is deployed: see
+"Hosting" in the README. Visits are counted with the host's GoatCounter; a weekly summary goes to the maintainer via
+ntfy. The data check (1) can run on the same server (no cron there: use a systemd user timer like
+`visitor-summary.timer`, and ntfy for the notification).
