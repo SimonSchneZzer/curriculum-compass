@@ -3,53 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MMA Study Planner</title>
-  <meta name="description" content="Curriculum of the MultiMediaArt master programme at FH Salzburg, tailored to your specialisation.">
+  <title>CT Study Planner</title>
+  <meta name="description" content="Curricula of the Creative Technologies programmes at FH Salzburg, tailored to your major.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <p class="eyebrow">MultiMediaArt · Master · FH Salzburg</p>
-      <h1>MMA Study Planner</h1>
-      <p class="lead">Pick your specialisation to see the curriculum as it applies to you: what you take each semester, how many contact hours and credits it adds up to, and what every course is about.</p>
-      <p class="asof" id="asof">Loading data…</p>
+  <nav class="nav" aria-label="Programmes">
+    <div class="nav-inner">
+      <a class="brand" href="#" aria-label="CT Study Planner, home">
+        <svg class="mark" viewBox="0 0 28 28" aria-hidden="true">
+          <rect x="1" y="1" width="26" height="26" rx="8" fill="var(--spec)"/>
+          <path d="M8 9h8M8 14h12M8 19h6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <span>CT Study Planner</span>
+      </a>
+      <button class="switcher" id="switcher" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu">
+        <span class="switcher-label">
+          <small id="switcher-degree">Programme</small>
+          <b id="switcher-name">Loading…</b>
+        </span>
+        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
-  </header>
+    <div class="menu" id="menu" role="menu" aria-labelledby="switcher"></div>
+  </nav>
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
 
-  <main class="wrap">
-    <section class="picker" aria-label="Specialisation">
-      <h2 class="label" id="picker-label">Your specialisation</h2>
-      <div class="segmented" role="radiogroup" aria-labelledby="picker-label" id="segmented">
-        <span class="thumb" aria-hidden="true"></span>
+  <div id="page">
+    <header class="top">
+      <div class="wrap">
+        <p class="eyebrow" id="eyebrow">Creative Technologies · FH Salzburg</p>
+        <h1 id="title">&nbsp;</h1>
+        <ul class="chips" id="chips"></ul>
+        <p class="asof" id="asof">Loading data…</p>
       </div>
-    </section>
+    </header>
 
-    <div class="note" id="note" role="status"></div>
+    <main class="wrap">
+      <div id="pickers"></div>
+      <div class="note" id="note" role="status"><div><div class="note-text" id="note-text"></div></div></div>
 
-    <section aria-labelledby="overview-title">
-      <h2 class="section-title" id="overview-title">Overview</h2>
-      <div class="overview" id="overview"></div>
-      <div class="key" aria-hidden="true">
-        <span><i class="dot core"></i>All specialisations</span>
-        <span><i class="dot spec"></i>Your specialisation</span>
-        <span><i class="dot elec"></i>Free elective</span>
-      </div>
-    </section>
+      <section aria-labelledby="overview-title">
+        <h2 class="section-title" id="overview-title">Overview</h2>
+        <div class="overview" id="overview"></div>
+        <div class="key" id="key" aria-hidden="true"></div>
+      </section>
 
-    <div id="semesters"></div>
+      <div id="semesters"></div>
 
-    <section class="legend" aria-labelledby="legend-title">
-      <h2 class="section-title" id="legend-title">How to read this</h2>
-      <dl id="legend"></dl>
-    </section>
-  </main>
+      <section class="legend" aria-labelledby="legend-title">
+        <h2 class="section-title" id="legend-title">How to read this</h2>
+        <dl id="legend"></dl>
+      </section>
+    </main>
 
-  <footer class="wrap foot">
-    <p id="source"></p>
-    <p>This is an unofficial overview. If anything here differs from the official study regulations, the regulations apply.</p>
-    <p><a href="data/curriculum.json">Download the data as JSON</a></p>
-  </footer>
+    <footer class="wrap foot">
+      <p id="source"></p>
+      <p>This is an unofficial overview. If anything here differs from the official study regulations, the regulations apply.</p>
+      <p><a id="json-link" href="data/index.json">Download the data as JSON</a></p>
+    </footer>
+  </div>
 
   <script src="app.js"></script>
 </body>

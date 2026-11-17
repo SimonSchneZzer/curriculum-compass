@@ -1,0 +1,92 @@
+{
+  "department": "Creative Technologies",
+  "institution": "Salzburg University of Applied Sciences (FH Salzburg)",
+  "dataAsOf": "2026-11-17",
+  "programmes": [
+    {
+      "id": "cis-b",
+      "name": "Code and Interactive Systems",
+      "degree": "Bachelor",
+      "mode": "Full-time",
+      "language": "German",
+      "semesters": 6,
+      "file": "data/cis-b.json"
+    },
+    {
+      "id": "mma-b",
+      "name": "MultiMediaArt",
+      "degree": "Bachelor",
+      "mode": "Full-time",
+      "language": "German",
+      "semesters": 6,
+      "file": "data/mma-b.json"
+    },
+    {
+      "id": "cis-m",
+      "name": "Code and Interactive Systems",
+      "degree": "Master",
+      "mode": "Part-time",
+      "language": "English",
+      "semesters": 4,
+      "file": "data/cis-m.json"
+    },
+    {
+      "id": "hci-m",
+      "name": "Human-Computer Interaction",
+      "degree": "Joint Master",
+      "mode": "Full-time",
+      "language": "English",
+      "semesters": 4,
+      "file": "data/hci-m.json"
+    },
+    {
+      "id": "mma-m",
+      "name": "MultiMediaArt",
+      "degree": "Master",
+      "mode": "Full-time",
+      "language": "English",
+      "semesters": 4,
+      "file": "data/mma-m.json"
+    },
+    {
+      "id": "rave-m",
+      "name": "Realtime Art & Visual Effects",
+      "degree": "Master",
+      "mode": "Full-time",
+      "language": "English",
+      "semesters": 4,
+      "file": "data/rave-m.json"
+    }
+  ],
+  "legend": {
+    "sws": "Weekly contact hours over 14 weeks (SWS 2 = 28 contact hours for the whole course).",
+    "ects": "Workload in ECTS credits; 1 ECTS credit is about 25 hours of work.",
+    "semester": "Odd semesters run in winter (mid-September to end of January), even semesters in summer (mid-February to end of June).",
+    "assessment": {
+      "final": "Assessed at the end of the course (exam).",
+      "continuous": "Assessed continuously during the course."
+    },
+    "types": {
+      "BP": "Bachelor final exam",
+      "DP": "Master final exam",
+      "MP": "Master final exam",
+      "IL": "Lecture with integrated project work",
+      "IT": "Individual training / phases",
+      "LB": "Lab session",
+      "PS": "Pro-seminar",
+      "PT": "Project",
+      "RC": "Course with integrated reflective practice",
+      "RE": "Revision course",
+      "SE": "Seminar",
+      "TU": "Tutorial",
+      "UB": "Practice session",
+      "VO": "Lecture",
+      "BA": "Bachelor thesis",
+      "BE": "Professional internship",
+      "EX": "Not defined in the source legend",
+      "KO": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page",
+      "UV": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page",
+      "VP": "Course type of Paris Lodron University Salzburg; not explained on the curriculum page"
+    }
+  }
+}

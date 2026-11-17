@@ -1,0 +1,1466 @@
+{
+  "id": "cis-b",
+  "name": "Code and Interactive Systems",
+  "degree": "Bachelor",
+  "mode": "Full-time",
+  "language": "German",
+  "semesters": 6,
+  "ectsTotal": 180,
+  "dataAsOf": "2026-11-17",
+  "source": {
+    "curriculum": "https://www.fh-salzburg.ac.at/en/study/ct/code-and-interactive-systems-bachelor/curriculum",
+    "brochure": {
+      "url": "https://www.fh-salzburg.ac.at/fileadmin/fhs_daten/studiengaenge/mmt/documents/CDE-BA_web.pdf",
+      "version": "2026/08"
+    }
+  },
+  "tracks": [
+    {
+      "key": "major",
+      "label": "Major",
+      "options": [
+        {
+          "id": "web",
+          "name": "Future Web & Mobile"
+        },
+        {
+          "id": "game",
+          "name": "Game & Immersive Tech"
+        }
+      ],
+      "fromSemester": 3
+    },
+    {
+      "key": "minor",
+      "label": "Specialisation",
+      "options": [
+        {
+          "id": "ixd",
+          "name": "Interaction Design"
+        },
+        {
+          "id": "ai",
+          "name": "AI Engineering"
+        }
+      ],
+      "fromSemester": 3
+    }
+  ],
+  "notes": [],
+  "groups": [
+    {
+      "id": "elective-2",
+      "semester": 2,
+      "label": "Elective",
+      "choose": 1,
+      "note": null,
+      "open": false,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "CDEB2KUKIL",
+          "label": "Communication and Culture 2",
+          "courses": [
+            "CDEB2KUKIL"
+          ]
+        },
+        {
+          "id": "CDEB2MTGIL",
+          "label": "Media, Technology & Society 2",
+          "courses": [
+            "CDEB2MTGIL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elective-6",
+      "semester": 6,
+      "label": "Elective",
+      "choose": 1,
+      "note": null,
+      "open": false,
+      "onlyFor": null,
+      "linkedTrack": null,
+      "options": [
+        {
+          "id": "CDEB6CCRIL",
+          "label": "Change.Climate.Resilience",
+          "courses": [
+            "CDEB6CCRIL"
+          ]
+        },
+        {
+          "id": "CDEB6IHFIL",
+          "label": "Interdisciplinary Hackathon / Futures Stories Lab",
+          "courses": [
+            "CDEB6IHFIL"
+          ]
+        }
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "code": "CDEB1PUSIL",
+      "title": "3D Prototyping and Scripting",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 3,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 1",
+      "content": "An introduction to real-time 3D, basic project structures and typical engine concepts such as scenes, objects, components and prefab or blueprint mechanisms. Installation, project setup and basic operation of a modern game engine (e.g. Unity, Unreal, Godot). Importing 3D models, textures, audio and UI elements, as well as understanding and applying relevant import and platform settings. Quality and performance requirements for real-time assets on different target platforms (e.g. polygon budget, texture sizes, level of detail, compression) and optimisation of prefabricated assets. Building simple 3D and/or 2D levels using placeholders (blockout) and prefabricated assets. Basics of materials, shading, lighting, camera work and audio. Basics of scripting and/or visual scripting: object movement, interaction logic, triggers, events and simple game states. Creation of a small playable prototype (mini-game or interactive scene) including playtesting and feedback loops.",
+      "learningOutcome": "Upon completion, students will be able to explain the fundamental concepts of real-time 3D and typical elements of modern game engines (e.g. scenes, objects, components, prefabs and blueprints) in their own words. They will be able to use a common game engine confidently, build simple 3D and 2D scenes, and integrate existing assets into a working project. Furthermore, they describe the quality and performance requirements of various target platforms (e.g. desktop, mobile, web, VR/AR) for assets and optimise pre-made assets for a selected target platform. Students understand import settings for different asset types (3D models, textures, audio, simple UI elements) and apply them appropriately. They configure lighting, materials or shading, cameras and audio to create a coherent scene. Furthermore, they create simple interactive applications or mini-games using a scripting language or visual scripting, including basic logic, input and simple state mechanics, and independently adapt a small project, expand it and prepare it for a playtest.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1AILIL",
+      "title": "AI Literacy",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 1",
+      "content": "An introduction to key AI concepts and how generative models work. Ethical and societal issues (bias, data protection, the EU AI Directive, accountability). An overview of suitable AI tools for academic study and professional practice. Critical evaluation of AI content. Effective prompting for AI tools. AI-supported workflows in development. Moderated discussion sessions on specified topics.",
+      "learningOutcome": "Upon completion, students will be able to explain the fundamental concepts and functioning of artificial intelligence, particularly generative models. They will critically reflect on the ethical, legal and societal aspects of AI systems (e.g. bias, data protection, the EU AI Directive, accountability). Furthermore, they will evaluate AI-generated content in terms of quality, credibility and potential biases. Students use AI tools purposefully and responsibly in their studies, for example to assist with programming, research and creative tasks. They also formulate prompts effectively to control generative AI models precisely and efficiently.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1AMAIL",
+      "title": "Applied Mathematics",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 4,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Mathematics 1",
+      "content": "Fundamentals of vector and matrix calculus: vector spaces, linear independence, basis and dimension. Systems of linear equations: solution methods (Gauss’s algorithm), rank of a matrix, inverse and determinant. Linear mappings: matrix representation, kernel and image of a mapping, linear transformations. Eigenvalues and eigenvectors: diagonalisation, spectral theorem, significance for data reduction and transformations. Orthogonality and scalar products: orthogonal projections, Gram’Schmidt method. Mathematical foundations for optimisation methods (gradient methods). Derivatives, partial derivatives, chain rule.",
+      "learningOutcome": "Upon completion, students will be able to understand and describe the fundamental structures of linear algebra. They will solve systems of linear equations and interpret their solution space. Furthermore, they will perform calculations involving matrices and vectors and apply linear transformations in practical contexts. Students will calculate eigenvalues and eigenvectors and explain their significance in data science contexts. In addition, they will apply orthogonal methods and understand fundamental mathematical optimisation techniques.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1KUKIL",
+      "title": "Communication and Culture 1",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 1",
+      "content": "This course introduces students to fundamental concepts and models in the fields of communication studies, linguistics and cultural studies. It covers classical communication models, provides an introduction to semiotics for the analysis of signs, symbols and simple narratives, and offers an initial understanding of discourses and cultural systems of meaning. In addition, the course examines the role of identity, representation and collective memory in shaping individual and societal self-images, as well as fundamental aspects of cultural standardisation.",
+      "learningOutcome": "Upon completion, students will be able to explain fundamental concepts of culture, communication and semiotics, and to identify and describe basic cultural systems of meaning and discourses in everyday communication by analysing and reflecting on cultural standardisation and codes.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1KTKIL",
+      "title": "Creative techniques and concept development",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 1",
+      "content": "Basic models and phases of creative processes, in particular divergent and convergent thinking (analysis and synthesis) as well as lateral and linear thinking. An introduction to various creativity techniques as tools for structuring and inspiring the generation of ideas. Methods for idea generation, problem analysis and structuring creative concepts, including iterative cycles, shifts in perspective and deliberate rule-breaking to focus, evaluate and select ideas. Use of digital and analogue tools to support creative group work. Practical exercises on teamwork, presentation, pitching and reflection on creative outcomes, taking conceptual responsibility into account.",
+      "learningOutcome": "Upon completion, students will be able to apply various creativity techniques independently to systematically generate innovative ideas, and consciously switch between divergent and convergent thinking. They will structure creative problem-solving processes, develop ideas into viable concepts, and take responsibility for conceptual decisions. Students plan interdisciplinary teamwork, critically reflect on creative processes, present and pitch concepts in a targeted manner, and use digital and analogue techniques to support creative work. Furthermore, they combine creative and critical thinking, evaluate ideas iteratively, and apply basic time and cost planning to simple, multimedia creative projects.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1EMEIL",
+      "title": "Introduction to Media Informatics",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 1",
+      "content": "Data storage in computers (numeric, alphanumeric). Visual media formats: representation and storage of image data, taking into account colour spaces (RGB, CMYK, YCbCr), bit depth and compression methods (lossless vs. lossy). Analysis of typical algorithms such as DCT (JPEG), Deflate (PNG) and LZW (GIF). Audio media formats: signal processing chains from sampling to encoding (sampling rate, bit rate, psychoacoustic models, lossless vs. lossy compression). Comparison of PCM (WAV), MP3 and AAC with regard to quality parameters and efficiency. Audiovisual media formats: Structure of container formats (MP4, AVI, MOV), functioning of common video codecs (H.264/AVC, HEVC), motion compensation techniques, GOP structures, bitrate control and streaming protocols (DASH, HLS). Text and document formats: structuring and markup methods (plain text, PostScript-based PDF, XML/HTML), encoding standards (ASCII, Unicode/UTF-8) and their impact on portability and semantic processing.",
+      "learningOutcome": "Upon completion, students will be able to identify sub-fields and roles within media informatics (including interfaces with computer science, HCI, design and media production). They will be able to name and describe different media formats and assess their advantages and disadvantages. Furthermore, they will understand and apply media-format-specific compression techniques. Students select appropriate media formats for various use cases and convert them across formats. They also explain the technical fundamentals of multimedia and interactive formats.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1EPRIL",
+      "title": "Introduction to Programming",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 4,
+      "ects": 5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 1",
+      "content": "Introduction to the C# programming language. Basic concepts: variables, data types, operators. Control structures (loops and conditional statements). Arrays. Object-oriented programming (OOP): classes, objects, interfaces, abstract classes. Generics and the use of .NET data structures such as Dictionary and List. Fundamentals of algorithm development. Introduction to debugging techniques and principles of code quality and maintainability.",
+      "learningOutcome": "Upon completion, students will be able to recognise and apply the basic syntax and keywords of the C# programming language, such as variables, data types, loops, conditional statements and arrays. They will be able to understand and analyse the flow of C# applications. Students are able to independently write C# code to solve simple algorithmic problems using loops, branches and arrays, as well as to extend existing code. Furthermore, they apply basic concepts of object-oriented programming and select and use appropriate data types as well as .NET data structures such as dictionaries and lists for given programming tasks. They recognise basic code smells such as code duplication, unreadable variables and magic numbers, identify bugs in C# programmes, and review and evaluate the functionality and code quality of C# programmes.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1MUDIL",
+      "title": "Media design and design principles",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 1",
+      "content": "UI design principles, the application and communication of design fundamentals. Gestalt laws and principles. Basic colour theory, typography, layout (with a focus on digital and interactive applications), design and style guides, UI patterns. Sound and motion as design elements. Interpreting and communicating designs: analysing, evaluating and creating designs. Developing layouts and wireframes for various end devices.",
+      "learningOutcome": "Upon completion, students will be able to identify the fundamentals of perception, mental models and Gestalt principles, and recognise, understand and evaluate their application in various designs. They will identify the fundamentals of typography and colour theory and assess their influence on the impact of a design. Furthermore, they will understand and apply the content of design and style guides, as well as the rationale behind their use in projects and organisations. Students identify, design and correctly apply common UI patterns. They create layouts and wireframes for different end devices and understand the basic differences in their operation. Furthermore, they evaluate knowledge of movement and sound as design elements, as well as their appropriate use in different types of interaction design.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1MTGIL",
+      "title": "Media, Technology & Society 1",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 1",
+      "content": "This course introduces key media studies perspectives on the relationship between media, technology and society. It focuses on the question of what media are and how (technical) systems interact with social processes. It examines selected approaches within media theory to analyse how media technologies help shape the framework conditions for contemporary communication and action by influencing communication, perception, the public sphere and social order.",
+      "learningOutcome": "Upon completion, students will be able to identify and explain key concepts and perspectives in media studies. They will describe media as technical and institutional infrastructures. Furthermore, they will provide examples of how media technologies influence social communication and perception.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1SLERC",
+      "title": "Self-directed learning 1",
+      "semester": 1,
+      "type": "RC",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 1",
+      "content": "Fundamentals of self-management based on the Personality-System Interaction (PSI) theory and the STAR model. Methods for achieving goals, such as the Eisenhower Method, the SMART Method, the ALPEN Method, ABC analysis and the Pareto Principle. Reflection on personal thinking and learning patterns through individual coaching and resource assessments. Coping with stress and resource management. Use of coaching methods for defining and pursuing personal goals.",
+      "learningOutcome": "Upon completion, students will be able to plan and organise their learning and work processes independently. They will prioritise tasks in a goal-oriented manner and tackle them efficiently. Furthermore, they will recognise their individual strengths and resources and make targeted use of them. Students will actively shape their personal development regardless of external circumstances.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1SDTUE",
+      "title": "Software Development Tools",
+      "semester": 1,
+      "type": "UB",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 1",
+      "content": "Professional use of Integrated Development Environments (IDEs), including advanced features and debugging techniques. An introduction to the command line (shell) as the primary tool for process control and file management. The basics of version control with Git, focusing on key commands and simple branching. An explanation of the underlying concepts of commits and branches.",
+      "learningOutcome": "Upon completion, students will be able to use integrated development environments (IDEs) and their advanced features (e.g. refactoring functions and advanced search) efficiently. They apply version control (Git) to their own work or work in small teams to manage code, and explain the concepts of commits and branches as well as the associated core commands (add, commit, push, branch). Furthermore, they use the command line (shell) as a central tool for navigation, file manipulation and program execution (cd, cp, mv) and can understand and interpret the logic and flow of simple shell scripts. Students apply debugging techniques (breakpoints, tracing) systematically and in depth to efficiently identify and rectify errors in programmes.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB1WUDIL",
+      "title": "Web Programming and Databases 1",
+      "semester": 1,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 3,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 1",
+      "content": "HTML (semantic tags), CSS (selectors, inheritance, box model, Flexbox, Grid). Introduction to JavaScript for basic interactions. Principles of accessibility and code quality assessment in front-end development. Fundamentals of data modelling. Representing schemas using ER diagrams. SQL. Practical project to build a complete, static web application.",
+      "learningOutcome": "Upon completion, students will be able to apply fundamental front-end technologies such as HTML and CSS to independently create static web pages and customise existing ones. They will understand how HTML and CSS work together and apply various CSS layout techniques to implement responsive designs. They understand and use the fundamentals of data modelling to design database schemas for a use case using ER diagrams, and formulate SQL queries for retrieving and manipulating data. Students identify and resolve basic accessibility issues in static websites and are able to assess the quality of HTML and CSS code.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2AUDIL",
+      "title": "Algorithms and data structures",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 4,
+      "ects": 5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 2",
+      "content": "In-depth study of advanced programming techniques in C# or a comparable language. Complexity analysis of algorithms (O-notation). Sorting algorithms. Elementary and advanced data structures such as linked lists (stacks, queues), heaps (priority queues), binary search trees and hash tables. Introduction to graph theory and related algorithms (e.g. shortest paths and spanning trees).",
+      "learningOutcome": "Upon completion, students will be able to understand the complexity analysis of existing algorithms and data structures (O-notation) and verify these through practical timing experiments. They will understand recursion as a tool for algorithm design and apply recursion to their own simple algorithms. Furthermore, they explain, compare and apply the functioning and efficiency of various sorting algorithms (such as selection, insertion, bubble, merge and quick sort) by using existing implementations to solve their own problems. Students explain and compare graph algorithms (e.g. breadth-first/depth-first search, shortest path, spanning tree) and their representations (adjacency matrix/list), and apply existing implementations to their own problems. They explain and compare data structures for efficient searching and management (such as search trees, heaps) and use existing implementations for their own problems. In addition, they objectively compare algorithms based on time and memory estimates and evaluate their suitability for various application scenarios. For given algorithmic problems, they select the most suitable data structures and algorithms, providing justification for their choice, and gain an in-depth understanding of object-oriented programming as a means of modelling.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2GGDIL",
+      "title": "Basics of Game Development",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 3,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 2",
+      "content": "An introduction to fundamental engine concepts using simple technologies (e.g. C# + SFML or Three.js). Game loop, delta time, resource management and simple visual scenes. Basic project structure, typical OOP structures for games, input, events and simple collisions. Debugging, logging and version control as part of the development process. Design and structure of modern game engine workflows (e.g. scenes, objects, components, prefabs). UI fundamentals and event systems, simple animations and visual representation. Transformations, camera control and basic movement logic. Collision detection and trigger mechanics in interactive applications. Advanced programming-related content within modern game engine workflows. Exercises based on simple technology at the outset, followed by implementation using a modern engine.",
+      "learningOutcome": "Upon completion, students will be able to understand the core processes of a game engine and apply them to interactive applications. They will develop maintainable code structures and apply fundamental OOP concepts. Furthermore, they will utilise basic graphics, animation and UI elements and apply coordinate systems and transformations with confidence. Students implement simple collision detection and reaction logic and utilise debugging and version control in the development process. They also apply fundamental problem-solving strategies to games.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2COMIL",
+      "title": "Computer networks",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 2",
+      "content": "Basic terms and concepts of computer networks: network types (LAN, WAN, MAN), topologies, protocol architectures. The OSI and TCP/IP layer models. Network technologies and transmission methods: Ethernet, WLAN (IEEE 802.11), DSL, fibre optics. Addressing and routing: IP addressing (IPv4, IPv6), subnetting. Transport protocols: UDP, TCP, flow and congestion control, QUIC. Application layer protocols: DNS, HTTP, SMTP. Practical exercises using real and virtual network infrastructure, e.g. router and switch configuration, network monitoring.",
+      "learningOutcome": "Upon completion, students will be able to describe and explain the basic principles and structures of computer networks. They will understand network topologies and protocols and be able to configure them. Furthermore, they will plan IP addresses and understand routing mechanisms. Students will use and analyse transport and application layer protocols. They will also carry out practical networking tasks independently and document them.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2MMPPT",
+      "title": "Multimedia Project 1 (MMP1) Programming Project",
+      "semester": 2,
+      "type": "PT",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 2",
+      "content": "Application of creativity techniques and brainstorming within technical parameters. Independent selection and implementation of a project topic. Project planning and management, including time management and self-management. Participation in project meetings and code reviews for quality assurance. Practical programming and implementation of a functional software project. Conducting simple usability tests to improve functionality and user-friendliness. Presentation of the concept and its practical implementation. Creation of accompanying documentation and a portfolio in the form of text, images and video.",
+      "learningOutcome": "Upon completion, students will be able to independently develop a project idea within technical parameters and refine it conceptually. They will programme and implement a simple multimedia software project. In addition, they will identify and rectify errors and implement iterative improvements based on code reviews and user feedback. Students will apply self-management and time-management techniques appropriately to the situation. They will present the concept and the finished project convincingly, both in person and online.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2PRAIL",
+      "title": "Presentation Techniques",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 2",
+      "content": "Target audience analysis and tailoring the presentation to specific needs. Structuring and organising presentations (introduction, main body, conclusion). Designing presentation materials. Narrative structures in presentations and the basics of storytelling. Rhetorical devices and linguistic style. Body language, facial expressions and gestures. Dealing with stage fright and building confidence. Techniques for handling questions and objections from the audience. Feedback methods for reflecting on and improving presentation style.",
+      "learningOutcome": "Upon completion, students will be able to independently plan and prepare structured presentations tailored to specific audiences. They will design presentation materials professionally using digital and AI-based tools and deploy them effectively. Furthermore, they will confidently apply rhetorical and non-verbal communication techniques and speak in front of an audience, even when suffering from stage fright. Students will respond competently to questions and lead discussions. They also accept constructive feedback and use it for continuous improvement.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2PMRVO",
+      "title": "Projektmanagement 1 and Introduction to Law",
+      "semester": 2,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 1.5,
+      "ects": 2,
+      "language": "German",
+      "assessment": "final",
+      "module": "Allgemeine Studien- & Medienkompetenz 2",
+      "content": "Introduction to Project Management (definitions, frameworks). Project initiation and project characteristics (SMART objectives, feasibility). Project planning ’ scope and requirements (Work Breakdown Structure, user stories, use cases). Project planning ’ time (Gantt chart, Critical Path Method) and budget (resource planning). Agile project management. Risk management and quality assurance. Overview of legal systems. Terms and conditions. Copyright and intellectual property. Transfer of usage rights and licensing models. General Data Protection Regulation. Legal basis for data processing. Privacy policy (legal notice, cookies). E-commerce law.",
+      "learningOutcome": "Upon completion, students will be able to understand and apply fundamental project management methods. They will plan, manage and monitor projects in a structured manner. Furthermore, they will be able to distinguish between agile and traditional project management approaches and apply them appropriately to different situations. Students will reflect on and assess their own and others’ key roles within projects. On the legal side, students are aware of the legal foundations for (IT) projects, such as copyright and data protection. They are familiar with intellectual property rights in software and multimedia projects. Furthermore, they are able to implement data protection principles in projects.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2SMLIL",
+      "title": "Statistics and the Fundamentals of Machine Learning",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 3,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Mathematics 2",
+      "content": "Fundamentals of statistics (probability spaces, random variables, distributions: normal, Bernoulli, binomial and exponential distributions; expected value, variance, covariance, conditional probability, Bayes’ theorem). Inferential statistics (hypothesis testing, confidence intervals). Fundamentals of machine learning: supervised learning (linear regression, decision trees, model evaluation), unsupervised learning (k-means). Practical applications and examples using Python.",
+      "learningOutcome": "Upon completion, students will be able to explain fundamental statistical concepts and methods (e.g. probability spaces, random variables, distributions, expected value, variance, covariance, conditional probability, Bayes’ theorem) in their own words and apply them to simple datasets. They will correctly perform hypothesis tests and calculate confidence intervals, and interpret the results. Furthermore, they implement and train simple machine learning models (e.g. linear regression, decision trees, k-means) using Python. Students evaluate the quality of models using appropriate metrics and interpret the results. They also explain the difference between supervised and unsupervised learning and select appropriate methods for typical tasks.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2UHFIL",
+      "title": "User Experience and Human Factors",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Design- & Technologie-Grundlagen 2",
+      "content": "Definitions and terminology relating to Human-Computer Interaction (HCI). An introduction to fundamental HCI theories and concepts (e.g. affordances, mental models, embodied interaction, situated action). Principles and methods of Human-Centred Design (HCD). Basic concepts of usability and user experience. Terms and methods for defining the context of use (e.g. contextual inquiry, task analysis, observation). Human characteristics in relation to human-computer interaction (human factors, accessibility and design principles). Overview of various interaction paradigms (WIMP, touch, ubiquitous computing, tangible interfaces, wearable computing). Fundamental methods and concepts for evaluating interactive systems (e.g. heuristic evaluation, usability, user experience).",
+      "learningOutcome": "Upon completion, students will be able to understand, explain and apply the fundamental terms, concepts, theories and models of Human-Computer Interaction (HCI). They will understand the principles of Human-Centred Design (HCD) and apply them in practical exercises. Furthermore, they will describe the fundamentals of human factors, context of use and evaluation methods, and test these out using practical examples. Students understand the interplay between interfaces and interaction with digital technologies and explore this in exercises. They also understand the significance of interaction design in technological development and put this into practice through prototyping.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2WUDIL",
+      "title": "Web Programming and Databases 2",
+      "semester": 2,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 3,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Programming 2",
+      "content": "Server-side web development using PHP. Accessing and interacting with relational databases via PHP. Basic principles of client-server communication. JavaScript for advanced web interactivity, including the concepts of asynchronous operations (Promises). Introduction to web security, focusing on common vulnerabilities such as SQL injection and cross-site scripting (XSS) and their prevention. Development of a database-driven web project.",
+      "learningOutcome": "Upon completion, students will be able to develop a web project using PHP, a database and JavaScript. They will be able to use and explain Promises in JavaScript. They will be able to identify and prevent SQL injection and cross-site scripting.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB2KUKIL",
+      "title": "Communication and Culture 2",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 2",
+      "content": "This course explores communication as a cultural practice in greater depth, focusing on discourse, representation and power. Topics covered include language as action and performativity, representations of gender, the body and identity, issues of interculturality and transculturality, and global media flows. Furthermore, the course examines digital communication cultures, social media, transmedia narratives and algorithms as structuring agents in the production of meaning within digital environments.",
+      "learningOutcome": "Upon completion, students will have gained a deeper understanding of communicative and media processes in relation to the production of cultural meaning, identity and power. They will apply fundamental semiotic, discourse-analytical and interpretative approaches to examples from analogue and digital media. Furthermore, they will critically examine language, forms of communication and media representations, and derive initial ideas for the thoughtful design of their own projects.",
+      "track": null,
+      "group": "elective-2"
+    },
+    {
+      "code": "CDEB2MTGIL",
+      "title": "Media, Technology & Society 2",
+      "semester": 2,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Allgemeine Studien- & Medienkompetenz 2",
+      "content": "This course examines digital platforms and data-driven media systems as powerful infrastructures of the present day. It focuses on current debates regarding how platform architectures and algorithmic sorting mechanisms shape attention, visibility and participation, thereby influencing social processes. In addition, the fundamental economic logics of digital media ’ such as those based on advertising and reach ’ are examined in order to understand social power relations. The aim is for students to reflect on their own professional practice within these structures and to develop ethical positions.",
+      "learningOutcome": "Upon completion, students will be able to describe digital platforms and data-driven media systems as infrastructures with specific logics of power and control. They will apply media studies concepts relating to platforms, algorithms and data regimes to current examples. Furthermore, they will critically discuss key areas of conflict within the digital media order (e.g. visibility, control, regulation, AI). Students reflect on their own actions within the context of media and technology and formulate initial, well-founded positions on responsibility. They also learn to incorporate media-economic aspects into their own professional development.",
+      "track": null,
+      "group": "elective-2"
+    },
+    {
+      "code": "CDEB3BSYIL",
+      "title": "Operating systems",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1.5,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Software Systems 1",
+      "content": "Introduction to the architecture and basic functions of operating systems. Process and thread management: creation, control, synchronisation, scheduling and deadlocks. Memory management: virtual memory addressing, paging, segmentation, allocation. File systems: concepts, structure, access rights and management mechanisms. Input/output management and device drivers. Inter-process communication. Security and rights management in operating systems. Practical exercises with Linux: command-line operation, shell scripting, system administration. Container technologies with Docker: container creation, management and networking.",
+      "learningOutcome": "Upon completion, students will be able to explain and evaluate the basic functions and architecture of modern operating systems. They will understand processes and threads, as well as memory and file systems, and will be able to administer them. Furthermore, they understand inter-process communication and security aspects in operating systems. Students use Linux as an operating system via the command line and carry out administrative tasks. They also create, configure and use Docker containers in development and production environments.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB3WAFIL",
+      "title": "Scientific Work and Research Methods",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Wissenschafts- & Wirtschaftskompetenz",
+      "content": "Fundamentals of academic research. Familiarising oneself with two academic research methods, e.g. interviews and surveys, and applying them in a practical example (planning, preparing, conducting and analysing data). Research ethics (such as informed consent and the proper handling of data). Research: locating and using various sources of information, reading academic texts. Fundamentals of working with sources and correct citation. Academic writing and presentation of results in a report. Discussing and critically reflecting on results. Answering the research question.",
+      "learningOutcome": "Upon completion, students will be able to formulate their own research question and answer it using specified methods. They will correctly plan and carry out a qualitative method (such as interviews) and a quantitative method (such as questionnaires) with participants. Furthermore, they will analyse qualitative and quantitative data and describe, discuss and relate the results obtained from these methods to academic sources. Students understand and apply the fundamentals of academic work and test hypotheses using appropriate methods (such as statistical tests). Furthermore, they inform participants in accordance with the applicable rules of the University of Applied Sciences and good academic practice within the framework of informed consent forms and implement the GDPR.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB3SWEIL",
+      "title": "Software Engineering 1",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Software Systems 1",
+      "content": "Collaborative software development using Git and advanced workflows. The fundamentals and application of Test-Driven Development (TDD). Code quality assurance through automated testing and code reviews. Methods for agile development and knowledge sharing, such as pair and mob programming. Algorithmic problem-solving through practical exercises. Introduction to code analysis using metrics and static analysis tools (linters). Use of AI assistance (e.g. chatbots, autocompletion) in programming.",
+      "learningOutcome": "Upon completion, students will be able to apply version control effectively in a team context, including the use of Git workflows and the creation of merge requests and pull requests. They will create automated tests and apply Test-Driven Development (TDD) as a systematic approach to software development. Furthermore, they utilise pair and mob programming practices to enhance code quality and knowledge sharing. Students develop and implement algorithms efficiently, for example by working on exercises such as katas and `Advent of Code’ problems. They assess the quality of code in a merge request or pull request and write constructive code reviews. They also systematically analyse and improve code using various metrics and tools, and deploy AI assistance tools (e.g. autocompletion, chat, Agentic AI) in a targeted and reflective manner to boost productivity.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB3SPMIL",
+      "title": "Software Project Management and Workflows",
+      "semester": 3,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Software Systems 1",
+      "content": "Software Development Life Cycle (various models). Requirements engineering and user story mapping (functional vs. non-functional requirements, acceptance criteria). Advanced Agile and the Scrum Master role. Software quality assurance and testing (software quality metrics, technical debt management). Team and leadership (team development, team performance management).",
+      "learningOutcome": "Upon completion, students will be able to understand the software development life cycle and apply it in projects. They will carry out requirements engineering professionally. Furthermore, they will systematically ensure and measure software quality. Students will understand team dynamics and develop leadership skills.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB3CMPIL",
+      "title": "Creative Making and Physical Interfaces",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Interaction Design 1",
+      "content": "An introduction to sensors, actuators and communication interfaces (e.g. Arduino). Creating multimodal prototypes using physical and digital elements. Developing skills in the use of various tools and materials, such as 3D printers, laser cutters and e-textiles. Exploratory, hands-on creation of an interactive prototype.",
+      "learningOutcome": "Upon completion, students will be able to identify the design and technical aspects of body-based and multimodal interaction. They will implement and design physical-digital interactions. In doing so, students integrate sensor technology and physical feedback components. They can use microcontrollers specifically to implement interactive prototypes and employ sensors and actuators appropriate to selected subject areas. In this process, they utilise digital manufacturing and prototyping methods (e.g. laser cutting, 3D printing).",
+      "track": {
+        "minor": "ixd"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3HCDIL",
+      "title": "Human-Centered Design Methods",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Interaction Design 1",
+      "content": "The role of usability and user experience in technology development. In-depth user evaluation and usability methods. Use of specific questionnaires (e.g. UEQ, AttrakDiff, TLX). Context, contextual methods (e.g. contextual inquiry, field studies) and contextual analysis. Requirements, task analysis, ethnography, observation. Evaluation methods: usability testing, A/B testing, heuristic evaluation, guerrilla testing. Overview of long-term studies and quantitative measurement methods (e.g. physiological measurements).",
+      "learningOutcome": "Upon completion, students will be able to apply methods for gathering and analysing user requirements. They will conduct usability and UX evaluations and identify and utilise selected UX tools, metrics and processes. Furthermore, they will analyse evaluation results and translate these into design implications or requirements. Students will improve the usability and user experience of interfaces and interactive applications.",
+      "track": {
+        "minor": "ixd"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3BDPIL",
+      "title": "Backend Development",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 1",
+      "content": "Introduction to backend frameworks. Introduction to the Model-View-Controller (MVC) architectural pattern. Use of object-relational mappers (ORM) and migrations. API engineering (REST/GraphQL). Designing database schemas for relational databases. Testing concepts in a backend context. Basics of deployment. Introduction to common security aspects and vulnerabilities of backend applications.",
+      "learningOutcome": "Upon completion, students will be able to implement a software project using a backend framework. They will analyse the data persistence requirements of a web application in order to design a suitable schema for a relational database based on these requirements. Using migrations, they develop this further step by step. They create automated tests for backend components, deploy a backend project on their own VM or on PaaS, and identify and resolve security issues (e.g. cross-site request forgery, insecure data exposure) in a backend application.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3DSCIL",
+      "title": "Design Systems and CSS",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 1",
+      "content": "Design process in a web context: information architecture and wireframes. Introduction to design systems: structure, component libraries and the Atomic Model. Creating a style guide using design tools (Figma). Advanced CSS techniques (CSS Grid, CSS Layers, modern colour systems). Implementation of different colour modes (Dark, Light, High Contrast). Design handover and documentation using tools (e.g. Storybook, Frontify, Zeroheight).",
+      "learningOutcome": "Upon completion, students will be able to design information architectures and visualise them using wireframes. They will have mastered the creation and maintenance of a design system. They will use modern CSS properties efficiently and appropriately. They will use design handover tools to synchronise design specifications and code components between design and development.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3FDPUE",
+      "title": "Frontend Development 1",
+      "semester": 3,
+      "type": "UB",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 2,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 1",
+      "content": "Setting up and configuring the front-end build pipeline using tools such as npm and Vite. Using linting tools (ESLint) to ensure code quality. Understanding the concepts of single-page applications (SPA) and creating components (e.g. using React/JSX).",
+      "learningOutcome": "Upon completion, students will be able to design and implement the front end of a web application as a single-page application (SPA). They will be able to configure the build pipeline for a front-end project independently.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3MMWPT",
+      "title": "Multimedia Project 2 (MMP2a): Backend Project",
+      "semester": 3,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 1",
+      "content": "A backend project carried out in small teams of students. Independent selection and implementation of the project. Independent preparation of the project. Software development using the backend framework during the project week. Use of version control for teamwork. Issue tracking. Conducting a simple user test.",
+      "learningOutcome": "Upon completion, students will be able to work in a team to develop a project idea for a simple backend project within technical parameters, devise a concept tailored to the target audience, and implement it within a specified timeframe. Students apply resource planning methods and tools independently ’ tailored to their individual needs and specific to their project. They present the finished project to lecturers and fellow students, conduct user tests, and describe the project in text, images and video on the programme’s portfolio website.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3WOPIL",
+      "title": "Web Operations and Digital Sovereignty",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 3,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 1",
+      "content": "Administration of a UNIX VM, web server and load balancer. Use of PaaS platforms such as Dokku. The implications of these technologies for digital sovereignty.",
+      "learningOutcome": "Upon completion, students will be able to install and configure a production web server on a virtual machine, as well as set up a domain including HTTPS (certificate generation via Let’s Encrypt). They will explain the key differences between the *aaS models (Infrastructure, Platform and Software as a Service), assess their implications for digital sovereignty, and utilise them in an on-premises setup. They also use containerisation technologies (e.g. Docker) for the deployment of web applications and configure the necessary system environment. They explain the role of reverse proxies in the context of modern web architectures and are able to configure them correctly.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3CGRIL",
+      "title": "Computer graphics",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 3,
+      "ects": 3.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 1",
+      "content": "Applications of linear algebra in computer graphics (e.g. dot product for shading, cross product for normal vectors, intersection calculations, affine transformations, orthographic/perspective projection, etc.). Coordinate spaces and transformations (object, world, NDC, camera, homogeneous coordinates, etc.). Ray tracing. Rasterisation. Render pipeline: z-buffer (principle, z-fighting, etc.), blending, stencil testing. Geometry definitions (polygon models, volume data, implicit geometries). Simple real-time reflection models (Lambert, Phong, Blinn-Phong, etc.) as well as simple NPR shaders (e.g. Gooch & cell shading). Fundamentals of texture mapping. Fundamentals of shader programming (vertex, fragment, geometry and tessellation shaders). Introduction to framebuffer objects. Practical exercises using a modern graphics interface (e.g. OpenGL/GLSL).",
+      "learningOutcome": "Upon completion, students will be able to explain, in their own words, the requirements of real-time rendering techniques, the difference between ray tracing and rasterisation techniques, and the structure of modern rendering pipelines. They will create simple 3D worlds using programming (e.g. OpenGL) by defining textured polygon geometry, transforming it using mathematical operations, and converting between different coordinate systems with confidence. In addition, they create simple shader programmes (e.g. GLSL). Students systematically debug simple graphics applications in order to analyse and rectify errors.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3GDEIL",
+      "title": "Game Development 1",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 3,
+      "ects": 4,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 1",
+      "content": "C++ according to current standards (object-oriented programming, polymorphism, memory management, templates, STL, etc.). Program flow and memory areas (stack, heap, etc.). Runtime and memory debugging. Modern development environments (e.g. Visual Studio), configuration and development of various project types (e.g. static/dynamic libraries). Software design patterns in game development (Singleton, Observer, Factory, Composite/Aggregate, etc.). Artificial intelligence in games (steering behaviours, decision trees, state machines). Pathfinding (Dijkstra, A*). Physics simulation of rigid 2D bodies. Practical exercises and implementation of a simple game engine (C++).",
+      "learningOutcome": "Upon completion, students will be able to implement programmes in a development environment using the C++ programming language. They will analyse programme flow in a structured manner using software tools, with a focus on runtime and memory usage, and estimate the runtime of data structures. Furthermore, they explain basic algorithms and software design patterns in the context of game development in their own words and implement these basic functionalities in a modular way (e.g. artificial intelligence, simple physics, event systems, graphical user interfaces). Students independently develop simple games in C++, systematically creating, implementing and debugging the necessary modular game engine architecture. They also analyse and rectify errors and use version control systems in their development process.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3GSDIL",
+      "title": "Game Studies & Game Design 1",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 1",
+      "content": "Introduction to Game Studies ’ the history, culture and social significance of games. Theoretical approaches to games: narratology, ludology, aesthetics and media theory. Analysis of game mechanics, dynamics and player experiences (fundamentals of game design). Non-linear storytelling and narrative structures in games. Representation and accessibility in games: cultural diversity and inclusion. Critical reflection on ethical practice and societal impacts (e.g. age restrictions, exploitative monetisation practices, dark patterns). Practical work: devising your own game concepts and designing game mechanics.",
+      "learningOutcome": "Upon completion, students will be able to describe and apply fundamental concepts and theories in game studies. They will systematically analyse and evaluate digital games. Furthermore, they will independently design game processes and mechanics and adapt these to users’ needs. Students will plan and implement narrative and aesthetic elements in games. They will also reflect on ethical and social issues relating to game design.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3MMGPT",
+      "title": "Multimedia Project 2 (MMP2a): 2D Game Project",
+      "semester": 3,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 1",
+      "content": "A game development project carried out in small teams of students. Independent selection and implementation of the project. Independent preparation of the project. Software development during the project week. Application of software project management principles. Use of version control for teamwork. Conducting simple usability tests.",
+      "learningOutcome": "Upon completion, students will be able to work in a team to develop a project idea for a 2D game within technical constraints and devise a concept tailored to the target audience. They will plan a simple software project collaboratively and implement it within a specified timeframe. Students apply resource planning methods and tools independently, tailoring them to their specific project requirements. They present the finished project to staff and fellow students, conduct user testing, and document the project using text, images and video on the programme’s portfolio website.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3SMLIL",
+      "title": "Supervised Machine Learning",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Minor: AI Engineering 1",
+      "content": "Feature cleaning and feature engineering. Hyperparameter optimisation and the bias-variance trade-off. Advanced supervised learning techniques: polynomial regression, k-nearest neighbours, support vector machines, and time series and geospatial data analysis. Practical application and evaluation of models using real-world datasets (e.g. Kaggle).",
+      "learningOutcome": "Upon completion, students will be able to professionally prepare datasets for machine learning applications (feature cleaning, feature engineering) and assess the impact of data quality on model performance. They will optimise models in a targeted manner by adjusting hyperparameters and understanding and applying the bias-variance trade-off. Furthermore, they explain and implement advanced regression and classification methods such as polynomial regression, k-nearest neighbour, support vector machines, and time and spatial analyses in practice. Students apply ML models to new, real-world datasets (e.g. from Kaggle).",
+      "track": {
+        "minor": "ai"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB3TAIIL",
+      "title": "Trustworthy AI",
+      "semester": 3,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Minor: AI Engineering 1",
+      "content": "Data scraping, building ML pipelines and handling missing values. Ensemble learning using random forests and gradient boosting. Model interpretation through feature importance, SHAP and visualisation. Comparing transparency, interpretability and bias in machine learning models. Practical application and evaluation using real-world datasets (e.g. Kaggle).",
+      "learningOutcome": "Upon completion, students will be able to automatically process datasets using scraping and pipelining, and handle missing values appropriately. They will develop machine learning pipelines and implement and evaluate ensemble methods such as random forests and gradient boosting. Furthermore, they will interpret models using feature importance and SHAP and visualise the results. Students analyse and reflect on bias, fairness and transparency in datasets and models. They also apply ML models to real-world datasets (e.g. from Kaggle) and present the results in a clear and comprehensible manner.",
+      "track": {
+        "minor": "ai"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4WAFIL",
+      "title": "Academic Writing and Research Methods 2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Wissenschafts- & Wirtschaftskompetenz",
+      "content": "Independent work on a research topic and study design. In-depth engagement with academic sources. Development of a detailed and structured plan for methodological implementation and analysis. Consideration of research ethics. Repeated revision and improvement of one’s own texts based on feedback.",
+      "learningOutcome": "Upon completion, students will be able to formulate a potential research topic for their bachelor’s thesis and justify the relevance of a research question on the basis of the literature. They will be able to identify, read and understand academic sources and discuss their content in depth in relation to a research question. Furthermore, they write academic texts and cite sources correctly. Students formulate research questions based on the current state of the art. They also develop and refine a study design, including the selection of methods, implementation, materials and required study documents, selection of participants, data analysis, details of study content and research ethics.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB4UGVIL",
+      "title": "Business Fundamentals and Contract Law",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 1.5,
+      "ects": 1.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Wissenschafts- & Wirtschaftskompetenz",
+      "content": "Basic concepts and types of business models (B2B, B2C, SaaS, marketplace, freemium). Business Model Canvas. Minimum Viable Product. Customer discovery and market research. Financial planning and costing (break-even). Employment contract vs. service contract vs. freelance contract vs. contract for work. Self-employment (legal structures, business registration, taxes, insurance).",
+      "learningOutcome": "Upon completion, students will be able to create a Business Model Canvas and analyse simple business models. They will understand lean startup principles (MVP, pivot, validation) and carry out financial planning for startup and freelance activities. In addition, they will set up their own business in a legally compliant manner, covering topics such as business registration, tax and insurance. Students understand and negotiate employment contracts and work placement agreements. They also set up a freelance business professionally, including costing, contract drafting and client acquisition.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB4KUDIL",
+      "title": "Cryptography and Data Security",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Software Systems 2",
+      "content": "Introduction to information security: fundamentals, security objectives, threats and risks. Number-theoretic foundations: groups, rings, fields, discrete logarithms, the Euclidean algorithm. Symmetric cryptography: classical methods (e.g. Caesar cipher, one-time pad), modern algorithms such as AES, stream and block ciphers. Asymmetric cryptography: RSA, Diffie-Hellman, elliptic curves. Hash functions and message authentication codes (MAC). Digital signatures and certificate infrastructures (PKI). Security solutions and protocols in practice (e.g. SSL/TLS, VPN).",
+      "learningOutcome": "Upon completion, students will be able to understand and apply the mathematical principles of cryptography. They will be able to describe fundamental cryptographic methods, assess their security, and apply them in practical situations. Furthermore, they will be able to distinguish between and use symmetric and asymmetric encryption systems. Students will use digital signatures and certificates to ensure integrity and authenticity. They will also understand and apply current security protocols.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB4SWEIL",
+      "title": "Software Engineering 2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Software Systems 2",
+      "content": "Refactoring, software design patterns (e.g. creational, structural and behavioural patterns). Introduction to software architecture: architectural styles and principles. Advanced concepts in software quality assurance and its metrics. An in-depth look at the role of agentic AI (artificial intelligence) as a tool and potential actor in the modern software development lifecycle.",
+      "learningOutcome": "Upon completion, students will be able to apply refactoring techniques to improve existing code whilst preserving its functionality. They use various software design patterns and architectures. They assess the quality, maintainability and scalability of software systems. They critically validate the results generated by AI systems using quality metrics and ensure, through appropriate testing procedures, that software integrity and security are maintained even when autonomous agents are deployed.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB4CMSIL",
+      "title": "Content Management Systems",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Introduction to content management systems (CMS) and their ecosystems. Comparison of traditional systems (e.g. WordPress, Pimcore) and headless CMS. Practical installation and configuration of WordPress. Management of themes, plugins and content. Installation of a headless CMS, schema definition and content creation. Fundamentals of deploying CMS applications. Security aspects and common vulnerabilities in CMS environments.",
+      "learningOutcome": "Upon completion, students will be able to distinguish between traditional CMS, headless systems and PIM systems, and select the appropriate architecture based on client requirements. They install and configure both traditional systems (WordPress) and headless approaches, including schema definition, content structuring and technical deployment. They identify and assess specific security risks (e.g. arising from plugin vulnerabilities or misconfigurations) and implement measures to secure the CMS infrastructure.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4FDPIL",
+      "title": "Frontend Development 2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Modern JavaScript features and an introduction to TypeScript as a typed extension. In-depth exploration of current front-end frameworks (e.g. React/Next.js), including state management and routing in framework-based applications. Fundamentals and implementation of Progressive Web Apps (PWA), including the use of service workers. In-depth study of web front-end accessibility, taking into account the Web Content Accessibility Guidelines (WCAG) and the correct use of ARIA attributes.",
+      "learningOutcome": "Upon completion, students will be able to apply modern JavaScript language features and TypeScript to develop complex, type-safe front-end applications. They will effectively utilise a contemporary front-end framework (such as React, Next.js or similar) to create single-page applications (SPAs). They will use service workers to make a front-end app capable of working offline. Furthermore, they can design and technically implement complex, dynamic interfaces in such a way that they meet digital accessibility requirements and enable barrier-free use even within highly interactive applications.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4WEUUE",
+      "title": "Multimedia Project 2 (MMP2b): Evaluation and User Testing",
+      "semester": 4,
+      "type": "UB",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Planning and conducting a user evaluation. Methods for gathering feedback and translating it into design implications and development decisions. Iterative project optimisation based on the test results.",
+      "learningOutcome": "Upon completion, students will be able to plan, prepare and independently conduct a structured user test. They will gather meaningful feedback from users, draw conclusions from this feedback and implement them technically. Furthermore, they will be able to optimise their own project through an iterative process, and critically discuss and comprehensively present both the results and the methodological approach.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4MPWPT",
+      "title": "Multimedia Project 2 (MMP2b): Frontend Project",
+      "semester": 4,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 4,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "An advanced front-end project carried out in small teams in accordance with industry-standard technical specifications (e.g. the latest JavaScript framework, design system, API interfaces). Independent selection and development of a project concept, as well as independent project preparation (architecture, component design, tooling setup). Front-end development over a period of several weeks with a focus on collaborative workflows. Application of software project management, version control, automated testing and other quality assurance methods for web front-ends.",
+      "learningOutcome": "Upon completion of the module, students will be able to plan a complex, component-based front-end software project as part of a team and implement it using modern frameworks within a timeframe of several weeks. In doing so, they will have mastered industry-standard project management methods, professional version control and advanced quality assurance procedures.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4WKOPT",
+      "title": "Multimedia Project 3 (MMP3): Kickoff",
+      "semester": 4,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 0.5,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Kick-off of the interdisciplinary final-year project. Problem and requirements analysis, initial concepts and benchmarking, initial technology scans, and the definition of roles, responsibilities and broad milestones.",
+      "learningOutcome": "Upon completion, students will be able to analyse target groups, project objectives and framework conditions. They will assess feasibility and risks and formulate a viable project idea. Furthermore, they will develop personal self-efficacy through independent idea generation and resilience when evaluating initial conceptual errors. Students will conduct collaborative brainstorming sessions and establish clear role definitions within the team.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4NMDIL",
+      "title": "Native Mobile Development",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Fundamentals of native programming on a target platform (e.g. Android with Kotlin). Platform-specific topics such as UI design, app lifecycle, navigation, persistence, networking and testing. Use of interfaces for external services (e.g. Firebase). Comparison and distinction from PWA and multi-platform approaches. Publishing the finished app in the relevant platform stores. Development and implementation of your own project.",
+      "learningOutcome": "Upon completion, students will be able to explain and evaluate the technical differences and use cases of Progressive Web Apps (PWAs), native apps and multi-platform native apps. They will independently implement and test user interfaces and application logic for mobile applications using native programming. They will publish the developed applications in the app stores in accordance with the respective platform’s guidelines.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4WASIL",
+      "title": "Web Application Security and Ethical Hacking",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 2",
+      "content": "Principles and ethical guidelines of ethical hacking. Web application security: threat modelling (STRIDE) and the Application Security Verification Standard (ASVS). Scanning techniques (network, port and vulnerability scanning). Fundamentals and tools for penetration testing. Attack methods: social engineering (human-, computer- and mobile-based), physical security, system hacking (Windows, Linux), phishing and DoS attacks, and their prevention. Use of specialised operating systems (e.g. Kali Linux and Parrot OS). Practical exercises applying the concepts learnt.",
+      "learningOutcome": "Upon completion, students will apply systematic threat modelling (STRIDE) and the Application Security Verification Standard (ASVS) to anticipate threats as early as the design phase and secure web applications in accordance with internationally recognised standards. They carry out coordinated penetration tests using scanning techniques and specialised operating systems (e.g. Kali Linux) to identify technical vulnerabilities.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4GDEIL",
+      "title": "Game Development 2",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Runtime and memory optimisation for interactive real-time systems, including modern processor architecture, caching hierarchy, memory alignment and object pooling. Parallelisation in C++-based game engines with a focus on fundamentals: Amdahl’s Law, task parallelisation, false sharing, basic multithreading constructs for engines. Thread synchronisation and signalling: locks, mutexes, monitors, semaphores, atomic operations. Spatial data structures for optimising collision detection and rendering: grids, quadtree, octree, BSP/kd trees. Rendering optimisations: visibility and occlusion culling, LOD concepts, batch rendering. Practical exercises using the C++ source code of a modular engine.",
+      "learningOutcome": "Upon completion, students will be able to analyse the runtime of interactive, real-time-capable programmes and identify typical bottlenecks. They will select appropriate optimisation strategies and implement them in C++, in particular through the use of spatial data structures. Furthermore, they will explain the fundamentals of parallelisation in their own words and confidently apply simple multithreading mechanisms and synchronisation primitives. Students evaluate entity-component systems in terms of architecture and performance and design their own components. They serialise programme data in a modular fashion to prepare it for editors, save states or network transmission. Furthermore, they select and implement advanced AI algorithms to realise more complex agent behaviour in games.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4GPEIL",
+      "title": "Game Production Environments and Workflows",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 4,
+      "ects": 4.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Overview of modern game engine architectures (e.g. Unity, Unreal). Production processes: asset management, build and deployment processes, iterative development and review cycles. Debugging and profiling in game engines for rendering, physics and gameplay. Asset and level production: prototyping, animation, lighting, materials, UI/UX, world-building. Multithreading in C# workflows: async/await, Tasks, basic scheduling and the use of thread pools at engine level. Scripting and visual scripting for implementing gameplay functionality and physics systems in 2D/3D for gameplay-relevant interactions. Animation systems: state machines, rigging, keyframing and simple cinematics. Development of engine tools. World structures and scene graphs in production-relevant projects. Advanced AI fundamentals in a production context: behaviour trees, decision logic, steering. Fundamentals of local multiplayer mechanics. Fundamentals of game accessibility to accommodate various limitations (e.g. visual, motor, auditory, cognitive, language). Practical exercises and team projects in at least two current game engines.",
+      "learningOutcome": "Upon completion, students will be able to explain the basic functioning of modern game engines and apply this knowledge to other engines. They will independently implement interactive applications in at least two widely used game engines (e.g. Unity, Unreal). Furthermore, they will select suitable engines for different project requirements and set up production-ready workflows. Students use debugging and profiling tools to identify and resolve performance issues and errors in game engine projects in a targeted manner. They employ multithreading mechanisms in game engines such as Unity in a controlled manner using tasks, async/await and engine schedulers. They also combine animation, physics, rendering and scripting systems, as well as local multiplayer functions, to develop high-quality, interactive applications as part of a team. Students work collaboratively in production-like workflows and document and present their results in a structured manner. Furthermore, they select mechanisms and methods to make games accessible and expand the functionality of existing game engines by developing their own tools.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4IVEIL",
+      "title": "Interactive Visual Effects",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Compute shaders and parallel programming, GPU architecture, particle systems (no fluid simulation), application of simple computer vision operations for post-processing effects (Gaussian blur, box blur, Sobel, thresholding, etc.). Deferred rendering. Visual effects in game engines (SSAO, motion blur, depth of field, artistic effects, etc.). Light management and rendering paths: deferred vs. forward plus, clustered & tiled shading. Development of custom rendering pipelines, e.g. for the Unity engine. Practical exercises using current engines (e.g. Unity, Godot).",
+      "learningOutcome": "Upon completion, students will be able to develop GPU-based particle systems using compute shaders. They will implement complex post-processing and in-camera effects (e.g. bloom, SSAO, motion blur, depth of field). Furthermore, they will identify and optimise performance issues using GPU profiling tools (e.g. RenderDoc, Unity Frame Debugger). Students understand the structure and functioning of modern render pipelines (HDRP, URP, Godot Forward+) and extend them.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4MPGPT",
+      "title": "Multimedia Project 2 (MMP2b): 3D Game Project",
+      "semester": 4,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 4,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Carrying out an advanced 3D game project in small teams using a specified general-purpose game engine. Independent project selection and preparation. Carrying out the software development during the project week. Application of software project management methods. Use of quality assurance procedures. Use of version control for collaborative teamwork. Use of an issue tracker for planning and prioritisation. Conducting and evaluating simple user tests. Presentation of project results to lecturers and students. Multimedia presentation and documentation of the project for the portfolio website.",
+      "learningOutcome": "Upon completion of the module, students will be able to plan a 3D game project as part of a team and implement it using modern game engines within a timeframe of several weeks. In doing so, they will have mastered industry-standard project management methods, professional version control and advanced quality assurance procedures.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4GEUUE",
+      "title": "Multimedia Project 2 (MMP2b): Evaluation and User Testing",
+      "semester": 4,
+      "type": "UB",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 0.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Planning and conducting a user evaluation. Methods for gathering feedback and translating it into design implications and development decisions. Iterative project optimisation based on the test results.",
+      "learningOutcome": "Upon completion, students will be able to plan, prepare and independently conduct a structured user test. They will gather meaningful feedback from users, draw conclusions from this feedback and implement them technically. Furthermore, they will be able to optimise their own project through an iterative process, and critically discuss and comprehensively present both the results and the methodological approach.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4GKOPT",
+      "title": "Multimedia Project 3 (MMP3): Kickoff",
+      "semester": 4,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 0.5,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 2",
+      "content": "Kick-off of the interdisciplinary final-year project. Problem and requirements analysis, initial concepts and benchmarking, initial technology scans, and the definition of roles, responsibilities and broad milestones.",
+      "learningOutcome": "Upon completion, students will be able to analyse target groups, project objectives and framework conditions. They will assess feasibility and risks and formulate a viable project idea. Furthermore, they will develop personal self-efficacy through independent idea generation and resilience when evaluating initial conceptual errors. Students will conduct collaborative brainstorming sessions and establish clear role definitions within the team.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4DLNIL",
+      "title": "Deep Learning and Neural Networks",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Minor: AI Engineering 2",
+      "content": "Introduction to neural networks (perceptrons, feedforward networks, activation functions). CNNs for image processing and RNNs/LSTMs for sequence data. Fundamentals of transfer learning. Evaluation and optimisation of deep learning models. Practical exercises and experiments using TensorFlow.",
+      "learningOutcome": "Upon completion, students will be able to understand the basic principles and structure of neural networks and train simple models themselves. They will apply various activation functions and understand how they work (e.g. in the context of backpropagation). Furthermore, they will employ simple methods to avoid overfitting. Students will implement convolutional neural networks (CNNs) for image data and recurrent neural networks (RNNs) with LSTMs for time series or text. They will use transfer learning to adapt existing models to new tasks. Furthermore, they will create, train and evaluate deep learning models using TensorFlow.",
+      "track": {
+        "minor": "ai"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4GAIIL",
+      "title": "Generative AI",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Minor: AI Engineering 2",
+      "content": "Application and evaluation of current generative AI tools for text, image, audio and multimodal content. Prompt engineering, prompt optimisation and systematic control of generative models. Use of tools for retrieval-augmented generation (RAG), simple agent systems and workflow automation. Quality assessment of generative outputs, dealing with hallucinations, bias and limitations. Practical exercises using commercially available generative AI systems and APIs.",
+      "learningOutcome": "Upon completion of the course, students will be able to use, configure and evaluate current generative AI tools in a targeted manner. Students will be able to integrate generative AI into existing workflows, implement simple RAG or agent-based applications, and critically assess the quality and reliability of the results. Furthermore, they will understand the opportunities, risks and limitations of generative AI in practical and professional contexts.",
+      "track": {
+        "minor": "ai"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4IASIL",
+      "title": "Interaction Design Studio",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Minor: Interaction Design 2",
+      "content": "Interaction Design Process. Conceptualisation, prototyping and evaluation of interactive systems. Iterative development and various prototypes: low-fidelity ’ high-fidelity, experience prototyping, video prototyping. Design critique frameworks. Interaction (temporal, emotional and narrative experience). Storytelling in interaction concepts. Inclusive design. Potential of off-screen and physical interactions (gestures, speech, movement). Addressing real-world problems.",
+      "learningOutcome": "Upon completion, students will be able to apply interaction design processes in a practical project. They combine design, evaluation and prototyping in a practical project. Furthermore, they critically reflect on and justify design decisions. Students understand and create inclusive and context-sensitive interactions, and integrate inclusive design principles throughout the entire design process (e.g. universal design, accessibility standards). They design and conceptualise both screen-based and non-screen-based interactions, and apply common tools to support the interaction design process.",
+      "track": {
+        "minor": "ixd"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB4IASIL",
+      "title": "Interactive Audio and Sound Design",
+      "semester": 4,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Minor: Interaction Design 2",
+      "content": "Principles of audio design, sound perception. Audio as feedback in interaction design. Digital signal processing, synthesis, sound textures, sound analysis. Combining visual and auditory elements with interaction and spatiality.",
+      "learningOutcome": "Upon completion, students will be able to use sound as a design element and feedback mechanism in interactive systems. They will use sound deliberately to shape emotion, meaning and perception. Furthermore, they will create and generate basic audio assets using the latest tools. Students design and create basic non-linear audio architectures (e.g. randomisation and branching) and integrate these using middleware (e.g. FMOD/Wwise). They also design and implement the interplay between visual and auditory feedback, as well as between the spatial environment and interaction within the space.",
+      "track": {
+        "minor": "ixd"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB5BFDSE",
+      "title": "Bachelor's thesis: Research design",
+      "semester": 5,
+      "type": "SE",
+      "kind": "compulsory",
+      "sws": 0.5,
+      "ects": 2.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Transformative Zukunftskompentenz",
+      "content": "Defining and formulating one’s own research objectives and research questions. Describing and justifying the research design as a structured research plan. Managing time and resources for the completion of the Bachelor’s thesis. Documenting and presenting the research design in the research proposal. Dealing with feedback and adapting the research design. Situating the research within the current academic context (literature review and state of the art). Legal and ethical aspects of research.",
+      "learningOutcome": "Upon completion, students will be able to independently familiarise themselves with an academic topic. They will document and justify a comprehensive research design for their Bachelor’s thesis in a clear and coherent manner. In addition, they will manage the time and resources required for their Bachelor’s thesis. Students will take ethical and legal considerations into account when conducting research.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB5BPRIT",
+      "title": "Internship",
+      "semester": 5,
+      "type": "IT",
+      "kind": "internship",
+      "sws": 0,
+      "ects": 19,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Berufspraktikum",
+      "content": "Practical work on typical professional tasks and projects. Observation and reflection on work processes, work organisation and teamwork. Development of job-related soft skills such as communication skills, self-organisation, a sense of responsibility and reliability. Use of feedback mechanisms for self-reflection and further development. Examination of professional ethical issues and practical skills in real-world work contexts.",
+      "learningOutcome": "Upon graduation, students are able to apply theoretical knowledge in a practical context and critically reflect on the professional environment. They understand typical professional work processes and organisational structures and play an active role in shaping them. Furthermore, they adapt efficiently to new working environments and act adaptively. Students apply relevant soft skills such as communication, teamwork and self-management competently. They use feedback effectively for personal and professional development and recognise issues of professional ethics in order to act responsibly.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB5BPRIL",
+      "title": "Internship: Accompanying Course",
+      "semester": 5,
+      "type": "IL",
+      "kind": "compulsory",
+      "sws": 0.5,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Berufspraktikum",
+      "content": "Orientation, preparation for and entry into the professional environment. Documentation of internship experiences in the form of reports and reflections. Support from mentors and accompanying events to facilitate in-depth reflection and a final presentation.",
+      "learningOutcome": "Upon completion, students will be able to systematically reflect on, document and present their practical experiences. They will make targeted use of feedback to further their personal and professional development.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB5SLERC",
+      "title": "Self-directed learning 2",
+      "semester": 5,
+      "type": "RC",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 0.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Transformative Zukunftskompentenz",
+      "content": "Further development and refinement of personal learning strategies and techniques. Self-reflection and self-motivation. Stress management, building resilience and mental training for sustained performance. Development of a personalised learning and development plan incorporating coaching elements.",
+      "learningOutcome": "Upon completion, students will be able to independently plan, structure and successfully implement complex learning projects. They will improve their personal learning and work efficiency through targeted self-reflection and motivation. Furthermore, they will be able to cope with challenges and stressful situations during the learning process and build resilience. Students will strategically shape and document their personal and professional development.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB5FSDIL",
+      "title": "Full Stack Development",
+      "semester": 5,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 3",
+      "content": "Introduction to full-stack architectures and modern runtimes (Node.js, Bun). Back-end development with NestJS or lightweight alternatives (e.g. Hono). Advanced TypeScript in the back-end (interfaces, decorators, dependency injection). API design strategies (REST, RPC). Database integration with modern ORMs (e.g. Prisma, Drizzle). Implementation of security mechanisms (JWT, OAuth). Testing strategies and deployment workflows for full-stack applications.",
+      "learningOutcome": "Upon completion, students will be able to explain the architecture of a modern full-stack application and demonstrate a confident grasp of the communication channels between the front-end and back-end using TypeScript. By utilising modern ORMs and type-safe communication protocols, they ensure consistent typing throughout the entire data flow. Furthermore, they safeguard code quality through automated testing procedures and successfully deploy the entire application.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB5MPWPT",
+      "title": "Multimedia Project 3 (MMP3): Pre-production",
+      "semester": 5,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 3",
+      "content": "Detailed feature specifications, user stories, prototyping of core functions, effort estimation, resource planning, automated build processes with linting and quality assurance, and a structured presentation of the concept.",
+      "learningOutcome": "Upon completion, students will be able to develop a coherent project concept, including high-level and detailed design, architectural and technological decisions, and realistic project planning. They will assess risks and set up test and production environments. Furthermore, they will apply strategic thinking and cost estimation. Students will put team organisation, stakeholder communication and critical discussion of concepts into practice.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB5ERIIL",
+      "title": "Extended Reality and Immersive Technologies",
+      "semester": 5,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 3,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 3",
+      "content": "Concepts of and differences between augmented reality and virtual reality (e.g. reality-virtuality continuum, presence, immersion, etc.). Application scenarios. AR/VR displays (properties, lens systems, perceptual conflicts, etc.). Tracking methods and technologies (marker tracking, SLAM tracking, motion capture, etc.). Rendering in AR/VR (stereo, occlusion, realism, etc.). Fundamental interaction concepts in AR/VR. Movement in VR. Simulator sickness. Current software frameworks and hardware solutions for AR/VR (e.g. smartphones, HMDs, RGBD cameras). Practical exercises using current frameworks and hardware.",
+      "learningOutcome": "Upon completion, students will be able to explain the fundamental concepts of AR and VR, as well as the differences between these technologies, describe their specific characteristics in their own words, and take these into account in application development. They will assess current AR/VR technologies (hardware, frameworks, tracking methods, etc.) in terms of their suitability for specific application scenarios and implement appropriate AR/VR applications. Furthermore, they combine various technologies to create shared AR/VR experiences for collaborative applications. Students develop interactive AR/VR experiences in a game engine (e.g. Unity).",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB5MPGPT",
+      "title": "Multimedia Project 3 (MMP3): Pre-production",
+      "semester": 5,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 4,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 3",
+      "content": "Detailed feature specifications, user stories, prototyping of core functions, effort estimation, resource planning, automated build processes with linting and quality assurance, and a structured presentation of the concept.",
+      "learningOutcome": "Upon completion, students will be able to develop a coherent project concept, including high-level and detailed design, architectural and technological decisions, and realistic project planning. They will assess risks and set up test and production environments. Furthermore, they will apply strategic thinking and cost estimation. Students will put team organisation, stakeholder communication and critical discussion of concepts into practice.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6BAPBP",
+      "title": "Bachelor's degree examination",
+      "semester": 6,
+      "type": "BP",
+      "kind": "compulsory",
+      "sws": 0,
+      "ects": 1,
+      "language": "German",
+      "assessment": "final",
+      "module": "Bachelorarbeit & Bachelorprüfung",
+      "content": "Approved Bachelor’s thesis. Specialist discussion on the core topic of the Bachelor’s thesis. Examination interview covering topics related to the chosen subject area.",
+      "learningOutcome": "Upon completion, students will be able to present complex issues clearly and in a structured manner in oral examinations. They will answer specialist questions and engage in critical discussions with confidence during their Bachelor’s examination. Furthermore, they will communicate and present their arguments professionally to examiners. Students will reflect on their own academic performance and continue to develop it.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB6BAASE",
+      "title": "Bachelor's thesis",
+      "semester": 6,
+      "type": "SE",
+      "kind": "thesis",
+      "sws": 1,
+      "ects": 10,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Bachelorarbeit & Bachelorprüfung",
+      "content": "Accompanying course for the Bachelor’s thesis. Preparation of interim presentations: presenting the problem, methodology and results in a way that is tailored to the audience. Feedback sessions and peer review. Discussion of individual progress, dealing with typical issues in the research and writing process (e.g. motivation, time management, methodology), and peer support within the seminar group.",
+      "learningOutcome": "Upon completion, students will be able to write academic papers independently and in accordance with sound methodology, as well as to present complex issues clearly and in a structured manner in writing. They will present and justify research findings in a clear and comprehensible manner in writing. Furthermore, they will be able to answer specialist questions and engage in critical discussions within a peer group.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB6GETVO",
+      "title": "Guest lectures: Emerging Technologies",
+      "semester": 6,
+      "type": "VO",
+      "kind": "compulsory",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "final",
+      "module": "Transformative Zukunftskompentenz",
+      "content": "Presentation and discussion of current technologies. Examples of applications and case studies from various sectors and social contexts. The social impact, ethical considerations and sustainability aspects of new technologies. Technological trends and future developments with practical relevance. Networking opportunities for students, researchers and industry representatives.",
+      "learningOutcome": "Upon completion, students will be able to understand and evaluate current technological developments within their broader context. They will critically reflect on the potential applications and challenges of new technologies. Furthermore, they will discuss the ethical and societal implications of technological innovations. Students will engage in specialist discussions with experts and present their own views convincingly.",
+      "track": null,
+      "group": null
+    },
+    {
+      "code": "CDEB6BOWIL",
+      "title": "Business of Web",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 0.5,
+      "ects": 0.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 4",
+      "content": "An overview of common business models in the web sector. The fundamentals of online marketing strategies. The conception and design of landing pages. A practical introduction to Google Ads (formerly AdWords) and setting up campaigns. Web analytics and the interpretation of key performance indicators (KPIs) for evaluating campaign success.",
+      "learningOutcome": "By the end of the course, students will be familiar with common business models and monetisation strategies used by web-based companies. They will design conversion-optimised landing pages for their own projects and implement them technically. Students are able to plan and launch Google Ads campaigns or comparable online marketing initiatives. They also analyse the effectiveness of these campaigns using relevant metrics (e.g. click-through rate, conversion rate) and identify specific areas for optimisation.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6ISRIL",
+      "title": "Information Systems and Retrieval",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 4",
+      "content": "Fundamentals of Information Retrieval (IR). Classical search models: Boolean search, inverted index, and the vector space model (Term Frequency-Inverse Document Frequency / TF-IDF ranking and scoring). Evaluation of IR systems (precision, recall). Text pre-processing (stopwords, stemming). Similarity search using Levenshtein distance and Soundex. Transition from keyword to vector retrieval: word and document embeddings. Architecture of RNNs and transformers. How large language models (LLMs) work: tokenisation, embeddings and retrieval-augmented generation (RAG).",
+      "learningOutcome": "Upon completion of the module, students will be able to analyse and evaluate retrieval models: they will explain how traditional and modern search structures (inverted index, vector space model) work and assess the quality of search results using precision and recall. They can apply natural language processing and NLP architectures in practice: in doing so, they employ text pre-processing techniques and similarity metrics, and use RNNs and Transformers in the context of natural language processing (NLP). Furthermore, they are able to implement modern approaches such as Retrieval Augmented Generation (RAG) for information systems in practice.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6MPWPT",
+      "title": "Multimedia Project 3 (MMP3): Implementation and Presentation",
+      "semester": 6,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 14,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Future Web & Mobile 4",
+      "content": "Delivery of a complex web or mobile project over a period of several months. Interdisciplinary collaboration in teams comprising software development and design specialists, using agile methodologies (e.g. Scrum or Kanban). End-to-end software development lifecycle: from requirements analysis and system design through iterative implementation to deployment. Focus on professional quality assurance, documentation and code reviews. Preparation and delivery of a final presentation to an external specialist audience.",
+      "learningOutcome": "Upon completion, students will be able to independently plan, manage and technically implement a large-scale software project over a period of several months as part of an interdisciplinary team. They will be proficient in coordinating between design and development and integrating complex requirements into a consistent system architecture. Students apply advanced strategies in project management and quality assurance to deliver production-ready applications. Furthermore, they are able to prepare their results and technical decisions in a professional manner and to present and defend them to an external audience.",
+      "track": {
+        "major": "web"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6BOGIL",
+      "title": "Business of Games",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 0.5,
+      "ects": 0.5,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 4",
+      "content": "Current data on the games industry (Austria, Europe, worldwide). Economic and legal aspects of games. Funding and grant opportunities. Marketing and distribution of games. Success metrics. Roles of publishers, developers, distributors and retailers. Typical contracts and contractual terms in the games industry. Protection of minors. Release platforms. Current competitions. Pitches. Press kits. Developing pitches for final projects through practical exercises. Handling licences for software and assets.",
+      "learningOutcome": "Upon completion, students will be able to explain, in their own words, the economic aspects of games, as well as the financing, marketing and distribution of games. They will describe the relationships between publishers, developers, distributors and retailers in the games market and identify various release platforms and their reach. Furthermore, they will explain, in their own words, the business models of games companies, industry leaders and their publicly known strategies.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6DEDIL",
+      "title": "Data-Driven Engine Design",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 2.5,
+      "language": "English",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 4",
+      "content": "Data-Oriented Design (DOD), data flow, memory layout. Distinction between traditional ECS architectures and DOD-optimised ECS variants. Serialisation and deserialisation of engine data. Scene persistence, save states, asset metadata. Fundamentals of network synchronisation in data-oriented architectures. Tool and editor integration for data-driven workflows, including modular editor systems. Building complex software systems from multiple modules and DLLs.",
+      "learningOutcome": "Upon completion, students will be able to explain the principles of data-oriented architecture and clearly distinguish it from traditional entity-component system approaches. They will analyse how memory layout, cache efficiency and data flow influence the design of modern engines, and apply appropriate strategies. Furthermore, they implement modular serialisation and deserialisation processes for engine data to reliably represent scenes, save states and network data. Students develop data-driven tools or editor workflows and integrate these into an existing engine.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6MPGPT",
+      "title": "Multimedia Project 3 (MMP3): Implementation and Presentation",
+      "semester": 6,
+      "type": "PT",
+      "kind": "elective",
+      "sws": 2,
+      "ects": 14,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Major: Game & Immersive Tech 4",
+      "content": "Delivery of a complex game or XR project over a period of several months. Interdisciplinary collaboration in teams comprising software development and design specialists, using agile methodologies (e.g. Scrum or Kanban). Full software development lifecycle: from requirements analysis and system design through iterative implementation to release. Focus on professional quality assurance, documentation and code reviews. Preparation and delivery of a final presentation to an external specialist audience.",
+      "learningOutcome": "Upon completion, students will be able to independently plan, manage and technically implement a large-scale software project over a period of several months as part of an interdisciplinary team. They will be proficient in coordinating between design and development and integrating complex requirements into a consistent system architecture. Students apply advanced strategies in project management and quality assurance to deliver production-ready applications. Furthermore, they are able to prepare their results and technical decisions in a professional manner and to present and defend them to an external audience.",
+      "track": {
+        "major": "game"
+      },
+      "group": null
+    },
+    {
+      "code": "CDEB6CCRIL",
+      "title": "Change.Climate.Resilience",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Transformative Zukunftskompentenz",
+      "content": "Green technologies are the future. The path we have taken so far is not sustainable; our continued reliance on fossil-fuel technologies and structures can only be overcome through innovation. Research into green technologies is booming, and this is very much alive in Salzburg. As part of the Change.Climate.Resilience symposium, we will be looking at a range of these forward-looking technologies and developments and aim to develop a theory based on them.",
+      "learningOutcome": "Upon completion, students will be able to analyse and evaluate social developments within the context of their studies. They will be able to describe and critically examine the ways of thinking within their discipline. Furthermore, they will reflect on their own ideas and values and critically engage with those of others. They will be able to clearly articulate their own viewpoint and compare it with other positions. They are also able to derive relevant insights from academic lectures and integrate them into their body of knowledge.",
+      "track": null,
+      "group": "elective-6"
+    },
+    {
+      "code": "CDEB6IHFIL",
+      "title": "Interdisciplinary Hackathon / Futures Stories Lab",
+      "semester": 6,
+      "type": "IL",
+      "kind": "elective",
+      "sws": 1,
+      "ects": 1,
+      "language": "German",
+      "assessment": "continuous",
+      "module": "Transformative Zukunftskompentenz",
+      "content": "Interdisciplinary Hackathon: Introduction to the principles and process of a hackathon. Interdisciplinary teamwork. Application of problem analysis and requirements definition methods in the context of real-world challenges. Application of creativity techniques and innovation methods for brainstorming and concept development. Application of technological tools and software platforms for product development and collaboration. Application of presentation techniques and pitch training to present the developed solutions. Consideration of user needs, market and technology analyses. Where applicable, practical relevance through the involvement of industry partners or real-world problems. Futures Stories Lab: Introduction to futures literacy: concepts and significance of futures (probable, possible, desirable). Methods of futures research: horizon scanning, scenario development, Futures Stories Lab. Creative, narrative and technological shaping of the future. Interdisciplinary collaboration and communication between art and technology. Self-reflection and development of the capacity to act in dealing with the complexity of the future.",
+      "learningOutcome": "Interdisciplinary Hackathon: Upon completion, students will be able to work on complex problems in an interdisciplinary and collaborative manner within teams. They will methodically develop creative ideas, structure them and turn them into functional prototypes. Furthermore, they will make efficient use of technological tools and digital platforms for product development. Students present results convincingly and communicate them to stakeholders. They also critically evaluate innovations with regard to users, technical feasibility and market potential. Futures Stories Lab: Upon graduation, students will be able to critically analyse and reflect on various future scenarios. They will competently apply methods for shaping the future and foresight. Furthermore, they will cooperate across disciplines and adopt different perspectives. Students will solve problems creatively and develop narrative and prototypical approaches for future developments.",
+      "track": null,
+      "group": "elective-6"
+    }
+  ]
+}
