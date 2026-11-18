@@ -163,8 +163,11 @@ function readStore() {
   } catch { return {}; }
 }
 const store = readStore();
-["sel", "picks", "scroll", "open"].forEach((k) => { store[k] = store[k] || {}; });
+["sel", "picks", "scroll", "open", "abs"].forEach((k) => { store[k] = store[k] || {}; });
 let openSet = new Set(); // expanded courses of the programme shown
+// Absences the viewer has entered: course code → { n: lessons missed, r: attendance rule in % }. Only in this browser,
+// never in the share link.
+let abs = {};
 
 let saveTimer;
 function persist() {
@@ -178,6 +181,7 @@ function remember() {
   store.sel[prog.id] = sel;
   store.picks[prog.id] = picks;
   store.open[prog.id] = [...openSet];
+  store.abs[prog.id] = abs;
   persist();
 }
 
@@ -236,15 +240,20 @@ async function init() {
   }, { passive: true });
 
   $("#menu-btn").addEventListener("click", () => toggleSide(!document.body.classList.contains("side-open")));
+  // Top right: report a problem / suggest an idea (swapped with the "saved" bookmark, which now sits in the sidebar)
+  const fbTop = $("#fb-top");
+  if (CONFIG.feedback?.key) { fbTop.innerHTML = icon("chat"); fbTop.dataset.text = t("fb.open"); fbTop.hidden = false; }
   $("#scrim").addEventListener("click", () => toggleSide(false));
 
   const setOnline = () => {
     const off = !navigator.onLine;
     document.body.classList.toggle("is-offline", off);
-    const btn = $("#saved");
-    const had = btn.innerHTML;
-    btn.innerHTML = icon(off ? "cloudOff" : "bookmark");
-    if (had && !reduceMotion) { btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop"); }
+    const btn = $("#saved");                                // in the sidebar footer (built in buildSide)
+    const ico = btn && btn.querySelector("svg");
+    if (ico) {
+      ico.outerHTML = icon(off ? "cloudOff" : "bookmark");
+      if (!reduceMotion) { btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop"); }
+    }
   };
   window.addEventListener("online", setOnline);
   window.addEventListener("offline", setOnline);
@@ -329,6 +338,7 @@ async function openProgramme(id, opts, animate, shared) {
     });
     picks = { ...(store.picks[id] || {}) };
     openSet = new Set(store.open[id] || []);
+    abs = { ...(store.abs[id] || {}) };
     if (shared) applyShared(shared);
 
     buildHeader();
@@ -444,7 +454,7 @@ function buildSide() {
         ${sideList(d.programmes)}
         ${(d.missing || []).length ? `<li class="list-head">${esc(t("nav.notIncluded"))}</li>` + d.missing.map((m) => `<li class="missing" data-tip="text" data-text="${esc(m.reason)}" tabindex="0">${esc(m.name)}</li>`).join("") : ""}
       </ul></div></div>
-    </div>`).join("") + `<div class="side-foot">${CONFIG.feedback?.key ? `<button class="side-feedback" type="button" data-feedback="bug">${icon("chat")}<span>${esc(t("fb.open"))}</span></button>` : ""}${CONFIG.legalUrl ? `<a class="side-legal" href="${esc(CONFIG.legalUrl)}">${esc(t("nav.legal"))}</a>` : ""}</div>`;
+    </div>`).join("") + `<div class="side-foot"><span class="side-saved saved" id="saved" tabindex="0" data-tip="saved">${icon(navigator.onLine ? "bookmark" : "cloudOff")}<span>${esc(t("status.savedLabel"))}</span></span>${CONFIG.legalUrl ? `<a class="side-legal" href="${esc(CONFIG.legalUrl)}">${esc(t("nav.legal"))}</a>` : ""}</div>`;
   $("#side").addEventListener("click", (e) => {
     const btn = e.target.closest(".dept-btn");
     if (btn) {
@@ -915,7 +925,7 @@ function render(animate) {
   document.querySelectorAll(".pills").forEach((g) => g.querySelectorAll(".pill").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.id === sel[g.dataset.key]))));
   renderNotes();
   renderOverview();
-  semesters().forEach((s) => renderSlot(s, animate));
+  semesters().forEach((s) => { renderSlot(s, animate); renderAbsSem(s); });
 }
 
 const RING = 94.25; // circumference of r = 15
@@ -939,7 +949,10 @@ function renderOverview() {
       card.innerHTML = `<svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="track" cx="18" cy="18" r="15" fill="none" stroke-width="5"/>
         ${["core", "spec", "minor", "elec"].map(seg).join("")}</svg>
         <span><small>${esc(t("sem.title", { n: s }))}</small><b></b><em class="per-day">${icon("clock")}<span></span></em></span>`;
-      card.addEventListener("click", () => document.getElementById("sem-" + s).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }));
+      card.addEventListener("click", () => {
+        const go = () => document.getElementById("sem-" + s).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+        if (card.closest("#tip")) { hideTip(true); setTimeout(go, 200); } else go();
+      });
       box.appendChild(card);
     }
     const card = box.querySelector(`[data-sem="${s}"]`);
@@ -978,6 +991,8 @@ function buildSemesters() {
     return `<section class="semester" id="sem-${s}" aria-labelledby="sem-${s}-t">
       <div class="sem-head">
         <h2 id="sem-${s}-t">${esc(t("sem.title", { n: s }))}</h2>
+        <span class="abs-sem" data-tip="abssem" data-sem="${s}" tabindex="0" hidden>${icon("alert")}<span class="abs-sem-t"></span></span>
+        <button class="abs-reset" type="button" data-abs-reset="${s}" hidden>${esc(t("abs.reset"))}</button>
         <button class="sum" type="button" data-tip="semester" data-sem="${s}"><span class="sum-v"></span>${warns.length ? `<span class="warn-ico" data-tip="semnote" data-sem="${s}" aria-label="${esc(t("sem.note"))}">${icon("alert")}</span>` : ""}</button>
       </div>
       <div class="slot"></div>
@@ -991,6 +1006,16 @@ function buildSemesters() {
 }
 
 function onSemesterClick(e) {
+  const step = e.target.closest("[data-abs]");
+  if (step) { const c = byCode(step.dataset.code); setAbsence(step.dataset.code, { n: absOf(c).n + +step.dataset.abs }); return; }
+  const rule = e.target.closest("[data-abs-rule]");
+  if (rule) { setAbsence(rule.dataset.code, { r: +rule.dataset.absRule }); return; }
+  const reset = e.target.closest("[data-abs-reset]");
+  if (reset) {
+    semesterCourses(+reset.dataset.absReset).forEach((c) => { if (abs[c.code]) { delete abs[c.code]; refreshAbsence(c); } });
+    remember();
+    return;
+  }
   const course = e.target.closest(".course");
   if (course && e.target.closest(".row") && !e.target.closest("[data-tip]") && !String(window.getSelection() || "")) {
     setOpen(course, !course.classList.contains("open"));
@@ -1037,16 +1062,111 @@ function slotHtml(s) {
 // app never promises more absence than the rule allows. One session a week → whole sessions, also rounded down.
 const NO_ATTENDANCE_TYPES = new Set(["BP", "DP", "MP"]);
 const floorHalf = (x) => { const r = Math.floor(x * 2 + 1e-9) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
+// Absence tracker: the viewer counts missed lessons (45 min); the app shows what is left under the course's rule
+// (75 % or 50 % attendance, chosen per course; 75 % by default – the stricter one, so it never promises too much).
+const tracksAbsence = (c) => c.sws > 0 && !NO_ATTENDANCE_TYPES.has(c.type);
+const absOf = (c) => abs[c.code] || { n: 0, r: 75 };
+const absLimit = (c, r) => Math.floor(lessonsOf(c.sws) * (1 - r / 100) + 1e-9);   // whole lessons, rounded down
+const sessionLessons = (c) => Math.max(1, Math.round(c.sws));                       // one weekly session
+function absState(c) {
+  const a = absOf(c), lim = absLimit(c, a.r), left = lim - a.n;
+  const level = !a.n ? "none" : left < 0 ? "over" : (lim ? a.n / lim : 1) >= 0.75 ? "warn" : "ok";
+  return { ...a, lim, left, level };
+}
+function absLeftText(c) {
+  const st = absState(c);
+  if (st.left < 0) return t("abs.over", { n: -st.left });
+  if (st.left === 0 && st.n) return t("abs.atLimit");
+  const sessions = Math.floor(st.left / sessionLessons(c) + 1e-9);
+  return t(sessions === 1 ? "abs.left1" : "abs.left", { left: `<b>${st.left}</b>`, lim: st.lim, h: floorHalf(st.left * LESSON_H),
+    s: sessions, w: TEACHING_WEEKS });
+}
 function absenceHtml(c) {
-  if (!(c.sws > 0) || NO_ATTENDANCE_TYPES.has(c.type)) return "";
-  const lessons = lessonsOf(c.sws);
-  const row = (p) => {
-    const miss = Math.floor(lessons * (1 - p / 100) + 1e-9);          // whole lessons, rounded down
-    return `<li><span class="abs-p">${p} %</span><span>${t("course.absenceRow", {
-      u: `<b>${miss}</b>`, h: floorHalf(miss * LESSON_H), n: Math.floor(TEACHING_WEEKS * (1 - p / 100) + 1e-9), w: TEACHING_WEEKS })}</span></li>`;
-  };
-  return `<div class="absence"><h4 class="first">${esc(t("course.absence"))}</h4><ul>${row(75)}${row(50)}</ul>
-    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, u: fmt(lessons), total: floorHalf(classHours(c.sws)) }))}</p></div>`;
+  if (!tracksAbsence(c)) return "";
+  const st = absState(c), key = esc(c.code);
+  const rule = (r) => `<button type="button" data-abs-rule="${r}" data-code="${key}" aria-pressed="${st.r === r}">${r} %</button>`;
+  return `<div class="absence" data-code="${key}">
+    <div class="abs-head"><h4 class="first">${esc(t("course.absence"))}</h4>
+      <div class="abs-rule" role="group" aria-label="${esc(t("abs.rule"))}"><span>${esc(t("abs.rule"))}</span>${rule(75)}${rule(50)}</div></div>
+    <div class="abs-track">
+      <span class="abs-label">${esc(t("abs.missed"))}</span>
+      <div class="stepper">
+        <button type="button" data-abs="-1" data-code="${key}" aria-label="${esc(t("abs.minus"))}" ${st.n ? "" : "disabled"}>−</button>
+        <output class="abs-n" aria-live="polite">${st.n}</output>
+        <button type="button" data-abs="1" data-code="${key}" aria-label="${esc(t("abs.plus"))}">+</button>
+      </div>
+      <span class="abs-unit">${esc(t("abs.unit"))}</span>
+      <button type="button" class="abs-session" data-abs="${sessionLessons(c)}" data-code="${key}">${esc(t(sessionLessons(c) === 1 ? "abs.session1" : "abs.session", { n: sessionLessons(c) }))}</button>
+    </div>
+    <div class="abs-bar ${st.level}" data-tip="abs" data-code="${key}" tabindex="0"><i style="width:${st.lim ? Math.min(100, st.n / st.lim * 100) : st.n ? 100 : 0}%"></i></div>
+    <p class="abs-left ${st.level}">${absLeftText(c)}</p>
+    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, u: fmt(lessonsOf(c.sws)), total: floorHalf(classHours(c.sws)) }))}</p></div>`;
+}
+// Small ring in the course row – only once something is entered, so untouched courses stay calm
+function absRingHtml(c) {
+  if (!tracksAbsence(c)) return "";
+  const st = absState(c);
+  const share = st.lim ? Math.min(1, st.n / st.lim) : st.n ? 1 : 0;
+  return `<span class="abs-ring ${st.level}" data-tip="abs" data-code="${esc(c.code)}" ${st.n ? "" : "hidden"}>
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle class="trk" cx="10" cy="10" r="7.5"/><circle class="val" cx="10" cy="10" r="7.5" pathLength="100" stroke-dasharray="${(share * 100).toFixed(1)} 100" transform="rotate(-90 10 10)"/></svg>
+    <span class="abs-ring-n">${st.n}/${st.lim}</span></span>`;
+}
+// Semester header: a short note only when a course is close to or over its limit
+function absSemHtml(s) {
+  const cs = semesterCourses(s).filter((c) => tracksAbsence(c) && absOf(c).n);
+  const over = cs.filter((c) => absState(c).level === "over").length, warn = cs.filter((c) => absState(c).level === "warn").length;
+  const text = [over ? t("abs.semOver", { n: over }) : "", warn ? t("abs.semWarn", { n: warn }) : ""].filter(Boolean).join(" · ");
+  return { text, level: over ? "over" : warn ? "warn" : "", any: cs.length > 0 };
+}
+function semesterCourses(s) {
+  const p = semesterParts(s);
+  return [...p.tracks.flatMap((x) => x.courses), ...p.core];
+}
+function setAbsence(code, change) {
+  const c = byCode(code);
+  if (!c) return;
+  const a = { ...absOf(c), ...change };
+  a.n = Math.max(0, Math.min(lessonsOf(c.sws), a.n));
+  if (!a.n && a.r === 75) delete abs[code]; else abs[code] = a;
+  refreshAbsence(c);
+  remember();
+}
+function refreshAbsence(c) {
+  const st = absState(c);
+  document.querySelectorAll(`.absence[data-code="${CSS.escape(c.code)}"]`).forEach((el) => {
+    $(".abs-n", el).textContent = st.n;
+    $('[data-abs="-1"]', el).disabled = !st.n;
+    el.querySelectorAll("[data-abs-rule]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.absRule === st.r)));
+    const bar = $(".abs-bar", el);
+    bar.className = `abs-bar ${st.level}`;
+    $("i", bar).style.width = `${st.lim ? Math.min(100, st.n / st.lim * 100) : st.n ? 100 : 0}%`;
+    const left = $(".abs-left", el);
+    left.className = `abs-left ${st.level}`;
+    left.innerHTML = absLeftText(c);
+  });
+  document.querySelectorAll(`.abs-ring[data-code="${CSS.escape(c.code)}"]`).forEach((el) => {
+    const share = st.lim ? Math.min(1, st.n / st.lim) : st.n ? 1 : 0;
+    el.className = `abs-ring ${st.level}`;
+    el.hidden = !st.n;
+    $(".val", el).setAttribute("stroke-dasharray", `${(share * 100).toFixed(1)} 100`);
+    $(".abs-ring-n", el).textContent = `${st.n}/${st.lim}`;
+  });
+  semesters().forEach((s) => {
+    renderAbsSem(s);
+    const slot = $(`#sem-${s} .slot`);
+    if (slot) slot.dataset.html = slotHtml(s);             // the DOM is up to date – no re-render needed later
+  });
+  if (tipFor && tipFor.dataset.tip === "abs") showTip(tipFor);
+}
+function renderAbsSem(s) {
+  const el = $(`#sem-${s} .abs-sem`);
+  if (!el) return;
+  const st = absSemHtml(s);
+  el.className = `abs-sem ${st.level}`;
+  el.hidden = !st.text;
+  $(".abs-sem-t", el).textContent = st.text;
+  const reset = $(`#sem-${s} .abs-reset`);
+  if (reset) reset.hidden = !st.any;
 }
 
 // A course: one line with short facts (each explained in a tooltip); a click folds out the details.
@@ -1059,6 +1179,7 @@ function rowHtml(c, cls) {
     <div class="row">
       <i class="stripe"></i>
       <button class="row-title" type="button" aria-expanded="${open}" aria-controls="${id}" data-code="${esc(c.code)}">${esc(c.title)}</button>
+      ${absRingHtml(c)}
       <span class="chip" data-tip="type" data-type="${esc(c.type)}">${esc(c.type)}</span>
       <span class="num sws" data-tip="sws" data-v="${c.sws}">${fmt(c.sws)} SWS</span>
       <span class="num assess" data-tip="assess" data-v="${esc(c.assessment)}">${esc(c.assessment === "final" ? t("course.exam") : t("course.cont"))}</span>
@@ -1067,6 +1188,7 @@ function rowHtml(c, cls) {
       <svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="details" id="${id}"><div><div class="inner">
+      <p class="facts-line"><span class="chip" data-type="${esc(c.type)}">${esc(c.type)}</span>${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(assessName(c.assessment).replace(/\.$/, ""))} · ${esc(t("course.hours", { n: hoursOf(c.ects, c.sws).total }))}</p>
       ${absenceHtml(c)}
       ${c.content ? `<h4 class="${absenceHtml(c) ? "" : "first"}">${esc(t("course.content"))}</h4><p>${esc(c.content)}</p>` : ""}
       ${c.learningOutcome ? `<h4>${esc(t("course.outcome"))}</h4><p>${esc(c.learningOutcome)}</p>` : ""}
@@ -1260,6 +1382,23 @@ function afterPick(first) {
 
 const tip = () => $("#tip");
 let tipFor = null, showTimer = null, hideTimer = null, warm = false;
+
+// Phones (tooltips as a card at the bottom): the semester rings and "electives picked" are not on the page but inside
+// the programme info card, below the facts – swipe the card up to see them. When the card closes they go back
+// (hidden there by CSS), so the overview keeps updating in one place.
+const sheetMode = () => !canHover && window.matchMedia("(max-width: 900px)").matches;
+let ovPlace = null;
+function moveOverviewInto(box) {
+  const wrap = $("#overview-wrap");
+  if (!wrap || wrap.parentNode === box) return;
+  ovPlace = document.createComment("overview");
+  wrap.before(ovPlace);
+  box.appendChild(wrap);
+}
+function restoreOverview() {
+  const wrap = $("#overview-wrap");
+  if (ovPlace && wrap) { ovPlace.replaceWith(wrap); ovPlace = null; }
+}
 const typeName = (type) => (L10N["legend.types"] || {})[type] || index.legend.types[type] || t("course.typeUnknown");
 const assessName = (a) => (L10N["legend.assessment"] || {})[a] || index.legend.assessment[a] || a;
 
@@ -1316,6 +1455,15 @@ function tipContent(el) {
       }
       return `<ul class="t-flush">${cs.map((c) => `<li>${esc(c.title)} · ${fmt(c.ects)} ECTS</li>`).join("")}</ul>`;
     }
+    case "abs": {
+      const c = byCode(d.code), st = absState(c);
+      return `<b class="t-title">${esc(c.title)}</b><span class="t-muted">${esc(t("abs.tip", { n: st.n, lim: st.lim, r: st.r }))}</span>
+        <span class="t-meta">${absLeftText(c)}</span>`;
+    }
+    case "abssem": {
+      const cs = semesterCourses(+d.sem).filter((c) => tracksAbsence(c) && ["warn", "over"].includes(absState(c).level));
+      return `<ul class="t-flush">${cs.map((c) => { const st = absState(c); return `<li>${esc(c.title)} · ${st.n}/${st.lim}</li>`; }).join("")}</ul>`;
+    }
     case "saved": return esc(navigator.onLine ? t("status.saved") : t("status.offline"));
     case "prog": { const p = findProgramme(d.id); return { small: true, html: esc(`${w(p.degree)} · ${w(p.mode)} · ${w(p.language)} · ${p.semesters} ${semWord()}`) }; }
     case "text": return esc(d.text);
@@ -1331,8 +1479,15 @@ function showTip(el) {
   const small = typeof content === "object" && content.small;
   if (typeof content === "object") content = content.html;
   if (!content) return;
+  restoreOverview();                                     // before the card's content is replaced
   tEl.innerHTML = content;
   tEl.className = "tip" + (small ? " small" : "");
+  const more = sheetMode() && el.dataset.tip === "programme" && $("#overview-wrap");
+  if (more) {
+    tEl.insertAdjacentHTML("beforeend", '<div class="t-more"><div class="t-more-in"></div></div>');
+    moveOverviewInto($(".t-more-in", tEl));
+    tEl.classList.add("has-more");
+  }
   tEl.style.transform = tEl.style.opacity = tEl.style.transition = "";   // rest of a swipe
   tipFor = el;
   el.setAttribute("aria-describedby", "tip");
@@ -1354,6 +1509,8 @@ function showTip(el) {
   }
   void tEl.offsetWidth;
   tEl.classList.add("show");
+  // A short pull upwards once it is open: shows that the card can be swiped up (for the semesters)
+  if (more && !reduceMotion) setTimeout(() => { if (tipFor === el) tEl.classList.add("hint"); }, 380);
   warm = true;
 }
 
@@ -1362,7 +1519,8 @@ function hideTip(now) {
   const tEl = tip();
   if (!tEl) return;
   const go = () => {
-    tEl.classList.remove("show");
+    tEl.classList.remove("show", "hint", "expanded");
+    setTimeout(() => { if (!tEl.classList.contains("show")) restoreOverview(); }, 260);   // after the card has faded
     if (tipFor) tipFor.removeAttribute("aria-describedby");
     tipFor = null;
     setTimeout(() => { if (!tipFor) warm = false; }, 300);
@@ -1405,40 +1563,58 @@ function initTips() {
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideTip(true); });
 }
 
-// Touch: the card at the bottom follows the finger down; far or fast enough and it slides away, otherwise it springs back.
+// Touch: the card at the bottom follows the finger. Down: far or fast enough and it slides away (an expanded card
+// folds up first), otherwise it springs back. Up (programme card): it expands and shows the semesters.
+// The finger is only captured after a few pixels of movement, so a tap on a semester ring stays a tap.
 function initSheetSwipe() {
   const el = tip();
-  let id = null, y0 = 0, dy = 0, last = 0, lastT = 0;
+  let id = null, y0 = 0, dy = 0, raw = 0, last = 0, lastT = 0, captured = false;
   el.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" || !el.classList.contains("sheet") || !el.classList.contains("show") || id !== null) return;
-    id = e.pointerId; dy = 0;
+    if (e.target.closest(".t-more-in") && el.classList.contains("expanded") && $(".t-more-in", el).scrollTop > 0) return;  // scrolling inside
+    id = e.pointerId; dy = raw = 0; captured = false;
     y0 = last = e.clientY; lastT = e.timeStamp;
-    try { el.setPointerCapture(id); } catch {}
-    el.style.transition = "none";
   });
   el.addEventListener("pointermove", (e) => {
     if (e.pointerId !== id) return;
-    const raw = e.clientY - y0;
-    dy = raw > 0 ? raw : raw / 6;                         // upwards only a little resistance
+    raw = e.clientY - y0;
+    if (!captured) {
+      if (Math.abs(raw) < 6) return;
+      captured = true;
+      try { el.setPointerCapture(id); } catch {}
+      el.classList.remove("hint");
+      el.style.transition = "none";
+    }
+    const canGrow = el.classList.contains("has-more") && !el.classList.contains("expanded");
+    dy = raw > 0 ? raw : raw / (canGrow ? 2.5 : 6);     // upwards: follows a bit when there is more to show
     if (e.timeStamp - lastT > 40) { last = e.clientY; lastT = e.timeStamp; }
     el.style.transform = `translateY(${dy}px)`;
-    el.style.opacity = String(Math.max(0.35, 1 - Math.max(0, dy) / (el.offsetHeight * 1.6)));
+    if (!el.classList.contains("expanded")) el.style.opacity = String(Math.max(0.35, 1 - Math.max(0, dy) / (el.offsetHeight * 1.6)));
   });
+  const springBack = () => {
+    el.style.transition = "transform .45s var(--spring), opacity .25s ease-out";
+    el.style.transform = "";
+    el.style.opacity = "";
+  };
   const end = (e) => {
     if (e.pointerId !== id) return;
     id = null;
+    if (!captured) return;                                  // a tap
     const v = (e.clientY - last) / Math.max(1, e.timeStamp - lastT);   // px per ms over the last bit of the move
-    if (dy > Math.min(90, el.offsetHeight * 0.35) || (v > 0.45 && dy > 12)) {
+    const far = dy > Math.min(90, el.offsetHeight * 0.35) || (v > 0.45 && dy > 12);
+    if (raw < -30 || v < -0.4) {                            // up: show the semesters
+      if (el.classList.contains("has-more")) el.classList.add("expanded");
+      springBack();
+    } else if (far && el.classList.contains("expanded")) { // down on an expanded card: fold up first
+      el.classList.remove("expanded");
+      springBack();
+    } else if (far) {
       const ms = reduceMotion ? 1 : Math.round(Math.max(140, Math.min(300, (el.offsetHeight + 24 - dy) / Math.max(v, 0.9))));
       el.style.transition = `transform ${ms}ms cubic-bezier(.2,.7,.3,1), opacity ${ms}ms ease-out`;
       el.style.transform = `translateY(${el.offsetHeight + 24}px)`;
       el.style.opacity = "0";
-      setTimeout(() => { hideTip(true); el.style.transition = "none"; }, ms);
-    } else if (dy) {
-      el.style.transition = "transform .45s var(--spring), opacity .25s ease-out";
-      el.style.transform = "";
-      el.style.opacity = "";
-    }
+      setTimeout(() => { hideTip(true); el.style.transition = "none"; el.style.transform = el.style.opacity = ""; }, ms);
+    } else springBack();
   };
   el.addEventListener("pointerup", end);
   el.addEventListener("pointercancel", end);

@@ -153,5 +153,20 @@
   "fb.ctxScreen": "Fenster",
   "fb.prefillData": "Datenfehler in {programme}:\n\nWas ist falsch:\n\nWie es sein sollte (und wo das steht):\n",
   "foot.reportForm": "Stimmt etwas in diesem Curriculum nicht? <a href=\"#\" data-feedback=\"data\">Melden</a>",
-  "fb.limitAt": "Du hast in der letzten Stunde schon {n} Nachrichten geschickt. Ab {time} Uhr kannst du wieder eine senden – dein Text bleibt so lange hier."
+  "fb.limitAt": "Du hast in der letzten Stunde schon {n} Nachrichten geschickt. Ab {time} Uhr kannst du wieder eine senden – dein Text bleibt so lange hier.",
+  "abs.rule": "Anwesenheit",
+  "abs.missed": "Schon gefehlt",
+  "abs.unit": "Einheiten (45 min)",
+  "abs.minus": "Eine Einheit weniger",
+  "abs.plus": "Eine Einheit mehr gefehlt",
+  "abs.session": "+1 Termin ({n} Einheiten)",
+  "abs.left": "noch {left} von {lim} Einheiten ({h} h) · etwa {s} Termine",
+  "abs.over": "{n} Einheiten über dem Limit – sprich mit der Lehrperson",
+  "abs.atLimit": "Limit erreicht – du darfst nicht mehr fehlen",
+  "abs.tip": "{n} von {lim} erlaubten Einheiten gefehlt bei {r} % Anwesenheit",
+  "abs.semOver": "{n} über dem Limit",
+  "abs.semWarn": "{n} knapp am Limit",
+  "abs.reset": "Fehlzeiten zurücksetzen",
+  "abs.session1": "+1 Termin (1 Einheit)",
+  "abs.left1": "noch {left} von {lim} Einheiten ({h} h) · etwa 1 Termin"
 }

@@ -48,7 +48,7 @@
       </label>
       <div class="search-results" id="search-results" role="listbox"></div>
     </div>
-    <span class="status-ico saved" id="saved" tabindex="0" role="img" data-tip="saved" data-l10n-attr="aria-label:status.savedLabel"></span>
+    <button class="icon-btn fb-top" id="fb-top" type="button" data-feedback="bug" data-tip="text" data-touch-silent hidden data-l10n-attr="aria-label:fb.open"></button>
   </header>
 
   <div class="shell">
@@ -74,8 +74,11 @@
 
         <div id="pickers"></div>
 
-        <section class="overview" id="overview" aria-label="Semesters"></section>
-        <p class="picks-info" id="picks-info"></p>
+        <!-- Phones: this block moves into the programme info card (swipe it up to see it), see moveOverview() in app.js -->
+        <div class="overview-wrap" id="overview-wrap">
+          <section class="overview" id="overview" aria-label="Semesters"></section>
+          <p class="picks-info" id="picks-info"></p>
+        </div>
 
         <div id="semesters"></div>
 

@@ -22,6 +22,8 @@
   --warn: #c2410c;
   --warn-soft: #fff1e6;
   --ok: #2b8a3e;
+  --bad: #c92a2a;
+  --bad-soft: #fff0f0;
   --tip-bg: #17182b;
   --tip-text: #ffffff;
   --tip-muted: #b9bbd0;
@@ -64,6 +66,8 @@
     --warn: #ffa26b;
     --warn-soft: #3a2516;
     --ok: #69db7c;
+    --bad: #ff8787;
+    --bad-soft: #3a1c1f;
     --tip-bg: #2a2c3e;
     --tip-text: #f4f5fb;
     --tip-muted: #a9abc2;
@@ -134,6 +138,9 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .saved.pop svg.i { animation: pop .45s var(--spring) both; }
 @keyframes pop { from { opacity: 0; transform: scale(.5) rotate(-12deg); } }
 body.is-offline .saved { color: var(--warn); }
+.side-saved { display: inline-flex; align-items: center; gap: 8px; margin: 0 -8px; padding: 7px 8px; border-radius: 9px; font-size: 13px; font-weight: 550; cursor: default; }
+.side-saved span { color: var(--text-2); }
+.side-saved .i { width: 17px; height: 17px; flex: none; }
 .menu-btn { display: none; }
 
 /* ---------- Shell ---------- */
@@ -355,7 +362,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 /* Semesters */
 .semester { margin-top: 46px; scroll-margin-top: calc(var(--top) + 20px); }
 .sem-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
-.sem-head h2 { margin: 0; font-size: 28px; letter-spacing: -.02em; }
+.sem-head h2 { margin: 0 auto 0 0; font-size: 28px; letter-spacing: -.02em; }
 .sem-head .sum { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; padding: 4px 0; font-size: 14px; font-weight: 600; color: var(--muted); cursor: default; }
 .sem-head .warn-ico { display: inline-grid; place-items: center; color: var(--warn); }
 .group { margin-top: 18px; }
@@ -399,14 +406,60 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .details h4 { margin: 14px 0 4px; font-size: 13px; font-weight: 650; color: var(--text); }
 .details p { margin: 0; max-width: 75ch; line-height: 1.55; }
 .details .facts { font-size: 13px; color: var(--muted); }
-/* Allowed absence (first thing in the details) */
-.absence ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.absence li { display: flex; align-items: baseline; gap: 10px; }
-.absence .abs-p { flex: none; min-width: 44px; padding: 1px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent-strong);
-  font-size: 12px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
-.absence li b { color: var(--text); font-weight: 650; }
+[hidden] { display: none !important; }
+/* Allowed absence (first thing in the details): count missed lessons, see what is left */
+.abs-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.abs-head h4.first { margin: 4px 0; }
+.abs-rule { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 9px; background: var(--surface-2); font-size: 12px; }
+.abs-rule span { padding: 0 6px 0 4px; color: var(--muted); font-weight: 600; }
+.abs-rule button { border: 0; background: none; padding: 3px 8px; border-radius: 6px; font: inherit; font-weight: 650; color: var(--muted); cursor: pointer;
+  font-variant-numeric: tabular-nums; transition: background-color .2s, color .2s, box-shadow .2s; }
+.abs-rule button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+.abs-track { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin-top: 8px; }
+.abs-label { font-weight: 600; color: var(--text); }
+.abs-unit { color: var(--muted); font-size: 13px; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.stepper button { width: 32px; height: 30px; border: 0; background: none; font: inherit; font-size: 16px; color: var(--text-2); cursor: pointer;
+  border-radius: 9px; transition: background-color .2s, transform .25s var(--spring); }
+.stepper button:hover:not(:disabled) { background: var(--surface-2); }
+.stepper button:active:not(:disabled) { transform: scale(.9); }
+.stepper button:disabled { opacity: .35; cursor: default; }
+.stepper output { min-width: 28px; text-align: center; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.abs-session { margin-left: auto; border: 1px solid var(--line); background: var(--surface); padding: 5px 10px; border-radius: 9px; font: inherit; font-size: 13px;
+  font-weight: 600; color: var(--text-2); cursor: pointer; transition: background-color .2s, border-color .2s, transform .25s var(--spring); }
+.abs-session:hover { background: var(--surface-2); border-color: var(--accent-line); }
+.abs-session:active { transform: scale(.96); }
+.abs-bar { position: relative; height: 8px; margin-top: 12px; border-radius: 4px; background: var(--surface-2); overflow: hidden; cursor: default; }
+.abs-bar i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ok); transition: width .5s var(--ease-out), background-color .3s; }
+.abs-bar.warn i { background: var(--warn); }
+.abs-bar.over i { background: var(--bad); }
+.abs-left { margin-top: 6px !important; font-size: 13.5px; color: var(--text-2); transition: color .3s; }
+.abs-left b { color: var(--text); font-weight: 700; }
+.abs-left.warn { color: var(--warn); }
+.abs-left.over { color: var(--bad); font-weight: 600; }
 .absence .facts { margin-top: 6px; }
+/* ring in the course row (only when something is entered) */
+.abs-ring { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 4px; border-radius: 999px; background: var(--surface-2);
+  font-size: 12px; font-weight: 650; color: var(--text-2); font-variant-numeric: tabular-nums; cursor: default; animation: abs-in .35s var(--spring); }
+.abs-ring svg { width: 18px; height: 18px; }
+.abs-ring circle { fill: none; stroke-width: 3; }
+.abs-ring .trk { stroke: color-mix(in srgb, var(--muted) 30%, transparent); }
+.abs-ring .val { stroke: var(--ok); stroke-linecap: round; transition: stroke-dasharray .5s var(--ease-out), stroke .3s; }
+.abs-ring.warn .val { stroke: var(--warn); }
+.abs-ring.over .val { stroke: var(--bad); }
+.abs-ring.over { background: var(--bad-soft); color: var(--bad); }
+@keyframes abs-in { from { opacity: 0; transform: scale(.8); } }
+/* semester header: note + reset */
+.abs-sem { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn);
+  font-size: 13px; font-weight: 650; cursor: default; animation: abs-in .35s var(--spring); }
+.abs-sem.over { background: var(--bad-soft); color: var(--bad); }
+.abs-sem svg { width: 15px; height: 15px; }
+.abs-reset { border: 0; background: none; padding: 4px 6px; border-radius: 7px; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer;
+  transition: color .2s, background-color .2s; }
+.abs-reset:hover { color: var(--text); background: var(--surface-2); }
 .details .meta { margin-top: 12px; font-size: 12px; color: var(--muted); }
+/* Phones: what the row leaves out (type, SWS, assessment, hours) is the first line of the details */
+.facts-line { display: none; }
 .chip { flex: none; padding: 3px 8px; border-radius: 7px; background: var(--surface-2); font-size: 12px; font-weight: 650; color: var(--text-2); cursor: default; }
 .num { flex: none; text-align: right; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; cursor: default; }
 .num.sws { width: 60px; }
@@ -513,7 +566,8 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .tip li + li { margin-top: 2px; }
 .tip p { margin: 0; }
 .tip p + p { margin-top: 8px; }
-.tip.small { padding: 8px 12px; font-size: 12px; white-space: nowrap; }
+/* short tips: one line when they fit, otherwise they wrap inside the bubble (nowrap let long text overflow) */
+.tip.small { padding: 8px 12px; font-size: 12px; width: max-content; }
 
 /* ---------- Motion ---------- */
 .enter { animation: enter .5s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 30ms); }
@@ -548,11 +602,43 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
   .sem-card { gap: 10px; padding: 12px; }
   .ring { width: 36px; height: 36px; }
   .sem-card b { font-size: 18px; }
-  .num.sws, .num.assess, .num.hours { display: none; }
+  .per-day { max-width: 100%; padding: 2px 6px; gap: 3px; font-size: 11.5px; white-space: nowrap; overflow: hidden; }
+  .num.sws, .num.assess, .num.hours, .row .chip { display: none; }
+  .facts-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 2px 0 10px !important; font-size: 13px; color: var(--muted); }
+  .facts-line .chip { font-size: 11px; padding: 2px 7px; }
+  /* programme head centred; track buttons full width (up to a comfortable maximum) */
+  .title-row { flex-wrap: wrap; justify-content: center; gap: 12px; text-align: center; }
+  .title-row h1 { flex: 1 0 100%; }
+  .subtitle { text-align: center; }
+  .notes-slot { justify-items: center; }
+  .picker-label { justify-content: center; }
+  .pills { flex-direction: column; align-items: center; }
+  .pill { width: 100%; max-width: 420px; justify-content: center; }
+  .abs-session { margin-left: 0; }
+  .abs-ring-n { display: none; }
+  .abs-ring { padding: 2px; }
   .row { padding: 6px 12px; }
   .details .inner { padding-left: 24px; padding-right: 12px; }
   .search-field { padding: 8px 12px; }
 }
+/* Phones: semester rings + picks live in the programme card (swipe up), not on the page */
+@media (hover: none) and (max-width: 900px) {
+  .main .overview-wrap { display: none; }
+}
+.tip .t-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease-out); }
+.tip .t-more-in { min-height: 0; overflow: hidden; }
+.tip.expanded .t-more { grid-template-rows: 1fr; }
+.tip.expanded .t-more-in { overflow: auto; max-height: 62vh; overscroll-behavior: contain; }
+.tip .overview-wrap { padding-top: 14px; margin-top: 12px; border-top: 1px solid color-mix(in srgb, var(--tip-text) 14%, transparent);
+  opacity: 0; transform: translateY(8px); transition: opacity .3s ease-out, transform .45s var(--spring); }
+.tip.expanded .overview-wrap { opacity: 1; transform: none; transition-delay: .08s; }
+.tip .overview { margin-top: 0; }
+.tip .sem-card { background: color-mix(in srgb, var(--tip-text) 7%, transparent); border-color: color-mix(in srgb, var(--tip-text) 12%, transparent); color: var(--tip-text); }
+.tip .sem-card small, .tip .picks-info { color: var(--tip-muted); }
+.tip .picks-info { margin: 12px 0 2px; }
+/* the hint: pulls up once, a little, and settles back */
+.tip.sheet.hint { animation: sheet-hint .9s var(--ease-out); }
+@keyframes sheet-hint { 0% { transform: none; } 35% { transform: translateY(-16px); } 100% { transform: none; } }
 /* Touch: tooltips open as a card at the bottom */
 @media (hover: none) {
   .tip.sheet { left: 12px !important; right: 12px; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom)); max-width: none; white-space: normal; --from: 12px; padding-top: 18px; touch-action: none; }

@@ -42,6 +42,7 @@ Course titles and descriptions stay in the language of the FH Salzburg source.
 ## Saved in the browser
 
 - **Local storage** (`curriculum-compass`): last programme, majors per programme, picked electives, expanded courses,
+  absences entered per course (never in the share link),
   scroll position. Nothing leaves the browser.
 - **Offline cache** (service worker, `sw.js`): the app and the curricula you open, so it works without internet.
   On a known unmetered connection all curricula are cached in advance (about 3.6 MB, too big for local storage).

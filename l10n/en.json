@@ -153,5 +153,20 @@
   "fb.ctxScreen": "Window",
   "fb.prefillData": "Data error in {programme}:\n\nWhat is wrong:\n\nHow it should be (and where it says so):\n",
   "foot.reportForm": "Something wrong in this curriculum? <a href=\"#\" data-feedback=\"data\">Report it</a>",
-  "fb.limitAt": "You have already sent {n} messages in the last hour. You can send the next one from {time} – your text stays here until then."
+  "fb.limitAt": "You have already sent {n} messages in the last hour. You can send the next one from {time} – your text stays here until then.",
+  "abs.rule": "Attendance",
+  "abs.missed": "Already missed",
+  "abs.unit": "lessons (45 min)",
+  "abs.minus": "One lesson less",
+  "abs.plus": "One more missed lesson",
+  "abs.session": "+1 session ({n} lessons)",
+  "abs.left": "{left} of {lim} lessons left ({h} h) · about {s} sessions",
+  "abs.over": "{n} lessons over the limit – talk to the lecturer",
+  "abs.atLimit": "Limit reached – you can't miss any more",
+  "abs.tip": "{n} of {lim} allowed lessons missed at {r} % attendance",
+  "abs.semOver": "{n} over the limit",
+  "abs.semWarn": "{n} close to the limit",
+  "abs.reset": "Reset absences",
+  "abs.session1": "+1 session (1 lesson)",
+  "abs.left1": "{left} of {lim} lessons left ({h} h) · about 1 session"
 }
