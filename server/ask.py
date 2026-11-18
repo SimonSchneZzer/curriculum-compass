@@ -56,7 +56,18 @@ def _num(v) -> str:
     return f"{float(v):g}"
 
 
-def build_context(prog: dict, sel: dict | None, lang: str) -> str:
+def clean_totals(raw) -> list[dict]:
+    """Semester totals the app computed for the viewer's picks (numbers only, at most 12 semesters)."""
+    out = []
+    for t in (raw if isinstance(raw, list) else [])[:12]:
+        try:
+            out.append({k: float(t[k]) for k in ("s", "ects", "sws", "hours")})
+        except (TypeError, KeyError, ValueError):
+            continue
+    return out
+
+
+def build_context(prog: dict, sel: dict | None, lang: str, totals: list[dict] | None = None) -> str:
     sel = sel or {}
     opt_name = {(t["key"], o["id"]): o.get("name") or o.get("label") or o["id"] for t in prog["tracks"] for o in t["options"]}
     lines = [f"Programme: {prog['name']} ({prog['degree']}), {prog.get('mode', '')}, taught in {prog.get('language', '')}, "
@@ -65,6 +76,9 @@ def build_context(prog: dict, sel: dict | None, lang: str) -> str:
         names = ", ".join(opt_name[(t["key"], o["id"])] for o in t["options"])
         picked = opt_name.get((t["key"], sel.get(t["key"])))
         lines.append(f"Choice '{t.get('label') or t['key']}': {names}." + (f" The viewer picked: {picked}." if picked else ""))
+    if totals:
+        lines.append("Semester totals for the viewer's current picks (computed by the app – use these, do not add up courses): "
+                     + "; ".join(f"semester {t['s']:g}: {t['ects']:g} ECTS, {t['sws']:g} SWS, about {t['hours']:g} h of work" for t in totals) + ".")
     for n in prog.get("notes") or []:
         lines.append(f"Note{' (semester ' + str(n['semester']) + ')' if n.get('semester') else ''}: {n.get('text', '')}")
     groups = {g["id"]: g for g in prog.get("groups") or []}
@@ -101,6 +115,8 @@ Rules:
 - Use only the data below. If the answer is not in it, say so briefly and point to the official curriculum page or
   the study regulations. Never invent courses, numbers, dates or rules.
 - The overview is unofficial; where it differs from the study regulations, the regulations apply.
+- For totals per semester use the given "Semester totals" line; list only the courses that apply to the viewer's picks
+  ("everyone" plus their own major/specialisation) unless they ask about another one.
 - Useful facts: 1 ECTS ≈ 25 hours of work. 1 SWS = 14 lessons of 45 minutes per semester. Allowed absence at 75 %
   attendance = 25 % of the lessons, at 50 % = half (rounded down); which rule applies is set by the course.
 - Keep it short: 1–4 sentences or a short list. Plain text, at most **bold** and "- " lists. No tables.
@@ -201,6 +217,7 @@ class Handler(BaseHTTPRequestHandler):
             question = " ".join(str(req.get("question", "")).split())[:MAX_QUESTION]
             lang = "German" if req.get("lang") == "de" else "English"
             sel = req.get("sel") if isinstance(req.get("sel"), dict) else {}
+            totals = clean_totals(req.get("totals"))
             if not re.fullmatch(r"[a-z0-9-]{2,24}", pid) or len(question) < 2:
                 return self.send(400, {"error": "bad request"})
             prog = json.loads((DATA / f"{pid}.json").read_text())
@@ -216,7 +233,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(429, {"error": blocked, "until": int(next_utc_midnight(now)) if blocked == "quota" else None})
         t0 = time.time()
         try:
-            system = SYSTEM.replace("{lang}", lang).replace("{data}", build_context(prog, sel, lang))
+            system = SYSTEM.replace("{lang}", lang).replace("{data}", build_context(prog, sel, lang, totals))
             answer, usage = ask_model(system, question)
         except Quota:
             with _lock:

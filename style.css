@@ -631,6 +631,15 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
   .sem-card { gap: 10px; padding: 12px; }
   .ring { width: 36px; height: 36px; }
   .sem-card b { font-size: 18px; }
+  .overview:not(.many) .sem-card, .tip .overview .sem-card { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; row-gap: 2px; align-items: center; }
+  .overview:not(.many) .sem-card > span, .tip .overview .sem-card > span { display: contents; }
+  .overview:not(.many) .sem-card .ring, .tip .overview .sem-card .ring { grid-row: 1 / 3; }
+  .overview:not(.many) .sem-card small, .tip .overview .sem-card small { grid-column: 2; align-self: end; }
+  .overview:not(.many) .sem-card b, .tip .overview .sem-card b { grid-column: 2; align-self: start; }
+  .overview:not(.many) .sem-card .per-day, .tip .overview .sem-card .per-day { grid-column: 1 / -1; justify-content: center; margin-top: 10px; }
+  .tip .overview.many { --n: 2 !important; }
+  .overview.many .sem-card > span { align-self: stretch; }
+  .overview.many .per-day { display: flex; justify-content: center; }
   .per-day { max-width: 100%; padding: 2px 6px; gap: 3px; font-size: 11.5px; white-space: nowrap; overflow: hidden; }
   .num.sws, .num.assess, .num.hours, .row .chip { display: none; }
   .facts-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 2px 0 10px !important; font-size: 13px; color: var(--muted); }
@@ -654,9 +663,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 @media (hover: none) and (max-width: 900px) {
   .main .overview-wrap { display: none; }
 }
-.tip .t-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease-out); }
-.tip .t-more-in { min-height: 0; overflow: hidden; }
-.tip.expanded .t-more { grid-template-rows: 1fr; }
+.tip .t-more-in { max-height: 0; overflow: hidden; transition: max-height .5s var(--ease-out); }
 .tip.expanded .t-more-in { overflow: auto; max-height: 62vh; overscroll-behavior: contain; }
 .tip .overview-wrap { padding-top: 14px; margin-top: 12px; border-top: 1px solid color-mix(in srgb, var(--tip-text) 14%, transparent);
   opacity: 0; transform: translateY(8px); transition: opacity .3s ease-out, transform .45s var(--spring); }
@@ -666,13 +673,18 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .tip .sem-card small, .tip .picks-info { color: var(--tip-muted); }
 .tip .picks-info { margin: 12px 0 2px; }
 /* the hint: pulls up once, a little, and settles back */
-.tip.sheet.hint { animation: sheet-hint .9s var(--ease-out); }
-@keyframes sheet-hint { 0% { transform: none; } 35% { transform: translateY(-16px); } 100% { transform: none; } }
+/* the hint: the card grows a little once (shows the first bit of the semesters) and folds back */
+.tip.sheet.hint:not(.expanded) .t-more-in { animation: sheet-peek 1.1s var(--ease-out); }
+.tip.sheet.hint:not(.expanded) .overview-wrap { animation: sheet-peek-fade 1.1s var(--ease-out); }
+@keyframes sheet-peek { 0%, 100% { max-height: 0; } 40%, 55% { max-height: 64px; } }
+@keyframes sheet-peek-fade { 0%, 100% { opacity: 0; transform: translateY(8px); } 40%, 55% { opacity: 1; transform: none; } }
 /* Touch: tooltips open as a card at the bottom */
 @media (hover: none) {
   .tip.sheet { left: 12px !important; right: 12px; top: auto !important; bottom: calc(12px + env(safe-area-inset-bottom)); max-width: none; white-space: normal; --from: 12px; padding-top: 18px; touch-action: none; }
   .tip.sheet.show { pointer-events: auto; }
   /* Grab handle: shows that the card can be swiped down */
+  .tip.sheet:not(.has-more)::before { display: none; }
+  .tip.sheet:not(.has-more) { padding-top: 12px; }
   .tip.sheet::before { content: ""; position: absolute; top: 7px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 2px; background: color-mix(in srgb, var(--tip-text) 28%, transparent); }
   .tip.sheet::after { display: none; }
 }

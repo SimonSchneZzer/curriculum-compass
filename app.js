@@ -629,7 +629,9 @@ function buildSearch() {
     let html;
     try {
       const r = await fetch(CONFIG.ai.endpoint, { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ programme: prog.id, question, lang, sel }) });
+        // the app's own semester totals for the viewer's picks – the model should not add up courses itself
+        body: JSON.stringify({ programme: prog.id, question, lang, sel,
+          totals: semesters().map((s) => { const r = totals(s); return { s, ects: r.ects, sws: r.sws, hours: hoursOf(r.ects, r.sws).total }; }) }) });
       const d = await r.json().catch(() => ({}));
       if (r.ok && d.answer) {
         html = `<div class="ask-answer">${aiMarkdown(d.answer)}</div><p class="ask-note">${esc(t("ai.note"))}</p>`;
