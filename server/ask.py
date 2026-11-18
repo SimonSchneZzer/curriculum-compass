@@ -67,6 +67,11 @@ def clean_totals(raw) -> list[dict]:
     return out
 
 
+def matches(cond, sel: dict) -> bool:
+    """Same rule as the app: a course/group applies when every condition matches the viewer's picks."""
+    return not cond or all((sel.get(k) in v) if isinstance(v, list) else sel.get(k) == v for k, v in cond.items())
+
+
 def build_context(prog: dict, sel: dict | None, lang: str, totals: list[dict] | None = None) -> str:
     sel = sel or {}
     opt_name = {(t["key"], o["id"]): o.get("name") or o.get("label") or o["id"] for t in prog["tracks"] for o in t["options"]}
@@ -82,8 +87,14 @@ def build_context(prog: dict, sel: dict | None, lang: str, totals: list[dict] | 
     for n in prog.get("notes") or []:
         lines.append(f"Note{' (semester ' + str(n['semester']) + ')' if n.get('semester') else ''}: {n.get('text', '')}")
     groups = {g["id"]: g for g in prog.get("groups") or []}
+    has_sel = all(sel.get(t["key"]) for t in prog["tracks"]) if prog["tracks"] else True
     for s in range(1, int(prog["semesters"]) + 1):
         lines.append(f"\nSemester {s}:")
+        if has_sel:   # computed here, so the model does not have to work out which courses apply
+            mine = [c["title"] for c in prog["courses"] if str(c.get("semester")) == str(s) and not c.get("group") and matches(c.get("track"), sel)]
+            choices = [g.get("label", "") for g in groups.values() if str(g.get("semester")) == str(s) and g.get("options") and matches(g.get("onlyFor"), sel)]
+            lines.append("The viewer's courses this semester (their picks): " + "; ".join(mine)
+                         + (f"; plus a choice: {', '.join(choices)}" if choices else "") + ".")
         for c in prog["courses"]:
             if str(c.get("semester")) != str(s) or c.get("group"):
                 continue
@@ -115,8 +126,8 @@ Rules:
 - Use only the data below. If the answer is not in it, say so briefly and point to the official curriculum page or
   the study regulations. Never invent courses, numbers, dates or rules.
 - The overview is unofficial; where it differs from the study regulations, the regulations apply.
-- For totals per semester use the given "Semester totals" line; list only the courses that apply to the viewer's picks
-  ("everyone" plus their own major/specialisation) unless they ask about another one.
+- For totals per semester use the given "Semester totals" line. For "my courses" use the line "The viewer's courses
+  this semester" (it already contains everyone's courses plus their own major/specialisation) – list all of them.
 - Useful facts: 1 ECTS ≈ 25 hours of work. 1 SWS = 14 lessons of 45 minutes per semester. Allowed absence at 75 %
   attendance = 25 % of the lessons, at 50 % = half (rounded down); which rule applies is set by the course.
 - Keep it short: 1–4 sentences or a short list. Plain text, at most **bold** and "- " lists. No tables.
