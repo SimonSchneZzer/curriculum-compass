@@ -159,7 +159,6 @@
   "abs.minus": "One session less",
   "abs.plus": "One more missed session",
   "abs.tip": "{n} of {of} sessions missed ({p} %)",
-  "abs.reset": "Reset absences",
   "ai.head": "Ask the AI about {programme}",
   "ai.hint": "Type your question after the /, e.g. /How many ECTS in semester 3?",
   "ai.needProgramme": "Open a programme first – then you can ask the AI about it with /.",
@@ -177,7 +176,8 @@
   "abs.comp": "Compensation task needed · {k}× more and the course is failed",
   "abs.last": "Compensation task needed · one more absence and the course is failed",
   "abs.fail": "More than half missed – the course is failed",
-  "abs.semFail": "{n} failed",
-  "abs.semComp": "{n} need a compensation task",
-  "abs.semLimit": "{n} at the limit"
+  "abs.sem.limit": "{n} close to compensation",
+  "abs.sem.comp": "{n} with compensation",
+  "abs.sem.last": "{n} close to failing",
+  "abs.sem.fail": "{n} failed"
 }

@@ -159,7 +159,6 @@
   "abs.minus": "Ein Termin weniger",
   "abs.plus": "Einen Termin mehr gefehlt",
   "abs.tip": "{n} von {of} Terminen gefehlt ({p} %)",
-  "abs.reset": "Fehlzeiten zurücksetzen",
   "ai.head": "Die KI zu {programme} fragen",
   "ai.hint": "Schreib deine Frage nach dem /, z. B. /Wie viele ECTS hat das 3. Semester?",
   "ai.needProgramme": "Öffne zuerst einen Studiengang – dann kannst du die KI mit / dazu fragen.",
@@ -177,7 +176,8 @@
   "abs.comp": "Kompensationsarbeit nötig · noch {k}× bis zum Nichtbestehen",
   "abs.last": "Kompensationsarbeit nötig · beim nächsten Fehlen ist die Lehrveranstaltung nicht bestanden",
   "abs.fail": "Mehr als die Hälfte gefehlt – nicht bestanden",
-  "abs.semFail": "{n} nicht bestanden",
-  "abs.semComp": "{n} mit Kompensationsarbeit",
-  "abs.semLimit": "{n} am Limit"
+  "abs.sem.limit": "{n} kurz vor Kompensation",
+  "abs.sem.comp": "{n} mit Kompensation",
+  "abs.sem.last": "{n} kurz vor Nichtbestehen",
+  "abs.sem.fail": "{n} nicht bestanden"
 }

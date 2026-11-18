@@ -1069,10 +1069,10 @@ function buildSemesters() {
     return `<section class="semester" id="sem-${s}" aria-labelledby="sem-${s}-t">
       <div class="sem-head">
         <h2 id="sem-${s}-t">${esc(t("sem.title", { n: s }))}</h2>
-        <span class="abs-sem" data-tip="abssem" data-sem="${s}" tabindex="0" hidden>${icon("alert")}<span class="abs-sem-t"></span></span>
-        <button class="abs-reset" type="button" data-abs-reset="${s}" hidden>${esc(t("abs.reset"))}</button>
+
         <button class="sum" type="button" data-tip="semester" data-sem="${s}"><span class="sum-v"></span>${warns.length ? `<span class="warn-ico" data-tip="semnote" data-sem="${s}" aria-label="${esc(t("sem.note"))}">${icon("alert")}</span>` : ""}</button>
       </div>
+      <div class="abs-sem-row" data-sem="${s}" hidden></div>
       <div class="slot"></div>
     </section>`;
   }).join("");
@@ -1086,12 +1086,6 @@ function buildSemesters() {
 function onSemesterClick(e) {
   const step = e.target.closest("[data-abs]");
   if (step) { setAbsence(step.dataset.code, +step.dataset.abs); return; }
-  const reset = e.target.closest("[data-abs-reset]");
-  if (reset) {
-    semesterCourses(+reset.dataset.absReset).forEach((c) => { if (abs[c.code]) { delete abs[c.code]; refreshAbsence(c); } });
-    remember();
-    return;
-  }
   const course = e.target.closest(".course");
   if (course && e.target.closest(".row") && !e.target.closest("[data-tip]") && !String(window.getSelection() || "")) {
     setOpen(course, !course.classList.contains("open"));
@@ -1186,13 +1180,11 @@ function absRingHtml(c) {
   return `<span class="abs-ring ${level}" data-tip="abs" data-code="${esc(c.code)}">
     <svg viewBox="0 0 20 20" aria-hidden="true"><circle class="trk" cx="10" cy="10" r="7.5"/><circle class="val" cx="10" cy="10" r="7.5" pathLength="100" stroke-dasharray="${(absRingFill(c) * 100).toFixed(1)} 100" transform="rotate(-90 10 10)"/></svg></span>`;
 }
-// Semester header: a short note only when a course needs a compensation task or is failed
-function absSemHtml(s) {
+// Below the semester head: one short chip per zone that needs attention (at a limit, compensation, failed)
+const ABS_CHIPS = ["limit", "comp", "last", "fail"];
+function absCounts(s) {
   const cs = semesterCourses(s).filter((c) => tracksAbsence(c) && absOf(c));
-  const lv = (l) => cs.filter((c) => l.includes(absState(c).level)).length;
-  const fail = lv(["fail"]), comp = lv(["comp", "last"]), limit = lv(["limit"]);
-  const text = [fail ? t("abs.semFail", { n: fail }) : "", comp ? t("abs.semComp", { n: comp }) : "", limit ? t("abs.semLimit", { n: limit }) : ""].filter(Boolean).join(" · ");
-  return { text, level: fail ? "fail" : comp || limit ? "warn" : "", any: cs.length > 0 };
+  return Object.fromEntries(ABS_CHIPS.map((l) => [l, cs.filter((c) => absState(c).level === l)]));
 }
 function semesterCourses(s) {
   const p = semesterParts(s);
@@ -1231,14 +1223,15 @@ function refreshAbsence(c) {
   if (tipFor && tipFor.dataset.tip === "abs") showTip(tipFor);
 }
 function renderAbsSem(s) {
-  const el = $(`#sem-${s} .abs-sem`);
-  if (!el) return;
-  const st = absSemHtml(s);
-  el.className = `abs-sem ${st.level}`;   // warn | fail
-  el.hidden = !st.text;
-  $(".abs-sem-t", el).textContent = st.text;
-  const reset = $(`#sem-${s} .abs-reset`);
-  if (reset) reset.hidden = !st.any;
+  const row = $(`.abs-sem-row[data-sem="${s}"]`);
+  if (!row) return;
+  const counts = absCounts(s);
+  const html = ABS_CHIPS.filter((l) => counts[l].length)
+    .map((l) => `<span class="abs-chip ${l}" data-tip="abssem" data-sem="${s}" data-level="${l}" tabindex="0">${esc(t(`abs.sem.${l}`, { n: counts[l].length }))}</span>`).join("");
+  if (row.dataset.html === html) return;
+  row.dataset.html = html;
+  row.innerHTML = html;
+  row.hidden = !html;
 }
 
 // A course: one line with short facts (each explained in a tooltip); a click folds out the details.
@@ -1533,7 +1526,7 @@ function tipContent(el) {
         <span class="t-meta">${absText(c)}</span>`;
     }
     case "abssem": {
-      const cs = semesterCourses(+d.sem).filter((c) => tracksAbsence(c) && ["limit", "comp", "last", "fail"].includes(absState(c).level));
+      const cs = absCounts(+d.sem)[d.level] || [];
       return `<ul class="t-flush">${cs.map((c) => `<li>${esc(c.title)} · ${absOf(c)}/${SESSIONS}</li>`).join("")}</ul>`;
     }
     case "saved": return esc(navigator.onLine ? t("status.saved") : t("status.offline"));

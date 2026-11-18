@@ -391,7 +391,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 /* Semesters */
 .semester { margin-top: 46px; scroll-margin-top: calc(var(--top) + 20px); }
 .sem-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
-.sem-head h2 { margin: 0 auto 0 0; font-size: 28px; letter-spacing: -.02em; }
+.sem-head h2 { margin: 0; font-size: 28px; letter-spacing: -.02em; }
 .sem-head .sum { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; padding: 4px 0; font-size: 14px; font-weight: 600; color: var(--muted); cursor: default; }
 .sem-head .warn-ico { display: inline-grid; place-items: center; color: var(--warn); }
 .group { margin-top: 18px; }
@@ -466,14 +466,14 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .abs-ring.none .val { stroke: transparent; }
 .abs-ring.limit .val, .abs-ring.comp .val, .abs-ring.last .val { stroke: var(--warn); }
 .abs-ring.fail .val { stroke: var(--bad); }
-/* semester header: note + reset */
-.abs-sem { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn);
-  font-size: 13px; font-weight: 650; cursor: default; animation: abs-in .35s var(--spring); }
-.abs-sem.fail { background: var(--bad-soft); color: var(--bad); }
-.abs-sem svg { width: 15px; height: 15px; }
-.abs-reset { border: 0; background: none; padding: 4px 6px; border-radius: 7px; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer;
-  transition: color .2s, background-color .2s; }
-.abs-reset:hover { color: var(--text); background: var(--surface-2); }
+/* below the semester head: short chips (close to compensation · with compensation · close to failing · failed) */
+.abs-sem-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 2px; }
+.abs-chip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 650; cursor: default;
+  animation: abs-in .35s var(--spring); }
+.abs-chip.limit { color: var(--warn); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn) 35%, transparent); }
+.abs-chip.comp { background: var(--warn-soft); color: var(--warn); }
+.abs-chip.last { color: var(--bad); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bad) 40%, transparent); }
+.abs-chip.fail { background: var(--bad-soft); color: var(--bad); }
 .details .meta { margin-top: 12px; font-size: 12px; color: var(--muted); }
 /* Phones: what the row leaves out (type, SWS, assessment, hours) is the first line of the details */
 .facts-line { display: none; }
