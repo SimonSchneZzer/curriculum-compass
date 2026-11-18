@@ -1,0 +1,31 @@
+# Curriculum Compass on the home server (~/compass): static app + the small AI service behind "/" in the search.
+# Reached via Caddy at simon.schnetzer.at/compass/. Update: ~/compass/deploy.sh (copies this file next to it).
+services:
+  web:
+    image: nginx:alpine
+    container_name: compass-web
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    logging: { driver: json-file, options: { max-size: "5m", max-file: "2" } }
+    networks: [ai-net]
+
+  ask:
+    image: python:3.12-alpine
+    container_name: compass-ask
+    command: ["python3", "-u", "/srv/ask.py"]
+    env_file: ./ai.env                      # CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN – never committed
+    environment:
+      COMPASS_DATA: /site/data
+    volumes:
+      - ./ask.py:/srv/ask.py:ro
+      - ./site:/site:ro
+    read_only: true
+    restart: unless-stopped
+    logging: { driver: json-file, options: { max-size: "5m", max-file: "2" } }
+    networks: [ai-net]
+
+networks:
+  ai-net:
+    external: true

@@ -16,6 +16,9 @@ const CONFIG = {
   // "Report a problem / Suggest an idea": the form sends straight to Web3Forms (mail to Simon). The access key can only
   // send to the stored address, the address itself is nowhere in the app. Same key as in Vorleser. key "" hides it.
   feedback: { key: "b8bf57d6-9254-472a-8d37-72aac7141ccd", endpoint: "https://api.web3forms.com/submit" },
+  // "/" in the search asks an AI about the open programme (server/ask.py, reached via nginx at api/ask relative to the
+  // app). "" turns it off; on a host without the service the app says the AI is not available.
+  ai: { endpoint: "api/ask" },
 };
 
 const STORE_KEY = "curriculum-compass";
@@ -553,6 +556,7 @@ function buildSearch() {
   input.addEventListener("input", async () => {
     const q = input.value.trim();
     if (!q) { close(); return; }
+    if (CONFIG.ai?.endpoint && q.startsWith("/")) { results = []; showAsk(q.slice(1).trim()); return; }
     await loadSearchIndex();
     if (input.value.trim() !== q) return;
     const { words, list } = findMatches(q);
@@ -577,6 +581,8 @@ function buildSearch() {
   });
   input.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { input.value = ""; close(); return; }
+    const q = input.value.trim();
+    if (e.key === "Enter" && CONFIG.ai?.endpoint && q.startsWith("/")) { e.preventDefault(); askAI(q.slice(1).trim()); return; }
     if (!results.length || !box.classList.contains("open")) return;
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
@@ -586,8 +592,78 @@ function buildSearch() {
     }
     if (e.key === "Enter") { e.preventDefault(); go(results[active]); }
   });
-  box.addEventListener("click", (e) => { const r = e.target.closest(".result"); if (r) go(results[+r.dataset.i]); });
+  box.addEventListener("click", (e) => {
+    if (e.target.closest(".ask-go")) { askAI(input.value.trim().slice(1).trim()); return; }
+    const r = e.target.closest(".result"); if (r) go(results[+r.dataset.i]);
+  });
   document.addEventListener("click", (e) => { if (!e.target.closest("#search-box")) close(); });
+
+  // ⌘K / Ctrl+K opens the search from anywhere (shown as a small hint in the field on computers)
+  const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  $("#search-kbd").textContent = mac ? "⌘K" : "Ctrl K";
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); input.focus(); input.select(); }
+  });
+
+  // ---- "/" asks the AI about the open programme ----
+  function openBox(html) {
+    box.innerHTML = html;
+    box.classList.add("open");
+    input.setAttribute("aria-expanded", "true");
+  }
+  function showAsk(question) {
+    if (!prog || $("#page").hidden) return openBox(`<div class="ask"><p class="ask-msg">${esc(t("ai.needProgramme"))}</p></div>`);
+    openBox(`<div class="ask">
+      <p class="ask-head">${icon("sparkles")}<span>${esc(t("ai.head", { programme: prog.name }))}</span></p>
+      ${question.length >= 2
+        ? `<button class="ask-go" type="button"><span>${esc(question)}</span><kbd>↵</kbd></button>`
+        : `<p class="ask-msg">${esc(t("ai.hint"))}</p>`}
+    </div>`);
+  }
+  let asking = 0;
+  async function askAI(question) {
+    if (!prog || $("#page").hidden || question.length < 2) return showAsk(question);
+    const my = ++asking;
+    openBox(`<div class="ask"><p class="ask-head">${icon("sparkles")}<span>${esc(question)}</span></p>
+      <p class="ask-wait" aria-live="polite"><i></i><i></i><i></i><span>${esc(t("ai.thinking"))}</span></p></div>`);
+    let html;
+    try {
+      const r = await fetch(CONFIG.ai.endpoint, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ programme: prog.id, question, lang, sel }) });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.answer) {
+        html = `<div class="ask-answer">${aiMarkdown(d.answer)}</div><p class="ask-note">${esc(t("ai.note"))}</p>`;
+      } else if (d.error === "quota") {
+        const at = d.until ? new Date(d.until * 1000).toLocaleTimeString(lang === "de" ? "de-AT" : "en-GB", { hour: "2-digit", minute: "2-digit" }) : "";
+        html = `<p class="ask-msg warn">${esc(t("ai.quota", { time: at }))}</p>`;
+      } else if (d.error === "limit") {
+        html = `<p class="ask-msg warn">${esc(t("ai.limit"))}</p>`;
+      } else if (r.status === 404 || d.error === "off") {
+        html = `<p class="ask-msg">${esc(t("ai.off"))}</p>`;
+      } else {
+        html = `<p class="ask-msg warn">${esc(t("ai.failed"))}</p>`;
+      }
+    } catch {
+      html = `<p class="ask-msg warn">${esc(t(navigator.onLine ? "ai.failed" : "ai.offline"))}</p>`;
+    }
+    if (my !== asking || !input.value.trim().startsWith("/")) return;   // a newer question or the search changed
+    openBox(`<div class="ask"><p class="ask-head">${icon("sparkles")}<span>${esc(question)}</span></p>${html}</div>`);
+  }
+}
+
+// Answers: only **bold**, "- " lists and paragraphs (everything else stays plain text)
+function aiMarkdown(text) {
+  const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  const out = [];
+  let list = [];
+  const flush = () => { if (list.length) { out.push(`<ul>${list.map((x) => `<li>${inline(x)}</li>`).join("")}</ul>`); list = []; } };
+  for (const line of text.split(/\n+/)) {
+    const m = line.match(/^\s*[-*•]\s+(.*)/);
+    if (m) list.push(m[1]);
+    else if (line.trim()) { flush(); out.push(`<p>${inline(line.trim())}</p>`); }
+  }
+  flush();
+  return out.join("");
 }
 
 function highlight(text, q) {

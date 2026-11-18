@@ -9,7 +9,7 @@
   "nav.master": "Master",
   "nav.legal": "Imprint & privacy",
   "nav.notIncluded": "Not included",
-  "search.placeholder": "Search programmes, courses or short names",
+  "search.placeholder": "Search programmes and courses – type / to ask the AI",
   "search.label": "Search programmes and courses",
   "search.programmes": "Programmes",
   "search.courses": "Courses",
@@ -168,5 +168,15 @@
   "abs.semWarn": "{n} close to the limit",
   "abs.reset": "Reset absences",
   "abs.session1": "+1 session (1 lesson)",
-  "abs.left1": "{left} of {lim} lessons left ({h} h) · about 1 session"
+  "abs.left1": "{left} of {lim} lessons left ({h} h) · about 1 session",
+  "ai.head": "Ask the AI about {programme}",
+  "ai.hint": "Type your question after the /, e.g. /How many ECTS in semester 3?",
+  "ai.needProgramme": "Open a programme first – then you can ask the AI about it with /.",
+  "ai.thinking": "Looking through the curriculum …",
+  "ai.note": "AI answer from this programme's data – unofficial; the study regulations apply.",
+  "ai.quota": "The AI is busy for today (free daily limit reached). It works again from {time}. The search still works.",
+  "ai.limit": "Too many questions in a short time – please try again in a few minutes.",
+  "ai.off": "The AI is not available right now. The search still works.",
+  "ai.failed": "The AI did not answer – please try again in a moment.",
+  "ai.offline": "You are offline – the AI needs an internet connection."
 }

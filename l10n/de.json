@@ -9,7 +9,7 @@
   "nav.master": "Master",
   "nav.legal": "Impressum & Datenschutz",
   "nav.notIncluded": "Nicht enthalten",
-  "search.placeholder": "Studiengänge, Kurse oder Kürzel suchen",
+  "search.placeholder": "Studiengänge und Kurse suchen – mit / die KI fragen",
   "search.label": "Studiengänge und Kurse suchen",
   "search.programmes": "Studiengänge",
   "search.courses": "Kurse",
@@ -168,5 +168,15 @@
   "abs.semWarn": "{n} knapp am Limit",
   "abs.reset": "Fehlzeiten zurücksetzen",
   "abs.session1": "+1 Termin (1 Einheit)",
-  "abs.left1": "noch {left} von {lim} Einheiten ({h} h) · etwa 1 Termin"
+  "abs.left1": "noch {left} von {lim} Einheiten ({h} h) · etwa 1 Termin",
+  "ai.head": "Die KI zu {programme} fragen",
+  "ai.hint": "Schreib deine Frage nach dem /, z. B. /Wie viele ECTS hat das 3. Semester?",
+  "ai.needProgramme": "Öffne zuerst einen Studiengang – dann kannst du die KI mit / dazu fragen.",
+  "ai.thinking": "Lese den Studienplan …",
+  "ai.note": "KI-Antwort aus den Daten dieses Studiengangs – inoffiziell; es gilt die Studien- und Prüfungsordnung.",
+  "ai.quota": "Die KI ist für heute ausgelastet (tägliches Gratis-Limit erreicht). Ab {time} Uhr geht es wieder. Die Suche funktioniert weiter.",
+  "ai.limit": "Zu viele Fragen in kurzer Zeit – bitte in ein paar Minuten noch einmal.",
+  "ai.off": "Die KI ist gerade nicht erreichbar. Die Suche funktioniert weiter.",
+  "ai.failed": "Die KI hat nicht geantwortet – bitte gleich noch einmal versuchen.",
+  "ai.offline": "Du bist offline – die KI braucht eine Internetverbindung."
 }

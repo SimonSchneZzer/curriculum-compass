@@ -105,11 +105,40 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 17px; letter-spacing: -.01em; white-space: nowrap; }
 .mark { width: 30px; height: 30px; }
-.search { position: relative; flex: 0 1 440px; margin-left: auto; min-width: 0; }
+/* the search takes all the free space; ⌘K / Ctrl+K opens it (hint only on computers) */
+.search { position: relative; flex: 1 1 auto; margin-left: 8px; min-width: 0; }
 .search-field { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 12px; background: var(--surface-2); color: var(--muted); transition: box-shadow .2s; }
 .search-field:focus-within { box-shadow: 0 0 0 2px var(--accent); }
 .search-field input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; color: var(--text); outline: none; }
 .search-field input::placeholder { color: var(--muted); }
+.search-kbd { flex: none; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.4; transition: opacity .2s; }
+.search-field:focus-within .search-kbd { opacity: 0; }
+@media (hover: none) { .search-kbd { display: none; } }
+/* iOS zooms into inputs below 16px – so phones and tablets get 16px */
+@media (hover: none), (max-width: 900px) { .search-field input { font-size: 16px; } }
+/* "/" asks the AI */
+.ask { padding: 8px 8px 6px; }
+.ask-head { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 8px; font-weight: 650; color: var(--text); }
+.ask-head svg.i { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--accent); }
+.ask-go { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 1px solid var(--accent-line); border-radius: 12px;
+  background: var(--accent-soft); color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: background-color .2s, transform .25s var(--spring); }
+.ask-go span { flex: 1; min-width: 0; }
+.ask-go:hover { background: color-mix(in srgb, var(--accent-soft) 70%, var(--accent) 12%); }
+.ask-go:active { transform: scale(.98); }
+.ask-go kbd { flex: none; padding: 1px 7px; border-radius: 6px; background: var(--surface); color: var(--muted); font: inherit; font-size: 12px; }
+.ask-msg { margin: 4px 2px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.ask-msg.warn { color: var(--warn); }
+.ask-wait { display: flex; align-items: center; gap: 5px; margin: 6px 2px; color: var(--muted); font-size: 14px; }
+.ask-wait i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: ask-dot 1s ease-in-out infinite; }
+.ask-wait i:nth-child(2) { animation-delay: .15s; } .ask-wait i:nth-child(3) { animation-delay: .3s; }
+.ask-wait span { margin-left: 6px; }
+@keyframes ask-dot { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+.ask-answer { max-height: min(55vh, 460px); overflow: auto; color: var(--text-2); font-size: 14.5px; line-height: 1.55; animation: abs-in .35s var(--spring); }
+.ask-answer p { margin: 0 0 8px; }
+.ask-answer ul { margin: 0 0 8px; padding-left: 18px; }
+.ask-answer b { color: var(--text); }
+.ask-note { margin: 6px 2px 0; font-size: 12px; color: var(--muted); }
 .search-results {
   position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 6px; border-radius: 16px;
   background: var(--surface); border: 1px solid var(--line); box-shadow: var(--tip-shadow);
