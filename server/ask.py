@@ -129,9 +129,9 @@ Rules:
 - For totals per semester use the given "Semester totals" line. For "my courses" use the line "The viewer's courses
   this semester" (it already contains everyone's courses plus their own major/specialisation) – list all of them.
 - Useful facts: 1 ECTS ≈ 25 hours of work. 1 SWS = 14 lessons of 45 minutes per semester (one session a week).
-- Absence questions: the data does not say which rule a course uses, so always give both, computed from its SWS:
-  lessons = SWS × 14; at 75 % attendance you may miss floor(lessons × 0.25) lessons, at 50 % floor(lessons × 0.5).
-  Say that the course sets which rule applies, and that the app can count missed lessons in the course details.
+- Absence questions: count in sessions – 14 per semester (one a week). Missing up to 25 % (3 sessions) is fine,
+  more than 25 % up to 50 % (4–7 sessions) needs a compensation task, more than 50 % (8+) means the course is failed.
+  The app can count missed sessions in the course details.
 - Keep it short: 1–4 sentences or a short list. Plain text, at most **bold** and "- " lists. No tables.
 - Answer in {lang}. In German address the user informally with "du". Politely decline anything unrelated to studying
   this programme.

@@ -436,52 +436,40 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
 .details p { margin: 0; max-width: 75ch; line-height: 1.55; }
 .details .facts { font-size: 13px; color: var(--muted); }
 [hidden] { display: none !important; }
-/* Allowed absence (first thing in the details): count missed lessons, see what is left */
-.abs-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.abs-head h4.first { margin: 4px 0; }
-.abs-rule { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 9px; background: var(--surface-2); font-size: 12px; }
-.abs-rule span { padding: 0 6px 0 4px; color: var(--muted); font-weight: 600; }
-.abs-rule button { border: 0; background: none; padding: 3px 8px; border-radius: 6px; font: inherit; font-weight: 650; color: var(--muted); cursor: pointer;
-  font-variant-numeric: tabular-nums; transition: background-color .2s, color .2s, box-shadow .2s; }
-.abs-rule button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+/* Absence (first thing in the details): count missed sessions; colour shows the zone (≤25 % ok, ≤50 % compensation, more failed) */
 .abs-track { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin-top: 8px; }
 .abs-label { font-weight: 600; color: var(--text); }
-.abs-unit { color: var(--muted); font-size: 13px; }
+.abs-of { color: var(--muted); font-size: 14px; }
 .stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-.stepper button { width: 32px; height: 30px; border: 0; background: none; font: inherit; font-size: 16px; color: var(--text-2); cursor: pointer;
+.stepper button { width: 34px; height: 32px; border: 0; background: none; font: inherit; font-size: 17px; color: var(--text-2); cursor: pointer;
   border-radius: 9px; transition: background-color .2s, transform .25s var(--spring); }
 .stepper button:hover:not(:disabled) { background: var(--surface-2); }
 .stepper button:active:not(:disabled) { transform: scale(.9); }
 .stepper button:disabled { opacity: .35; cursor: default; }
 .stepper output { min-width: 28px; text-align: center; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
-.abs-session { margin-left: auto; border: 1px solid var(--line); background: var(--surface); padding: 5px 10px; border-radius: 9px; font: inherit; font-size: 13px;
-  font-weight: 600; color: var(--text-2); cursor: pointer; transition: background-color .2s, border-color .2s, transform .25s var(--spring); }
-.abs-session:hover { background: var(--surface-2); border-color: var(--accent-line); }
-.abs-session:active { transform: scale(.96); }
-.abs-bar { position: relative; height: 8px; margin-top: 12px; border-radius: 4px; background: var(--surface-2); overflow: hidden; cursor: default; }
-.abs-bar i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ok); transition: width .5s var(--ease-out), background-color .3s; }
-.abs-bar.warn i { background: var(--warn); }
-.abs-bar.over i { background: var(--bad); }
-.abs-left { margin-top: 6px !important; font-size: 13.5px; color: var(--text-2); transition: color .3s; }
+.abs-bar { position: relative; height: 10px; margin-top: 12px; border-radius: 5px; background: var(--surface-2); overflow: hidden; cursor: default; }
+.abs-bar i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: var(--ok); transition: width .5s var(--ease-out), background-color .3s; }
+.abs-bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--surface); opacity: .9; }
+.abs-bar.limit i, .abs-bar.comp i, .abs-bar.last i { background: var(--warn); }
+.abs-bar.fail i { background: var(--bad); }
+.abs-left { margin-top: 6px !important; font-size: 14px; color: var(--text-2); transition: color .3s; }
 .abs-left b { color: var(--text); font-weight: 700; }
-.abs-left.warn { color: var(--warn); }
-.abs-left.over { color: var(--bad); font-weight: 600; }
+.abs-left.limit, .abs-left.comp, .abs-left.last { color: var(--warn); font-weight: 600; }
+.abs-left.fail { color: var(--bad); font-weight: 650; }
 .absence .facts { margin-top: 6px; }
-/* ring in the course row (only when something is entered) */
-.abs-ring { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 4px; border-radius: 999px; background: var(--surface-2);
-  font-size: 12px; font-weight: 650; color: var(--text-2); font-variant-numeric: tabular-nums; cursor: default; animation: abs-in .35s var(--spring); }
-.abs-ring svg { width: 18px; height: 18px; }
+/* ring at the right of the row, before the chevron: empty until something is missed */
+.abs-ring { flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; cursor: default; }
+.abs-ring svg { width: 20px; height: 20px; }
 .abs-ring circle { fill: none; stroke-width: 3; }
-.abs-ring .trk { stroke: color-mix(in srgb, var(--muted) 30%, transparent); }
+.abs-ring .trk { stroke: color-mix(in srgb, var(--muted) 35%, transparent); }
 .abs-ring .val { stroke: var(--ok); stroke-linecap: round; transition: stroke-dasharray .5s var(--ease-out), stroke .3s; }
-.abs-ring.warn .val { stroke: var(--warn); }
-.abs-ring.over .val { stroke: var(--bad); }
-.abs-ring.over { background: var(--bad-soft); color: var(--bad); }
-@keyframes abs-in { from { opacity: 0; transform: scale(.8); } }
+.abs-ring.none .val { stroke: transparent; }
+.abs-ring.limit .val, .abs-ring.comp .val, .abs-ring.last .val { stroke: var(--warn); }
+.abs-ring.fail .val { stroke: var(--bad); }
 /* semester header: note + reset */
 .abs-sem { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn);
   font-size: 13px; font-weight: 650; cursor: default; animation: abs-in .35s var(--spring); }
-.abs-sem.over { background: var(--bad-soft); color: var(--bad); }
+.abs-sem.fail { background: var(--bad-soft); color: var(--bad); }
 .abs-sem svg { width: 15px; height: 15px; }
 .abs-reset { border: 0; background: none; padding: 4px 6px; border-radius: 7px; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer;
   transition: color .2s, background-color .2s; }
@@ -641,9 +629,10 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
   .overview.many .sem-card > span { align-self: stretch; }
   .overview.many .per-day { display: flex; justify-content: center; }
   .per-day { max-width: 100%; padding: 2px 6px; gap: 3px; font-size: 11.5px; white-space: nowrap; overflow: hidden; }
-  .num.sws, .num.assess, .num.hours, .row .chip { display: none; }
+  .num.sws, .num.assess, .num.hours, .num.ects, .row .chip { display: none; }
   .facts-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 2px 0 10px !important; font-size: 13px; color: var(--muted); }
   .facts-line .chip { font-size: 11px; padding: 2px 7px; }
+  .facts-line > b { color: var(--text); font-weight: 650; }
   /* programme head centred; track buttons full width (up to a comfortable maximum) */
   .title-row { flex-wrap: wrap; justify-content: center; gap: 12px; text-align: center; }
   .title-row h1 { flex: 1 0 100%; }
@@ -652,9 +641,6 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spa
   .picker-label { justify-content: center; }
   .pills { flex-direction: column; align-items: center; }
   .pill { width: 100%; max-width: 420px; justify-content: center; }
-  .abs-session { margin-left: 0; }
-  .abs-ring-n { display: none; }
-  .abs-ring { padding: 2px; }
   .row { padding: 6px 12px; }
   .details .inner { padding-left: 24px; padding-right: 12px; }
   .search-field { padding: 8px 12px; }

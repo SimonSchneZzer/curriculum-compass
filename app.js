@@ -1085,9 +1085,7 @@ function buildSemesters() {
 
 function onSemesterClick(e) {
   const step = e.target.closest("[data-abs]");
-  if (step) { const c = byCode(step.dataset.code); setAbsence(step.dataset.code, { n: absOf(c).n + +step.dataset.abs }); return; }
-  const rule = e.target.closest("[data-abs-rule]");
-  if (rule) { setAbsence(rule.dataset.code, { r: +rule.dataset.absRule }); return; }
+  if (step) { setAbsence(step.dataset.code, +step.dataset.abs); return; }
   const reset = e.target.closest("[data-abs-reset]");
   if (reset) {
     semesterCourses(+reset.dataset.absReset).forEach((c) => { if (abs[c.code]) { delete abs[c.code]; refreshAbsence(c); } });
@@ -1140,94 +1138,90 @@ function slotHtml(s) {
 // app never promises more absence than the rule allows. One session a week → whole sessions, also rounded down.
 const NO_ATTENDANCE_TYPES = new Set(["BP", "DP", "MP"]);
 const floorHalf = (x) => { const r = Math.floor(x * 2 + 1e-9) / 2; const i = Math.floor(r); return (i ? String(i) : r ? "" : "0") + (r - i ? "½" : ""); };
-// Absence tracker: the viewer counts missed lessons (45 min); the app shows what is left under the course's rule
-// (75 % or 50 % attendance, chosen per course; 75 % by default – the stricter one, so it never promises too much).
+// Absence: the viewer counts missed sessions (one a week, 14 per semester). Up to 25 % missed is fine, 25–50 % needs
+// a compensation task, more than 50 % means the course is failed. Colours follow these zones.
 const tracksAbsence = (c) => c.sws > 0 && !NO_ATTENDANCE_TYPES.has(c.type);
-const absOf = (c) => abs[c.code] || { n: 0, r: 75 };
-const absLimit = (c, r) => Math.floor(lessonsOf(c.sws) * (1 - r / 100) + 1e-9);   // whole lessons, rounded down
-const sessionLessons = (c) => Math.max(1, Math.round(c.sws));                       // one weekly session
+const SESSIONS = TEACHING_WEEKS;
+const OK_MAX = Math.floor(SESSIONS * 0.25 + 1e-9);     // 3: still fine
+const COMP_MAX = Math.floor(SESSIONS * 0.5 + 1e-9);    // 7: with a compensation task
+const absOf = (c) => {                                  // older entries counted lessons → convert once to sessions
+  const a = abs[c.code];
+  if (!a) return 0;
+  return typeof a === "number" ? a : Math.min(SESSIONS, Math.ceil((a.n || 0) / Math.max(1, Math.round(c.sws))));
+};
 function absState(c) {
-  const a = absOf(c), lim = absLimit(c, a.r), left = lim - a.n;
-  const level = !a.n ? "none" : left < 0 ? "over" : (lim ? a.n / lim : 1) >= 0.75 ? "warn" : "ok";
-  return { ...a, lim, left, level };
+  const n = absOf(c);
+  const level = n > COMP_MAX ? "fail" : n === COMP_MAX ? "last" : n > OK_MAX ? "comp" : n === OK_MAX ? "limit" : n ? "ok" : "none";
+  return { n, level };
 }
-function absLeftText(c) {
-  const st = absState(c);
-  if (st.left < 0) return t("abs.over", { n: -st.left });
-  if (st.left === 0 && st.n) return t("abs.atLimit");
-  const sessions = Math.floor(st.left / sessionLessons(c) + 1e-9);
-  return t(sessions === 1 ? "abs.left1" : "abs.left", { left: `<b>${st.left}</b>`, lim: st.lim, h: floorHalf(st.left * LESSON_H),
-    s: sessions, w: TEACHING_WEEKS });
+function absText(c) {
+  const { n, level } = absState(c);
+  const k = level === "ok" || level === "none" ? OK_MAX - n : COMP_MAX - n;
+  return t(`abs.${level}`, { k: `<b>${k}</b>`, n, ok: OK_MAX, comp: COMP_MAX });
 }
+const absRingFill = (c) => Math.min(1, absOf(c) / SESSIONS);
 function absenceHtml(c) {
   if (!tracksAbsence(c)) return "";
-  const st = absState(c), key = esc(c.code);
-  const rule = (r) => `<button type="button" data-abs-rule="${r}" data-code="${key}" aria-pressed="${st.r === r}">${r} %</button>`;
+  const { n, level } = absState(c), key = esc(c.code);
   return `<div class="absence" data-code="${key}">
-    <div class="abs-head"><h4 class="first">${esc(t("course.absence"))}</h4>
-      <div class="abs-rule" role="group" aria-label="${esc(t("abs.rule"))}"><span>${esc(t("abs.rule"))}</span>${rule(75)}${rule(50)}</div></div>
+    <h4 class="first">${esc(t("course.absence"))}</h4>
     <div class="abs-track">
       <span class="abs-label">${esc(t("abs.missed"))}</span>
       <div class="stepper">
-        <button type="button" data-abs="-1" data-code="${key}" aria-label="${esc(t("abs.minus"))}" ${st.n ? "" : "disabled"}>−</button>
-        <output class="abs-n" aria-live="polite">${st.n}</output>
-        <button type="button" data-abs="1" data-code="${key}" aria-label="${esc(t("abs.plus"))}">+</button>
+        <button type="button" data-abs="-1" data-code="${key}" aria-label="${esc(t("abs.minus"))}" ${n ? "" : "disabled"}>−</button>
+        <output class="abs-n" aria-live="polite">${n}</output>
+        <button type="button" data-abs="1" data-code="${key}" aria-label="${esc(t("abs.plus"))}" ${n >= SESSIONS ? "disabled" : ""}>+</button>
       </div>
-      <span class="abs-unit">${esc(t("abs.unit"))}</span>
-      <button type="button" class="abs-session" data-abs="${sessionLessons(c)}" data-code="${key}">${esc(t(sessionLessons(c) === 1 ? "abs.session1" : "abs.session", { n: sessionLessons(c) }))}</button>
+      <span class="abs-of">${esc(t("abs.of", { n: SESSIONS }))}</span>
     </div>
-    <div class="abs-bar ${st.level}" data-tip="abs" data-code="${key}" tabindex="0"><i style="width:${st.lim ? Math.min(100, st.n / st.lim * 100) : st.n ? 100 : 0}%"></i></div>
-    <p class="abs-left ${st.level}">${absLeftText(c)}</p>
-    <p class="facts">${esc(t("course.absenceNote", { sws: fmt(c.sws), w: TEACHING_WEEKS, u: fmt(lessonsOf(c.sws)), total: floorHalf(classHours(c.sws)) }))}</p></div>`;
+    <div class="abs-bar ${level}" data-tip="abs" data-code="${key}" tabindex="0"><i style="width:${(n / SESSIONS) * 100}%"></i>
+      <b class="tick" style="left:25%"></b><b class="tick" style="left:50%"></b></div>
+    <p class="abs-left ${level}">${absText(c)}</p>
+    <p class="facts">${esc(t("abs.rule", { ok: OK_MAX, comp: COMP_MAX, n: SESSIONS }))}</p></div>`;
 }
-// Small ring in the course row – only once something is entered, so untouched courses stay calm
+// Ring at the right of the course row (before the chevron): empty until something is entered
 function absRingHtml(c) {
   if (!tracksAbsence(c)) return "";
-  const st = absState(c);
-  const share = st.lim ? Math.min(1, st.n / st.lim) : st.n ? 1 : 0;
-  return `<span class="abs-ring ${st.level}" data-tip="abs" data-code="${esc(c.code)}" ${st.n ? "" : "hidden"}>
-    <svg viewBox="0 0 20 20" aria-hidden="true"><circle class="trk" cx="10" cy="10" r="7.5"/><circle class="val" cx="10" cy="10" r="7.5" pathLength="100" stroke-dasharray="${(share * 100).toFixed(1)} 100" transform="rotate(-90 10 10)"/></svg>
-    <span class="abs-ring-n">${st.n}/${st.lim}</span></span>`;
+  const { level } = absState(c);
+  return `<span class="abs-ring ${level}" data-tip="abs" data-code="${esc(c.code)}">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle class="trk" cx="10" cy="10" r="7.5"/><circle class="val" cx="10" cy="10" r="7.5" pathLength="100" stroke-dasharray="${(absRingFill(c) * 100).toFixed(1)} 100" transform="rotate(-90 10 10)"/></svg></span>`;
 }
-// Semester header: a short note only when a course is close to or over its limit
+// Semester header: a short note only when a course needs a compensation task or is failed
 function absSemHtml(s) {
-  const cs = semesterCourses(s).filter((c) => tracksAbsence(c) && absOf(c).n);
-  const over = cs.filter((c) => absState(c).level === "over").length, warn = cs.filter((c) => absState(c).level === "warn").length;
-  const text = [over ? t("abs.semOver", { n: over }) : "", warn ? t("abs.semWarn", { n: warn }) : ""].filter(Boolean).join(" · ");
-  return { text, level: over ? "over" : warn ? "warn" : "", any: cs.length > 0 };
+  const cs = semesterCourses(s).filter((c) => tracksAbsence(c) && absOf(c));
+  const lv = (l) => cs.filter((c) => l.includes(absState(c).level)).length;
+  const fail = lv(["fail"]), comp = lv(["comp", "last"]), limit = lv(["limit"]);
+  const text = [fail ? t("abs.semFail", { n: fail }) : "", comp ? t("abs.semComp", { n: comp }) : "", limit ? t("abs.semLimit", { n: limit }) : ""].filter(Boolean).join(" · ");
+  return { text, level: fail ? "fail" : comp || limit ? "warn" : "", any: cs.length > 0 };
 }
 function semesterCourses(s) {
   const p = semesterParts(s);
   return [...p.tracks.flatMap((x) => x.courses), ...p.core];
 }
-function setAbsence(code, change) {
+function setAbsence(code, delta) {
   const c = byCode(code);
   if (!c) return;
-  const a = { ...absOf(c), ...change };
-  a.n = Math.max(0, Math.min(lessonsOf(c.sws), a.n));
-  if (!a.n && a.r === 75) delete abs[code]; else abs[code] = a;
+  const n = Math.max(0, Math.min(SESSIONS, absOf(c) + delta));
+  if (n) abs[code] = n; else delete abs[code];
   refreshAbsence(c);
   remember();
 }
 function refreshAbsence(c) {
-  const st = absState(c);
+  const { n, level } = absState(c);
   document.querySelectorAll(`.absence[data-code="${CSS.escape(c.code)}"]`).forEach((el) => {
-    $(".abs-n", el).textContent = st.n;
-    $('[data-abs="-1"]', el).disabled = !st.n;
-    el.querySelectorAll("[data-abs-rule]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.absRule === st.r)));
+    $(".abs-n", el).textContent = n;
+    $('[data-abs="-1"]', el).disabled = !n;
+    $('[data-abs="1"]', el).disabled = n >= SESSIONS;
     const bar = $(".abs-bar", el);
-    bar.className = `abs-bar ${st.level}`;
-    $("i", bar).style.width = `${st.lim ? Math.min(100, st.n / st.lim * 100) : st.n ? 100 : 0}%`;
+    bar.className = `abs-bar ${level}`;
+    $("i", bar).style.width = `${(n / SESSIONS) * 100}%`;
     const left = $(".abs-left", el);
-    left.className = `abs-left ${st.level}`;
-    left.innerHTML = absLeftText(c);
+    left.className = `abs-left ${level}`;
+    left.innerHTML = absText(c);
   });
   document.querySelectorAll(`.abs-ring[data-code="${CSS.escape(c.code)}"]`).forEach((el) => {
-    const share = st.lim ? Math.min(1, st.n / st.lim) : st.n ? 1 : 0;
-    el.className = `abs-ring ${st.level}`;
-    el.hidden = !st.n;
-    $(".val", el).setAttribute("stroke-dasharray", `${(share * 100).toFixed(1)} 100`);
-    $(".abs-ring-n", el).textContent = `${st.n}/${st.lim}`;
+    el.className = `abs-ring ${level}`;
+    $(".val", el).setAttribute("stroke-dasharray", `${(absRingFill(c) * 100).toFixed(1)} 100`);
   });
   semesters().forEach((s) => {
     renderAbsSem(s);
@@ -1240,7 +1234,7 @@ function renderAbsSem(s) {
   const el = $(`#sem-${s} .abs-sem`);
   if (!el) return;
   const st = absSemHtml(s);
-  el.className = `abs-sem ${st.level}`;
+  el.className = `abs-sem ${st.level}`;   // warn | fail
   el.hidden = !st.text;
   $(".abs-sem-t", el).textContent = st.text;
   const reset = $(`#sem-${s} .abs-reset`);
@@ -1257,16 +1251,16 @@ function rowHtml(c, cls) {
     <div class="row">
       <i class="stripe"></i>
       <button class="row-title" type="button" aria-expanded="${open}" aria-controls="${id}" data-code="${esc(c.code)}">${esc(c.title)}</button>
-      ${absRingHtml(c)}
       <span class="chip" data-tip="type" data-type="${esc(c.type)}">${esc(c.type)}</span>
       <span class="num sws" data-tip="sws" data-v="${c.sws}">${fmt(c.sws)} SWS</span>
       <span class="num assess" data-tip="assess" data-v="${esc(c.assessment)}">${esc(c.assessment === "final" ? t("course.exam") : t("course.cont"))}</span>
       <span class="num hours" data-tip="hours" data-ects="${c.ects}" data-sws="${c.sws}">${esc(t("course.hours", { n: hoursOf(c.ects, c.sws).total }))}</span>
       <span class="num ects" data-tip="ects" data-v="${c.ects}">${fmt(c.ects)} ECTS</span>
+      ${absRingHtml(c)}
       <svg class="i chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="details" id="${id}"><div><div class="inner">
-      <p class="facts-line"><span class="chip" data-type="${esc(c.type)}">${esc(c.type)}</span>${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(assessName(c.assessment).replace(/\.$/, ""))} · ${esc(t("course.hours", { n: hoursOf(c.ects, c.sws).total }))}</p>
+      <p class="facts-line"><b>${fmt(c.ects)} ECTS</b><span class="chip" data-type="${esc(c.type)}">${esc(c.type)}</span>${esc(typeName(c.type))} · ${fmt(c.sws)} SWS · ${esc(assessName(c.assessment).replace(/\.$/, ""))} · ${esc(t("course.hours", { n: hoursOf(c.ects, c.sws).total }))}</p>
       ${absenceHtml(c)}
       ${c.content ? `<h4 class="${absenceHtml(c) ? "" : "first"}">${esc(t("course.content"))}</h4><p>${esc(c.content)}</p>` : ""}
       ${c.learningOutcome ? `<h4>${esc(t("course.outcome"))}</h4><p>${esc(c.learningOutcome)}</p>` : ""}
@@ -1535,12 +1529,12 @@ function tipContent(el) {
     }
     case "abs": {
       const c = byCode(d.code), st = absState(c);
-      return `<b class="t-title">${esc(c.title)}</b><span class="t-muted">${esc(t("abs.tip", { n: st.n, lim: st.lim, r: st.r }))}</span>
-        <span class="t-meta">${absLeftText(c)}</span>`;
+      return `<b class="t-title">${esc(c.title)}</b><span class="t-muted">${esc(t("abs.tip", { n: st.n, of: SESSIONS, p: Math.round(st.n / SESSIONS * 100) }))}</span>
+        <span class="t-meta">${absText(c)}</span>`;
     }
     case "abssem": {
-      const cs = semesterCourses(+d.sem).filter((c) => tracksAbsence(c) && ["warn", "over"].includes(absState(c).level));
-      return `<ul class="t-flush">${cs.map((c) => { const st = absState(c); return `<li>${esc(c.title)} · ${st.n}/${st.lim}</li>`; }).join("")}</ul>`;
+      const cs = semesterCourses(+d.sem).filter((c) => tracksAbsence(c) && ["limit", "comp", "last", "fail"].includes(absState(c).level));
+      return `<ul class="t-flush">${cs.map((c) => `<li>${esc(c.title)} · ${absOf(c)}/${SESSIONS}</li>`).join("")}</ul>`;
     }
     case "saved": return esc(navigator.onLine ? t("status.saved") : t("status.offline"));
     case "prog": { const p = findProgramme(d.id); return { small: true, html: esc(`${w(p.degree)} · ${w(p.mode)} · ${w(p.language)} · ${p.semesters} ${semWord()}`) }; }
